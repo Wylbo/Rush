@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Translucent_Green
+  m_Name: Translucent_Orange
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
   m_LightmapFlags: 1
@@ -75,4 +75,4 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 0.32156864}
-    - _EmissionColor: {r: 0.039849162, g: 1, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 0.28571284, b: 0, a: 1}

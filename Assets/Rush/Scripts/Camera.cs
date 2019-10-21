@@ -6,13 +6,17 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
-	public class Camera : MonoBehaviour {
-		private static Camera instance;
+    public class Camera : MonoBehaviour {
+        private static Camera instance;
 
         [SerializeField] private Vector3 pivot;
+        [SerializeField] private float speed;
         [SerializeField] private string horizontalAxis;
+        [SerializeField] private string verticalAxis;
 
-		public static Camera Instance { get { return instance; } }
+        private float distanceFromPivot;
+
+        public static Camera Instance { get { return instance; } }
 		
 		private void Awake(){
 			if (instance){
@@ -24,11 +28,17 @@ namespace Com.IsartDigital.Rush {
 		}
 		
 		private void Start () {
-			
+            distanceFromPivot = Vector3.Distance(pivot, transform.position);
+            transform.LookAt(pivot);
 		}
 		
 		private void Update () {
-			Input.GetAxis()
+            //float vertAngle;
+            //float horiAngle;
+
+            transform.LookAt(pivot);
+
+            transform.Translate(new Vector3(Input.GetAxis(horizontalAxis),  Input.GetAxis(verticalAxis)) * Time.deltaTime * speed);
 		}
 		
 		private void OnDestroy(){
