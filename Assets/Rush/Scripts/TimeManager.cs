@@ -41,10 +41,6 @@ namespace Com.IsartDigital.Rush {
 		}
 
         private void Tick() {
-            if (elapsedTime == 0) {
-                Debug.Log("<color=red><size=21>Tick</size></color>");
-
-            }
 
             if (elapsedTime > durationBetweenTicks) {
                 Debug.Log("<color=green><size=21>Tick</size></color>");

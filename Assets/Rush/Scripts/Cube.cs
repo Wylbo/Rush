@@ -75,11 +75,16 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Tick() {
+            Debug.Log("<color=red><size=21>Tick</size></color>");
+
             if (doAction == doActionWait) {
                 isWaiting = true;
                 return;
             }
+
             CheckCollision();
+
+            
         }
 
         private void SetModeVoid() {
