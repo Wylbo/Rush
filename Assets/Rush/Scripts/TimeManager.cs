@@ -3,23 +3,53 @@
 /// Date : 21/10/2019 14:03
 ///-----------------------------------------------------------------
 
+using System;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
 	public class TimeManager : MonoBehaviour {
+        private static TimeManager instance;
 
-        private float _timeScale;
-        [Range(0,5)] public float TimeScale;
-        
+        [SerializeField, Range(0f, 5f)] private float speed = 1;
 
-		private void Start () {
+        private float elapsedTime = 0;
+        private float durationBetweenTicks = 1;
+        private float _ratio;
+        public float Ratio { get => _ratio; }
+
+        public Action OnTick;
+
+        public static TimeManager Instance { get { return instance; } }
+
+        private void Awake() {
+            if (instance) {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+        }
+
+        private void Start () {
 			
 		}
 		
 		private void Update () {
-            //Time.timeScale = TimeScale;
+            Tick();
+            
 		}
 
+        private void Tick() {
+            if (elapsedTime > durationBetweenTicks) {
+                Debug.Log("Tick");
+                OnTick();
+                elapsedTime = 0;
+            }
+
+            elapsedTime += Time.deltaTime * speed;
+            _ratio = elapsedTime / durationBetweenTicks;
+
+        }
         private void OnDestroy() {
 
         }
