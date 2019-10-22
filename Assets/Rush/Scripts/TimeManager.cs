@@ -18,6 +18,7 @@ namespace Com.IsartDigital.Rush {
         public float Ratio { get => _ratio; }
 
         public Action OnTick;
+        public Action OnStartTick;
 
         public static TimeManager Instance { get { return instance; } }
 
@@ -40,10 +41,17 @@ namespace Com.IsartDigital.Rush {
 		}
 
         private void Tick() {
+            if (elapsedTime == 0) {
+                Debug.Log("<color=red><size=21>Tick</size></color>");
+
+            }
+
             if (elapsedTime > durationBetweenTicks) {
-                Debug.Log("Tick");
-                OnTick();
+                Debug.Log("<color=green><size=21>Tick</size></color>");
+                OnTick?.Invoke();
                 elapsedTime = 0;
+                OnStartTick?.Invoke();
+
             }
 
             elapsedTime += Time.deltaTime * speed;

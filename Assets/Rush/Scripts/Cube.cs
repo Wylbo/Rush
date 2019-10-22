@@ -9,18 +9,16 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
-
-        [SerializeField, Range(0.1f, 5f)] private float speed = 0.7f;
-
-    
-
         private Vector3 fromPosition;
         private Vector3 toPosition;
         private Quaternion fromRotation;
+
         private Quaternion toRotation;
 
-        public Vector3 movementDirection;
-        public Quaternion movementRotation;
+        private Vector3 _movementDirection;
+        public Vector3 MovementDirection { get => _movementDirection; }
+
+        private Quaternion movementRotation;
 
         private float rotationOffsetY = 0f;
         private float cubeSide = 1f;
@@ -31,7 +29,11 @@ namespace Com.IsartDigital.Rush {
         private Vector3 down;
         private RaycastHit hit;
 
+        private bool isWaiting = false;
+
         private string groundTag = "Ground";
+
+
 
         private Action doAction;
 
@@ -43,8 +45,11 @@ namespace Com.IsartDigital.Rush {
             cubeFaceDiagonal = Mathf.Sqrt(2) * cubeSide;
             rotationOffsetY = cubeFaceDiagonal / 2 - cubeSide / 2;
 
-            movementDirection = transform.forward;
+            _movementDirection = transform.forward;
             movementRotation = Quaternion.AngleAxis(90f, transform.right);
+
+            toPosition = transform.position;
+            toRotation = transform.rotation;
 
             SetModeVoid();
         }
@@ -70,6 +75,10 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Tick() {
+            if (doAction == doActionWait) {
+                isWaiting = true;
+                return;
+            }
             CheckCollision();
         }
 
@@ -82,15 +91,15 @@ namespace Com.IsartDigital.Rush {
         }
 
         public void SetDirection(Vector3 newDirection) {
-            movementDirection = newDirection;
-            movementRotation = Quaternion.AngleAxis(90f, Vector3.Cross(Vector3.up, movementDirection));
+            _movementDirection = newDirection;
+            movementRotation = Quaternion.AngleAxis(90f, Vector3.Cross(Vector3.up, _movementDirection));
         }
 
         private void InitNextMove() {
-            fromPosition = transform.position;
-            fromRotation = transform.rotation;
+            fromPosition = toPosition;
+            fromRotation = toRotation;
 
-            toPosition = fromPosition + movementDirection;
+            toPosition = fromPosition + _movementDirection;
             toRotation = movementRotation * fromRotation;
         }
 
@@ -101,7 +110,7 @@ namespace Com.IsartDigital.Rush {
 
         private void DoActionMove() {
             transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio)
-                + (Vector3.up * (rotationOffsetY * Mathf.Sin(Mathf.PI * TimeManager.Instance.Ratio)));
+                + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(TimeManager.Instance.Ratio));
             transform.rotation = Quaternion.Lerp(fromRotation, toRotation, TimeManager.Instance.Ratio);
         }
 
@@ -117,6 +126,17 @@ namespace Com.IsartDigital.Rush {
 
         private void doActionFall() {
             transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio);
+        }
+
+        public void SetModeWait() {
+            doAction = doActionWait;
+        }
+
+        private void doActionWait() {
+            if (isWaiting) {
+                SetModeMove();
+                isWaiting = false;
+            }
         }
     }
 }
