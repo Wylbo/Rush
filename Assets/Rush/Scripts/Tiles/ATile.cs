@@ -15,10 +15,10 @@ namespace Com.IsartDigital.Rush.Tiles {
 		}
 
         protected virtual void CubeAbove() {
-            Ray ray = new Ray(transform.position - new Vector3(0, 1), Vector3.up);
+            Ray ray = new Ray(transform.position + Vector3.down, Vector3.up);
             RaycastHit cube;
 
-            Debug.DrawRay(transform.position, Vector3.up, Color.red);
+            Debug.DrawRay(transform.position + Vector3.down, Vector3.up * 100, Color.red);
 
             bool isCubeAbove = Physics.Raycast(ray,out cube, 100, cubeMask);
 

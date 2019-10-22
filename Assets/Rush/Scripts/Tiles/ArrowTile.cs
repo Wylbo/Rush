@@ -15,7 +15,6 @@ namespace Com.IsartDigital.Rush.Tiles {
         protected override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
 
-            cube.NextDirection = transform.forward;
         }
     }
 }

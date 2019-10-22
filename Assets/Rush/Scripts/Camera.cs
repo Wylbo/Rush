@@ -22,6 +22,7 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private bool InvertXAxis;
 
         private float distanceFromPivot;
+        private Vector3 mouseStartPos;
 
         public static Camera Instance { get { return instance; } }
 
@@ -45,15 +46,15 @@ namespace Com.IsartDigital.Rush {
             float vertAngle = 0;
             float horiAngle = 0;
 
-            Vector3 mouseStartPos = Vector3.zero;
             if (Input.GetButton(mouseBtn)) {
                 if (Input.GetButtonDown(mouseBtn)) {
                     mouseStartPos = Input.mousePosition;
                 }
 
-                vertAngle = Mathf.Clamp(Input.mousePosition.y - mouseStartPos.y, -1, 1);
-                horiAngle = Mathf.Clamp(Input.mousePosition.x - mouseStartPos.x, -1, 1);
-                Debug.Log(horiAngle);
+                Vector3 direction = Input.mousePosition - mouseStartPos;
+
+                vertAngle = Mathf.Clamp(direction.y / 100, -1, 1);
+                horiAngle = Mathf.Clamp(direction.x, -1, 1);
 
                 vertAngle *= InvertYAxis ? -1 : 1;
                 horiAngle *= InvertXAxis ? -1 : 1;
