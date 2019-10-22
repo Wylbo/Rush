@@ -29,7 +29,6 @@ namespace Com.IsartDigital.Rush {
             if (transform.position == NextPos) {
                 Direction = NextDirection;
                 NextPos = transform.position + Direction;
-                Debug.Log("hey");
 
             }
         }

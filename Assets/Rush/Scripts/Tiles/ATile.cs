@@ -22,10 +22,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 
             bool isCubeAbove = Physics.Raycast(ray,out cube, 100, cubeMask);
 
-            Debug.Log(isCubeAbove);
-
             if (isCubeAbove) {
-                Debug.Log("bonjour");
                 SetCubeAction(cube.collider.GetComponent<Cube>());
             }
 
