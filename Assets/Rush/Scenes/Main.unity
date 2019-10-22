@@ -471,7 +471,7 @@ PrefabInstance:
     - target: {fileID: 1213640374989558991, guid: 0e6cf0627fe8ec948b87dc44ab3fd3ac,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1213640374989558991, guid: 0e6cf0627fe8ec948b87dc44ab3fd3ac,
         type: 3}
@@ -589,6 +589,21 @@ PrefabInstance:
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
       value: 0.5901642
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879165019067646710, guid: 9ca5dea2adfa3df4789e230db6d39e0a,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879165019067646710, guid: 9ca5dea2adfa3df4789e230db6d39e0a,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879165019067646710, guid: 9ca5dea2adfa3df4789e230db6d39e0a,
+        type: 3}
+      propertyPath: looping
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ca5dea2adfa3df4789e230db6d39e0a, type: 3}
@@ -891,6 +906,7 @@ MonoBehaviour:
   speed: 10
   horizontalAxis: Horizontal
   verticalAxis: Vertical
+  angleCap: 15
 --- !u!1 &1288895657
 GameObject:
   m_ObjectHideFlags: 0
