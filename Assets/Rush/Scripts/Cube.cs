@@ -179,7 +179,12 @@ namespace Com.IsartDigital.Rush {
 
             if (TimeManager.Instance.Ratio >= 1) {
                 tickCounter = 0;
-                SetModeWait(1);
+                if (Physics.Raycast(transform.position, down, out hit, raycastDistance)) {
+                    GameObject hitObject = hit.collider.gameObject;
+                    if (hitObject.CompareTag(groundTag)) {
+                        SetModeWait(1);
+                    }
+                }
                 isConvoyed = false;
             }
 
