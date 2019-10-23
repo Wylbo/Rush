@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
     public class ArrowTile : ATile {
-        protected override void SetCubeAction(Cube cube) {
+        public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
             cube.SetDirection(transform.forward);   
         }

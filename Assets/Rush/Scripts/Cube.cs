@@ -3,6 +3,7 @@
 /// Date : 21/10/2019 12:56
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Tiles;
 using System;
 using UnityEngine;
 
@@ -37,8 +38,7 @@ namespace Com.IsartDigital.Rush {
         private int tickCounter = 0;
 
         private string groundTag = "Ground";
-
-
+        private string tileTag = "Tile";
 
         private Action doAction;
 
@@ -150,7 +150,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void doActionWait() {
-            if (tickCounter >= nTickToWait) {
+            if (tickCounter > nTickToWait) {
                 CheckCollision();
                 tickCounter = 0;
                 isWaiting = false;
@@ -167,19 +167,19 @@ namespace Com.IsartDigital.Rush {
         public void SetModeConvoyed(Vector3 convoyeurDirection) {
             isConvoyed = true;
             InitNextConvoyedMovement(convoyeurDirection);
-            doAction = DoActionConvoyed;
+            doAction = DoActionConveyed;
 
 
             Debug.Log("<color=red>hey2</color>");
         }
 
-        private void DoActionConvoyed() {
+        private void DoActionConveyed() {
 
             transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio);
 
             if (TimeManager.Instance.Ratio >= 1) {
                 tickCounter = 0;
-                SetModeWait(2);
+                SetModeWait(1);
                 isConvoyed = false;
             }
 

@@ -9,7 +9,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 	public class Turnstile : ATile {
 
         private bool isRight = true;
-        protected override void SetCubeAction(Cube cube) {
+        public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
             if (isRight) {
                 cube.SetDirection(Vector3.Cross(Vector3.up, cube.movementDirection));

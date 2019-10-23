@@ -6,9 +6,9 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-    public class ConvoyeurTile : ATile {
+    public class ConveyorTile : ATile {
 
-        protected override void SetCubeAction(Cube cube) {
+        public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
             cube.SetModeConvoyed(transform.forward);
 

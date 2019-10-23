@@ -48,6 +48,6 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         }
 
-        protected virtual void SetCubeAction(Cube cube) { }
+        public virtual void SetCubeAction(Cube cube) { }
 	}
 }

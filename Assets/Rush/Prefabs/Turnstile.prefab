@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4084496340511427049}
   m_Layer: 0
   m_Name: Turnstile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,6 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e955809b87931e74d90f211be0078016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &287069422286279863
 GameObject:
   m_ObjectHideFlags: 0
