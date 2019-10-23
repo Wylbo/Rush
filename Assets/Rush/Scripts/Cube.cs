@@ -70,8 +70,8 @@ namespace Com.IsartDigital.Rush {
                     GameObject hitObjectInFront = hit.collider.gameObject;
 
                     if (hitObjectInFront.CompareTag(groundTag)) {
-                        SetModeWait(1);
                         SetDirection(Vector3.Cross(Vector3.up, movementDirection));
+                        SetModeWait(0);
                         return;
 
                     }
@@ -160,17 +160,12 @@ namespace Com.IsartDigital.Rush {
         private void InitNextConvoyedMovement(Vector3 convoyeurDirection) {
             fromPosition = toPosition;
             toPosition = fromPosition + convoyeurDirection;
-            Debug.Log(fromPosition);
-            Debug.Log(toPosition);
         }
 
         public void SetModeConvoyed(Vector3 convoyeurDirection) {
             isConvoyed = true;
             InitNextConvoyedMovement(convoyeurDirection);
             doAction = DoActionConveyed;
-
-
-            Debug.Log("<color=red>hey2</color>");
         }
 
         private void DoActionConveyed() {

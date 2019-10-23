@@ -36,10 +36,6 @@ namespace Com.IsartDigital.Rush.Tiles {
                 Cube cube = hitCube.collider.GetComponent<Cube>();
                 if (!cube.isWaiting) {
                     SetCubeAction(cube);
-                    if (cube.isConvoyed) {
-                        Debug.Log("Nique sa mere");
-                        cube.nTickToWait = 0;
-                    }
 
                     Debug.Log("action");
                 }
