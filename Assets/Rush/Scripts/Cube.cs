@@ -15,9 +15,7 @@ namespace Com.IsartDigital.Rush {
 
         private Quaternion toRotation;
 
-        private Vector3 _movementDirection;
-        public Vector3 MovementDirection { get => _movementDirection; }
-
+        public Vector3 movementDirection { get; private set; }
         private Quaternion movementRotation;
 
         private float rotationOffsetY = 0f;
@@ -30,6 +28,7 @@ namespace Com.IsartDigital.Rush {
         private RaycastHit hit;
 
         private bool isWaiting = false;
+        private int tickCounter = 0;
 
         private string groundTag = "Ground";
 
@@ -45,7 +44,7 @@ namespace Com.IsartDigital.Rush {
             cubeFaceDiagonal = Mathf.Sqrt(2) * cubeSide;
             rotationOffsetY = cubeFaceDiagonal / 2 - cubeSide / 2;
 
-            _movementDirection = transform.forward;
+            movementDirection = transform.forward;
             movementRotation = Quaternion.AngleAxis(90f, transform.right);
 
             toPosition = transform.position;
@@ -75,10 +74,9 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Tick() {
-            Debug.Log("<color=red><size=21>Tick</size></color>");
-
-            if (doAction == doActionWait) {
-                isWaiting = true;
+            Debug.Log(tickCounter + " " + isWaiting);
+            if (isWaiting) {
+                tickCounter++;
                 return;
             }
 
@@ -96,15 +94,15 @@ namespace Com.IsartDigital.Rush {
         }
 
         public void SetDirection(Vector3 newDirection) {
-            _movementDirection = newDirection;
-            movementRotation = Quaternion.AngleAxis(90f, Vector3.Cross(Vector3.up, _movementDirection));
+            movementDirection = newDirection;
+            movementRotation = Quaternion.AngleAxis(90f, Vector3.Cross(Vector3.up, movementDirection));
         }
 
         private void InitNextMove() {
             fromPosition = toPosition;
             fromRotation = toRotation;
 
-            toPosition = fromPosition + _movementDirection;
+            toPosition = fromPosition + movementDirection;
             toRotation = movementRotation * fromRotation;
         }
 
@@ -134,12 +132,14 @@ namespace Com.IsartDigital.Rush {
         }
 
         public void SetModeWait() {
+            isWaiting = true;
             doAction = doActionWait;
         }
 
         private void doActionWait() {
-            if (isWaiting) {
+            if (tickCounter >= 2) {
                 SetModeMove();
+                tickCounter = 0;
                 isWaiting = false;
             }
         }

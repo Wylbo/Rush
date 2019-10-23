@@ -14,9 +14,9 @@ namespace Com.IsartDigital.Rush.Tiles {
             Debug.Log("hey");
 
             if (isRight) {
-                cube.SetDirection(Vector3.Cross(Vector3.up, cube.MovementDirection));
+                cube.SetDirection(Vector3.Cross(Vector3.up, cube.movementDirection));
             } else {
-                cube.SetDirection(Vector3.Cross(cube.MovementDirection, Vector3.up));
+                cube.SetDirection(Vector3.Cross(cube.movementDirection, Vector3.up));
             }
 
             isRight = !isRight;
