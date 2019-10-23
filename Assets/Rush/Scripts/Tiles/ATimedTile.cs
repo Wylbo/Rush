@@ -1,15 +1,13 @@
 ///-----------------------------------------------------------------
 /// Author : Maximilien Galea
-/// Date : 21/10/2019 15:34
+/// Date : 22/10/2019 18:23
 ///-----------------------------------------------------------------
 
+using System;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-    public class ArrowTile : ATile {
-        public override void SetCubeAction(Cube cube) {
-            base.SetCubeAction(cube);
-            cube.SetDirection(transform.forward);   
-        }
+	public class ATimedTile : ATile {
+	    
     }
 }

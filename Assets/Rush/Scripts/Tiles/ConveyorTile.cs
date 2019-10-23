@@ -1,15 +1,17 @@
 ///-----------------------------------------------------------------
 /// Author : Maximilien Galea
-/// Date : 21/10/2019 15:34
+/// Date : 23/10/2019 16:06
 ///-----------------------------------------------------------------
 
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-    public class ArrowTile : ATile {
+    public class ConveyorTile : ATile {
+
         public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
-            cube.SetDirection(transform.forward);   
+            cube.SetModeConvoyed(transform.forward);
+
         }
     }
 }

@@ -8,9 +8,13 @@ using UnityEngine;
 namespace Com.IsartDigital.Common {
 	public static class MathTools {
        
-        /***
-         * insert spherical coord, return carthesian coord
-         ***/
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="verticalAngle"></param>
+        /// <param name="horizontalAngle"></param>
+        /// <returns></returns>
         public static Vector3 SphericalToCarthesian(float distance, float verticalAngle, float horizontalAngle) {
             return new Vector3(distance * Mathf.Cos(verticalAngle) * Mathf.Cos(horizontalAngle),
                                distance * Mathf.Sin(verticalAngle),

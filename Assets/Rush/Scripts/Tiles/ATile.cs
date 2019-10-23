@@ -9,28 +9,41 @@ namespace Com.IsartDigital.Rush.Tiles {
 	public abstract class ATile : MonoBehaviour {
 
         [SerializeField] protected LayerMask cubeMask;
-		
-		protected virtual void Update () {
+
+        protected Vector3 raycastOffset = new Vector3(0, 0.5f, 0);
+        protected virtual void Start() {
+            TimeManager.Instance.OnTick += Tick;
+            //TimeManager.Instance.OnStartTick += Tick;
+        }
+
+        protected virtual void Tick() {
             CubeAbove();
-		}
+        }
+
+  //      protected virtual void Update () {
+  //          CubeAbove();
+		//}
 
         protected virtual void CubeAbove() {
-            Ray ray = new Ray(transform.position - new Vector3(0, 1), Vector3.up);
-            RaycastHit cube;
+            Ray ray = new Ray(transform.position - raycastOffset, Vector3.up);
+            RaycastHit hitCube;
 
             Debug.DrawRay(transform.position, Vector3.up, Color.red);
 
-            bool isCubeAbove = Physics.Raycast(ray,out cube, 100, cubeMask);
-
-            Debug.Log(isCubeAbove);
+            bool isCubeAbove = Physics.Raycast(ray,out hitCube, 1, cubeMask);
 
             if (isCubeAbove) {
-                Debug.Log("bonjour");
-                SetCubeAction(cube.collider.GetComponent<Cube>());
+                Cube cube = hitCube.collider.GetComponent<Cube>();
+                if (!cube.isWaiting) {
+                    SetCubeAction(cube);
+
+                    Debug.Log("action");
+                }
+
             }
 
         }
 
-        protected virtual void SetCubeAction(Cube cube) { }
+        public virtual void SetCubeAction(Cube cube) { }
 	}
 }
