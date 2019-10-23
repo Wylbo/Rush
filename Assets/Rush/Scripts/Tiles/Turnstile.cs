@@ -11,8 +11,6 @@ namespace Com.IsartDigital.Rush.Tiles {
         private bool isRight = true;
         protected override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
-            Debug.Log("hey");
-
             if (isRight) {
                 cube.SetDirection(Vector3.Cross(Vector3.up, cube.movementDirection));
             } else {

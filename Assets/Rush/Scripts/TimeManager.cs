@@ -40,6 +40,7 @@ namespace Com.IsartDigital.Rush {
 		}
 
         private void Tick() {
+
             if (elapsedTime > durationBetweenTicks) {
                 Debug.Log("<color=green><size=21>Tick</size></color>");
                 OnTick?.Invoke();
@@ -48,7 +49,8 @@ namespace Com.IsartDigital.Rush {
             }
 
             elapsedTime += Time.deltaTime * speed;
-            _ratio = elapsedTime / durationBetweenTicks;
+
+            _ratio = Mathf.Clamp01(elapsedTime / durationBetweenTicks);
 
         }
         private void OnDestroy() {

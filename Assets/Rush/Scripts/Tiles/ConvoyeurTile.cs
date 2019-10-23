@@ -10,9 +10,8 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         protected override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
-            cube.SetModeWait(1);
-            cube.transform.position = Vector3.Lerp(cube.transform.position, cube.transform.position + transform.forward, TimeManager.Instance.Ratio);
-            
+            cube.SetModeConvoyed(transform.forward);
+
         }
     }
 }

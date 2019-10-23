@@ -15,6 +15,8 @@ namespace Com.IsartDigital.Rush {
 
         private Quaternion toRotation;
 
+        public int nTickToWait { get; set; }
+
         public Vector3 movementDirection { get; private set; }
         private Quaternion movementRotation;
 
@@ -31,6 +33,7 @@ namespace Com.IsartDigital.Rush {
 
 
         public bool isWaiting {get; private set; }
+        public bool isConvoyed { get; private set; }
         private int tickCounter = 0;
 
         private string groundTag = "Ground";
@@ -76,12 +79,7 @@ namespace Com.IsartDigital.Rush {
                 SetModeMove();
             } else {
                 SetModeFall();
-                return;
             }
-
-            
-
-
         }
 
         private void Update() {
@@ -89,7 +87,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Tick() {
-            if (isWaiting) {
+            if (isWaiting || isConvoyed) {
                 tickCounter++;
                 return;
             }
@@ -145,7 +143,6 @@ namespace Com.IsartDigital.Rush {
             transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio);
         }
 
-        private int nTickToWait;
         public void SetModeWait(int nTickToWait) {
             isWaiting = true;
             this.nTickToWait = nTickToWait;
@@ -158,6 +155,34 @@ namespace Com.IsartDigital.Rush {
                 tickCounter = 0;
                 isWaiting = false;
             }
+        }
+
+        private void InitNextConvoyedMovement(Vector3 convoyeurDirection) {
+            fromPosition = toPosition;
+            toPosition = fromPosition + convoyeurDirection;
+            Debug.Log(fromPosition);
+            Debug.Log(toPosition);
+        }
+
+        public void SetModeConvoyed(Vector3 convoyeurDirection) {
+            isConvoyed = true;
+            InitNextConvoyedMovement(convoyeurDirection);
+            doAction = DoActionConvoyed;
+
+
+            Debug.Log("<color=red>hey2</color>");
+        }
+
+        private void DoActionConvoyed() {
+
+            transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio);
+
+            if (TimeManager.Instance.Ratio >= 1) {
+                tickCounter = 0;
+                SetModeWait(2);
+                isConvoyed = false;
+            }
+
         }
     }
 }
