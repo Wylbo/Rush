@@ -26,15 +26,19 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         protected virtual void CubeAbove() {
             Ray ray = new Ray(transform.position - raycastOffset, Vector3.up);
-            RaycastHit cube;
+            RaycastHit hitCube;
 
             Debug.DrawRay(transform.position, Vector3.up, Color.red);
 
-            bool isCubeAbove = Physics.Raycast(ray,out cube, 1, cubeMask);
+            bool isCubeAbove = Physics.Raycast(ray,out hitCube, 1, cubeMask);
 
             if (isCubeAbove) {
-                SetCubeAction(cube.collider.GetComponent<Cube>());
-                Debug.Log("action");
+                Cube cube = hitCube.collider.GetComponent<Cube>();
+                if (!cube.isWaiting) {
+                    SetCubeAction(cube);
+                    Debug.Log("action");
+                }
+
             }
 
         }

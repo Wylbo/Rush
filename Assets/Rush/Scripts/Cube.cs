@@ -27,7 +27,10 @@ namespace Com.IsartDigital.Rush {
         private Vector3 down;
         private RaycastHit hit;
 
-        private bool isWaiting = false;
+        private Vector3 forward;
+
+
+        public bool isWaiting {get; private set; }
         private int tickCounter = 0;
 
         private string groundTag = "Ground";
@@ -55,18 +58,30 @@ namespace Com.IsartDigital.Rush {
 
         private void CheckCollision() {
             down = Vector3.down;
+            forward = movementDirection;
 
             if (Physics.Raycast(transform.position, down, out hit, raycastDistance)) {
                 GameObject hitObject = hit.collider.gameObject;
-                //Debug.Log(hitObject);
-                if (hitObject.CompareTag(groundTag)) {
+
+                if (Physics.Raycast(transform.position, forward, out hit, raycastDistance)) {
+                    GameObject hitObjectInFront = hit.collider.gameObject;
+
+                    if (hitObjectInFront.CompareTag(groundTag)) {
+                        SetModeWait(1);
+                        SetDirection(Vector3.Cross(Vector3.up, movementDirection));
+                        return;
+
+                    }
                 }
                 SetModeMove();
-
-
-            } else {    
+            } else {
                 SetModeFall();
+                return;
             }
+
+            
+
+
         }
 
         private void Update() {
@@ -74,7 +89,6 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Tick() {
-            Debug.Log(tickCounter + " " + isWaiting);
             if (isWaiting) {
                 tickCounter++;
                 return;
@@ -82,7 +96,7 @@ namespace Com.IsartDigital.Rush {
 
             CheckCollision();
 
-            
+
         }
 
         private void SetModeVoid() {
@@ -131,14 +145,16 @@ namespace Com.IsartDigital.Rush {
             transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio);
         }
 
-        public void SetModeWait() {
+        private int nTickToWait;
+        public void SetModeWait(int nTickToWait) {
             isWaiting = true;
+            this.nTickToWait = nTickToWait;
             doAction = doActionWait;
         }
 
         private void doActionWait() {
-            if (tickCounter >= 2) {
-                SetModeMove();
+            if (tickCounter >= nTickToWait) {
+                CheckCollision();
                 tickCounter = 0;
                 isWaiting = false;
             }

@@ -7,11 +7,12 @@ using System;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-	public class Spawner : MonoBehaviour {
+    public class Spawner : MonoBehaviour {
 
         [SerializeField] private GameObject cubePrefab;
         [SerializeField, Range(1, 5)] private int tickBetweenSpawn;
         [SerializeField] private int nToSpawn;
+        [SerializeField] private int tickBeforeFirstSpawn;
 
         private int elapsedTick;
         private int nSpawned = 0;
@@ -22,7 +23,7 @@ namespace Com.IsartDigital.Rush.Tiles {
             TimeManager.Instance.OnTick += Tick;
             doAction = doActionVoid;
 
-            elapsedTick = tickBetweenSpawn;
+            elapsedTick = tickBeforeFirstSpawn;
 
         }
 
@@ -30,11 +31,11 @@ namespace Com.IsartDigital.Rush.Tiles {
             if (nSpawned == nToSpawn) {
                 TimeManager.Instance.OnTick -= Tick;
             }
-            if (elapsedTick == tickBetweenSpawn) {
+            if (elapsedTick == 0) {
                 SetModeSpawn();
-                elapsedTick = 0;
+                elapsedTick = tickBetweenSpawn;
             }
-            elapsedTick++;
+            elapsedTick--;
 
         }
 
