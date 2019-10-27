@@ -13,6 +13,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         [SerializeField, Range(1, 5)] private int tickBetweenSpawn;
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
+        [SerializeField] private Color color;
 
         private int elapsedTick;
         private int nSpawned = 0;
@@ -56,7 +57,8 @@ namespace Com.IsartDigital.Rush.Tiles {
         }
 
         private void doActionSpawn() {
-            Instantiate(cubePrefab, transform.position, transform.rotation);
+            GameObject cube = Instantiate(cubePrefab, transform.position, transform.rotation);
+            cube.GetComponent<Renderer>().material.SetColor("_Color", color);
             SetModeVoid();
         }
     }

@@ -4782,9 +4782,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 5831078177041585375, guid: 0e6cf0627fe8ec948b87dc44ab3fd3ac,
     type: 3}
-  tickBetweenSpawn: 0
-  nToSpawn: 0
+  tickBetweenSpawn: 2
+  nToSpawn: 1
   tickBeforeFirstSpawn: 0
+  color: {r: 1, g: 0, b: 0.78488207, a: 0}
 --- !u!1 &1451354327250352
 GameObject:
   m_ObjectHideFlags: 0

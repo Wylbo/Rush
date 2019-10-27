@@ -9,7 +9,7 @@ namespace Com.IsartDigital.Common {
 	public static class MathTools {
        
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="distance"></param>
         /// <param name="verticalAngle"></param>
