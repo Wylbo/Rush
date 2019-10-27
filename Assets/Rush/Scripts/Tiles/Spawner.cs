@@ -20,7 +20,11 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private Action doAction;
 
-		private void Start () {
+        private void OnValidate() {
+            transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.SetColor("_Color", color);
+        }
+
+        private void Start () {
             TimeManager.Instance.OnTick += Tick;
             doAction = doActionVoid;
 
