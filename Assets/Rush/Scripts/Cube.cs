@@ -185,10 +185,22 @@ namespace Com.IsartDigital.Rush {
 
         }
 
-        public void TeleportTo(Transform target) {
-            SetModeWait(2);
-            transform.position = target.position + Vector3.up / 2;
-            toPosition = transform.position;
+        Transform tpTarget;
+        public void SetModeTeleport(Transform target) {
+            isWaiting = true;
+            doAction = DoActionTeleport;
+            tpTarget = target;  
+        }
+
+        private void DoActionTeleport() {
+            if (tickCounter > 1) {
+                isWaiting = false;
+
+                transform.position = tpTarget.position + Vector3.up / 2;
+                toPosition = transform.position;
+
+                SetModeWait(2);
+            }
         }
     }
 }

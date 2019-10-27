@@ -16,8 +16,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         }
 
         public override void SetCubeAction(Cube cube) {
-            cube.SetModeWait(1);
-            cube.TeleportTo(target);
+            cube.SetModeTeleport(target);
 
 
         }
