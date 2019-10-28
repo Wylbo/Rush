@@ -202,5 +202,9 @@ namespace Com.IsartDigital.Rush {
                 SetModeWait(2);
             }
         }
+
+        private void OnDestroy() {
+            TimeManager.Instance.OnTick -= Tick;
+        }
     }
 }
