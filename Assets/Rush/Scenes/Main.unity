@@ -9690,16 +9690,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c909518929546bd4b90671d84e4f80a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivot: {x: 0, y: 0, z: 0}
-  speed: 1
+  speed: 4
   horizontalAxis: Horizontal
   verticalAxis: Vertical
-  mouseX: 
-  mouseY: 
-  mouseBtn: 
-  angleCap: 0
-  InvertYAxis: 0
-  InvertXAxis: 0
+  mouseX: Mouse X
+  mouseY: Mouse Y
+  mouseBtn: Fire2
+  MouseSensitivity: 4
+  OribitDampening: 10
 --- !u!4 &1208924780
 Transform:
   m_ObjectHideFlags: 0
