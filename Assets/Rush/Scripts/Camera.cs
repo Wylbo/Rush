@@ -10,19 +10,21 @@ namespace Com.IsartDigital.Rush {
     public class Camera : MonoBehaviour {
         private static Camera instance;
 
-        [SerializeField] private Vector3 pivot;
+        protected Transform _XFormCamera;
+        protected Transform _XFormParent;
+
+        protected Vector3 _LocalRotation;
+
         [SerializeField] private float speed;
         [SerializeField] private string horizontalAxis;
         [SerializeField] private string verticalAxis;
         [SerializeField] private string mouseX;
         [SerializeField] private string mouseY;
         [SerializeField] private string mouseBtn;
-        [SerializeField] private float angleCap;
-        [SerializeField] private bool InvertYAxis;
-        [SerializeField] private bool InvertXAxis;
+        
+        [SerializeField] private float MouseSensitivity;
+        [SerializeField] private float OribitDampening;
 
-        private float distanceFromPivot;
-        private Vector3 mouseStartPos;
 
         public static Camera Instance { get { return instance; } }
 
@@ -31,54 +33,29 @@ namespace Com.IsartDigital.Rush {
                 Destroy(gameObject);
                 return;
             }
-
-            instance = this;
-            transform.LookAt(pivot);
-
         }
 
         private void Start() {
-            distanceFromPivot = Vector3.Distance(pivot, transform.position);
+            _XFormCamera = transform;
+            _XFormParent = transform.parent;
         }
 
-        private void Update() {
-
-            float vertAngle = 0;
-            float horiAngle = 0;
-
-            if (Input.GetButton(mouseBtn)) {
-                if (Input.GetButtonDown(mouseBtn)) {
-                    mouseStartPos = Input.mousePosition;
+        private void LateUpdate() {
+            if (Input.GetAxis(mouseBtn) != 0) {
+                if (Input.GetAxis(mouseX) != 0 || Input.GetAxis(mouseY) != 0) {
+                    _LocalRotation.x += Input.GetAxis(mouseX) * MouseSensitivity;
+                    _LocalRotation.y -= Input.GetAxis(mouseY) * MouseSensitivity;
                 }
-
-                Vector3 direction = Input.mousePosition - mouseStartPos;
-
-                vertAngle = Mathf.Clamp(direction.y / 100, -1, 1);
-                horiAngle = Mathf.Clamp(direction.x, -1, 1);
-
-                vertAngle *= InvertYAxis ? -1 : 1;
-                horiAngle *= InvertXAxis ? -1 : 1;
-
             } else {
-                vertAngle = Input.GetAxis(verticalAxis);
-                horiAngle = Input.GetAxis(horizontalAxis);
+                if (Input.GetAxis(horizontalAxis) != 0 || Input.GetAxis(verticalAxis) != 0) {
+                    _LocalRotation.x -= Input.GetAxis(horizontalAxis) * speed;
+                    _LocalRotation.y -= Input.GetAxis(verticalAxis) * speed;
+                }
             }
+            _LocalRotation.y = Mathf.Clamp(_LocalRotation.y, -90, 90);
 
-            Move(vertAngle, horiAngle);
-        }
-
-        private void Move(float vertAngle, float horiAngle) {
-
-            if (Vector3.Angle(Vector3.up, transform.forward) < angleCap && vertAngle < 0) {
-                vertAngle = 0;
-            }
-            if (Vector3.Angle(Vector3.down, transform.forward) < angleCap && vertAngle > 0) {
-                vertAngle = 0;
-            }
-
-            transform.LookAt(pivot);
-            transform.Translate(new Vector3(horiAngle, vertAngle) * (Time.deltaTime * speed));
-
+            Quaternion QT = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
+            _XFormParent.rotation = Quaternion.Lerp(_XFormParent.rotation, QT, Time.deltaTime * OribitDampening);
         }
 
         private void OnDestroy() {

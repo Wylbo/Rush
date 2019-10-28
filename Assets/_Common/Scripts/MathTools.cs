@@ -9,11 +9,11 @@ namespace Com.IsartDigital.Common {
 	public static class MathTools {
        
         /// <summary>
-        /// 
+        /// convertit des coordonées spherique en carthesien
         /// </summary>
-        /// <param name="distance"></param>
-        /// <param name="verticalAngle"></param>
-        /// <param name="horizontalAngle"></param>
+        /// <param name="distance">distance depuis le pivot</param>
+        /// <param name="verticalAngle">angle vertical entre -pi/2 et pi/2</param>
+        /// <param name="horizontalAngle">angle horizontal entre -pi et pi</param>
         /// <returns></returns>
         public static Vector3 SphericalToCarthesian(float distance, float verticalAngle, float horizontalAngle) {
             return new Vector3(distance * Mathf.Cos(verticalAngle) * Mathf.Cos(horizontalAngle),
