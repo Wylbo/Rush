@@ -10,13 +10,15 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
+        [SerializeField] AnimationCurve moveCurve;
+        [SerializeField] Light light;
+
         private Vector3 fromPosition;
         private Vector3 toPosition;
         private Quaternion fromRotation;
 
         private Quaternion toRotation;
 
-        public int nTickToWait { get; set; }
 
         public Vector3 movementDirection { get; private set; }
         private Quaternion movementRotation;
@@ -33,9 +35,12 @@ namespace Com.IsartDigital.Rush {
         private Vector3 forward;
 
 
-        public bool isWaiting {get; private set; }
+        public int nTickToWait { get; set; }
+        public bool isWaiting { get; private set; }
         public bool isConvoyed { get; private set; }
         private int tickCounter = 0;
+        private Transform tpTarget;
+
 
         private string groundTag = "Ground";
         private string tileTag = "Tile";
@@ -56,7 +61,13 @@ namespace Com.IsartDigital.Rush {
             toPosition = transform.position;
             toRotation = transform.rotation;
 
+            light.color = GetComponent<Renderer>().sharedMaterial.color;
+
+            
+
             SetModeVoid();
+
+
         }
 
         private void CheckCollision() {
@@ -124,9 +135,9 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void DoActionMove() {
-            transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio)
-                + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(TimeManager.Instance.Ratio));
-            transform.rotation = Quaternion.Lerp(fromRotation, toRotation, TimeManager.Instance.Ratio);
+            transform.position = Vector3.Lerp(fromPosition, toPosition, moveCurve.Evaluate(TimeManager.Instance.Ratio))
+                + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(moveCurve.Evaluate(TimeManager.Instance.Ratio)));
+            transform.rotation = Quaternion.Lerp(fromRotation, toRotation, moveCurve.Evaluate(TimeManager.Instance.Ratio));
         }
 
         private void InitNextFall() {
@@ -185,11 +196,10 @@ namespace Com.IsartDigital.Rush {
 
         }
 
-        Transform tpTarget;
         public void SetModeTeleport(Transform target) {
             isWaiting = true;
             doAction = DoActionTeleport;
-            tpTarget = target;  
+            tpTarget = target;
         }
 
         private void DoActionTeleport() {

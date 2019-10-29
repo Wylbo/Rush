@@ -62,6 +62,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private void doActionSpawn() {
             GameObject cube = Instantiate(cubePrefab, transform.position, transform.rotation);
+            cube.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
             cube.GetComponent<Renderer>().material.SetColor("_Color", color);
             SetModeVoid();
         }
