@@ -36,6 +36,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Start() {
+            transform.LookAt(transform.parent);
             _XFormCamera = transform;
             _XFormParent = transform.parent;
         }
