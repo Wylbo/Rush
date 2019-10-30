@@ -11,7 +11,7 @@ namespace Com.IsartDigital.Rush.Tiles {
     public class Spawner : MonoBehaviour {
 
         [SerializeField] private GameObject cubePrefab;
-        [SerializeField, Range(1, 5)] private int tickBetweenSpawn;
+        [SerializeField, Range(1, 10)] private int tickBetweenSpawn;
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
         [SerializeField] private Color color;
