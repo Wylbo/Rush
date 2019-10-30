@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
@@ -14,6 +15,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
         [SerializeField] private Color color;
+        [SerializeField] private GameObject ObjectToChangeColor;
 
         private int elapsedTick;
         private int nSpawned = 0;
@@ -21,7 +23,8 @@ namespace Com.IsartDigital.Rush.Tiles {
         private Action doAction;
 
         private void OnValidate() {
-            transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.SetColor("_Color", color);
+            transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color = color; //("_Color", color);
+            transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.SetColor("_EmissionColor", color);
         }
 
         private void Start () {
@@ -62,7 +65,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private void doActionSpawn() {
             GameObject cube = Instantiate(cubePrefab, transform.position, transform.rotation);
-            cube.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
+            cube.GetComponent<Renderer>().sharedMaterial.SetColor("_EmissionColor", color);
             cube.GetComponent<Renderer>().material.SetColor("_Color", color);
             SetModeVoid();
         }

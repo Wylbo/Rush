@@ -11,6 +11,7 @@ namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
         [SerializeField] AnimationCurve moveCurve;
+        [SerializeField] Light lightHallo;
         [SerializeField] Light light;
 
         private Vector3 fromPosition;
@@ -61,9 +62,10 @@ namespace Com.IsartDigital.Rush {
             toPosition = transform.position;
             toRotation = transform.rotation;
 
-            light.color = GetComponent<Renderer>().sharedMaterial.color;
+            lightHallo.color = GetComponent<Renderer>().material.color;
+            light.color = GetComponent<Renderer>().material.color;
 
-            
+
 
             SetModeVoid();
 

@@ -10,7 +10,7 @@ namespace Com.IsartDigital.Rush {
 	public class TimeManager : MonoBehaviour {
         private static TimeManager instance;
 
-        [SerializeField, Range(0f, 5f)] private float speed = 1;
+        [SerializeField, Range(0f, 5f)] public float speed = 1;
 
         private float elapsedTime = 0;
         private float durationBetweenTicks = 1;
