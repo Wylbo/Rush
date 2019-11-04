@@ -17,14 +17,19 @@ namespace Com.IsartDigital.Rush.Tiles {
         [SerializeField] private Color color;
         [SerializeField] private GameObject ObjectToChangeColor;
 
+        MaterialPropertyBlock block;
+
         private int elapsedTick;
         private int nSpawned = 0;
 
         private Action doAction;
 
         private void OnValidate() {
-            //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color = color; //("_Color", color);
-            //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.SetColor("_EmissionColor", color);
+            block = new MaterialPropertyBlock();
+            block.SetColor("_Color", color);
+            block.SetColor("_EmissionColor", color);
+
+            transform.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
         }
 
         private void Start () {
@@ -65,8 +70,8 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private void doActionSpawn() {
             GameObject cube = Instantiate(cubePrefab, transform.position, transform.rotation);
-            cube.GetComponent<Renderer>().sharedMaterial.SetColor("_EmissionColor", color);
-            cube.GetComponent<Renderer>().material.SetColor("_Color", color);
+            cube.GetComponent<Renderer>().SetPropertyBlock(block);
+            cube.GetComponent<Renderer>().SetPropertyBlock(block);
             SetModeVoid();
         }
     }

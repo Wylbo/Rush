@@ -179,5 +179,7 @@ MonoBehaviour:
   horizontalAxis: Horizontal
   verticalAxis: Vertical
   mouseBtn: Fire2
+  mouseHorizontalAxis: Mouse X
+  mouseVerticalAxis: Mouse Y
   MouseSensitivity: 0
   OribitDampening: 0

@@ -15,12 +15,13 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private string horizontalAxis;
         [SerializeField] private string verticalAxis;
         [SerializeField] private string mouseBtn;
+        [SerializeField] private string mouseHorizontalAxis;
+        [SerializeField] private string mouseVerticalAxis;
 
         [SerializeField] private float MouseSensitivity;
         [SerializeField] private float OribitDampening;
 
-        private float vertAngle;
-        private float horiAngle;
+        private (float, float) angles;
 
         private float distance;
 
@@ -46,29 +47,24 @@ namespace Com.IsartDigital.Rush {
             if (this == instance) instance = null;
         }
 
-        private void Move() {
+
+        private (float, float) GetAxis() {
             if (Input.GetAxis(mouseBtn) != 0) {
-                verticalAxis = "Mouse Y";
-                horizontalAxis = "Mouse X";
-                
-            } else {
-                verticalAxis = "Vertical";
-                horizontalAxis = "Horizontal";
+                return (-Input.GetAxis(mouseHorizontalAxis), -Input.GetAxis(mouseVerticalAxis));
             }
+            return ( Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
-            if (Input.GetAxis(verticalAxis) != 0) {
-                vertAngle += Input.GetAxis(verticalAxis) * speed * Time.deltaTime;
-                Debug.Log(vertAngle);
-                vertAngle = Mathf.Clamp(vertAngle, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
-            }
+        }
 
-            if (Input.GetAxis(horizontalAxis) != 0) {
-                horiAngle += Input.GetAxis(horizontalAxis) * speed * Time.deltaTime;
+        private void Move() {
 
-            }
+            angles.Item1 += GetAxis().Item1 * speed * Time.deltaTime;
+            angles.Item2 += GetAxis().Item2 * speed * Time.deltaTime;
+
+            angles.Item2 = Mathf.Clamp(angles.Item2, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
 
 
-            transform.position = MathTools.SphericalToCarthesian(distance, vertAngle, horiAngle);
+            transform.position = MathTools.SphericalToCarthesian(distance, angles.Item2, angles.Item1);
             transform.LookAt(Vector3.zero);
         }
     }

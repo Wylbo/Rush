@@ -62,6 +62,7 @@ namespace Com.IsartDigital.Rush {
             toPosition = transform.position;
             toRotation = transform.rotation;
 
+
             lightHallo.color = GetComponent<Renderer>().material.color;
             light.color = GetComponent<Renderer>().material.color;
 
