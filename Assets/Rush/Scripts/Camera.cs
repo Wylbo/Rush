@@ -10,20 +10,19 @@ namespace Com.IsartDigital.Rush {
     public class Camera : MonoBehaviour {
         private static Camera instance;
 
-        protected Transform _XFormCamera;
-        protected Transform _XFormParent;
-
-        protected Vector3 _LocalRotation;
 
         [SerializeField] private float speed;
         [SerializeField] private string horizontalAxis;
         [SerializeField] private string verticalAxis;
-        [SerializeField] private string mouseX;
-        [SerializeField] private string mouseY;
         [SerializeField] private string mouseBtn;
-        
+
         [SerializeField] private float MouseSensitivity;
         [SerializeField] private float OribitDampening;
+
+        private float vertAngle;
+        private float horiAngle;
+
+        private float distance;
 
 
         public static Camera Instance { get { return instance; } }
@@ -36,31 +35,31 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Start() {
-            transform.LookAt(transform.parent);
-            _XFormCamera = transform;
-            _XFormParent = transform.parent;
+            distance = Vector3.Distance(transform.position, Vector3.zero);
         }
 
         private void LateUpdate() {
-            if (Input.GetAxis(mouseBtn) != 0) {
-                if (Input.GetAxis(mouseX) != 0 || Input.GetAxis(mouseY) != 0) {
-                    _LocalRotation.x += Input.GetAxis(mouseX) * MouseSensitivity;
-                    _LocalRotation.y -= Input.GetAxis(mouseY) * MouseSensitivity;
-                }
-            } else {
-                if (Input.GetAxis(horizontalAxis) != 0 || Input.GetAxis(verticalAxis) != 0) {
-                    _LocalRotation.x -= Input.GetAxis(horizontalAxis) * speed;
-                    _LocalRotation.y -= Input.GetAxis(verticalAxis) * speed;
-                }
-            }
-            _LocalRotation.y = Mathf.Clamp(_LocalRotation.y, -90, 90);
-
-            Quaternion QT = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
-            _XFormParent.rotation = Quaternion.Lerp(_XFormParent.rotation, QT, Time.deltaTime * OribitDampening);
+            Move();
         }
 
         private void OnDestroy() {
             if (this == instance) instance = null;
+        }
+
+        private void Move() {
+            if (Input.GetAxis(verticalAxis) != 0) {
+                vertAngle += Input.GetAxis(verticalAxis) * speed * Time.deltaTime;
+                Debug.Log(vertAngle);
+                vertAngle = Mathf.Clamp(vertAngle, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
+            }
+
+            if (Input.GetAxis(horizontalAxis) != 0) {
+                horiAngle += Input.GetAxis(horizontalAxis) * speed * Time.deltaTime;
+
+            }
+
+            transform.position = MathTools.SphericalToCarthesian(distance, vertAngle, horiAngle);
+            transform.LookAt(Vector3.zero);
         }
     }
 }
