@@ -47,6 +47,15 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Move() {
+            if (Input.GetAxis(mouseBtn) != 0) {
+                verticalAxis = "Mouse Y";
+                horizontalAxis = "Mouse X";
+                
+            } else {
+                verticalAxis = "Vertical";
+                horizontalAxis = "Horizontal";
+            }
+
             if (Input.GetAxis(verticalAxis) != 0) {
                 vertAngle += Input.GetAxis(verticalAxis) * speed * Time.deltaTime;
                 Debug.Log(vertAngle);
@@ -57,6 +66,7 @@ namespace Com.IsartDigital.Rush {
                 horiAngle += Input.GetAxis(horizontalAxis) * speed * Time.deltaTime;
 
             }
+
 
             transform.position = MathTools.SphericalToCarthesian(distance, vertAngle, horiAngle);
             transform.LookAt(Vector3.zero);

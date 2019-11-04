@@ -12,7 +12,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private void OnValidate() {
             for (int i = 0; i < transform.childCount; i++) {
-                transform.GetChild(i).GetComponent<Renderer>().sharedMaterial.color = color; //SetColor("_Color", color);
+                //transform.GetChild(i).GetComponent<Renderer>().sharedMaterial.color = color; //SetColor("_Color", color);
 
             }
         }

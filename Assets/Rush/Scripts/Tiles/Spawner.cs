@@ -23,8 +23,8 @@ namespace Com.IsartDigital.Rush.Tiles {
         private Action doAction;
 
         private void OnValidate() {
-            transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color = color; //("_Color", color);
-            transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.SetColor("_EmissionColor", color);
+            //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color = color; //("_Color", color);
+            //transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.SetColor("_EmissionColor", color);
         }
 
         private void Start () {
