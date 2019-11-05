@@ -7,11 +7,13 @@ using System;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
-	public class TimeManager : MonoBehaviour {
+    public class TimeManager : MonoBehaviour {
         private static TimeManager instance;
 
-        [SerializeField, Range(0f, 5f)] public float speed = 1;
+        [SerializeField, Range(0f, 5f)] private float speed = 1;
 
+        public float tickRate;
+        private bool isTicking = false;
         private float elapsedTime = 0;
         private float durationBetweenTicks = 1;
         private float _ratio;
@@ -27,17 +29,25 @@ namespace Com.IsartDigital.Rush {
                 return;
             }
 
+            tickRate = 0;
+
             instance = this;
         }
 
-        private void Start () {
-			
-		}
-		
-		private void Update () {
+        public void onOff() {
+            isTicking = !isTicking;
+            Debug.Log(isTicking);
+            if (isTicking) {
+                tickRate = speed;
+            } else {
+                tickRate = 0;
+            }
+        }
+
+        private void Update() {
             Tick();
-            
-		}
+
+        }
 
         private void Tick() {
 
@@ -48,7 +58,7 @@ namespace Com.IsartDigital.Rush {
 
             }
 
-            elapsedTime += Time.deltaTime * speed;
+            elapsedTime += Time.deltaTime * tickRate;
 
             _ratio = Mathf.Clamp01(elapsedTime / durationBetweenTicks);
 

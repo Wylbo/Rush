@@ -20,7 +20,8 @@ namespace Com.IsartDigital.Rush {
 
         [SerializeField] private float MouseSensitivity;
         [SerializeField] private float OribitDampening;
-
+        [SerializeField] private Transform cameraPivot;
+        
         private (float, float) angles;
 
         private float distance;
@@ -36,7 +37,8 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Start() {
-            distance = Vector3.Distance(transform.position, Vector3.zero);
+            distance = Vector3.Distance(transform.position, cameraPivot.position);
+
         }
 
         private void LateUpdate() {
@@ -64,8 +66,9 @@ namespace Com.IsartDigital.Rush {
             angles.Item2 = Mathf.Clamp(angles.Item2, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
 
 
-            transform.position = MathTools.SphericalToCarthesian(distance, angles.Item2, angles.Item1);
-            transform.LookAt(Vector3.zero);
+            transform.position = MathTools.SphericalToCarthesian(distance, angles.Item2, angles.Item1) + cameraPivot.position;
+
+            transform.LookAt(cameraPivot);
         }
     }
 }

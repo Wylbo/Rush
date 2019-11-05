@@ -9,20 +9,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
-	public class TilePlacer : MonoBehaviour {
+	public class Player : MonoBehaviour {
 
         [SerializeField] private LayerMask groundMask;
 
         private int inventoryIndex = 0;
+        public GameObject Levelinventory;
         private List<ElementInventory> inventory;
 
         private void Start () {
-            inventory = transform.parent.GetComponent<Inventory>().list;
+            inventory = Levelinventory.GetComponent<Inventory>().list;
 
         }
 
         private void Update () {
             RaycastToGround();
+
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                TimeManager.Instance.onOff();
+            }
 		}
 
         private void RaycastToGround() {
