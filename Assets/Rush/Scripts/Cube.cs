@@ -5,14 +5,17 @@
 
 using Com.IsartDigital.Rush.Tiles;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
+        static private List<Cube> list = new List<Cube>();
+
         [SerializeField] private AnimationCurve moveCurve;
         [SerializeField] public Light lightHallo;
-        [SerializeField] public Light light;
+        [SerializeField] public Light secondLight;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -50,6 +53,7 @@ namespace Com.IsartDigital.Rush {
 
         private void Start() {
             TimeManager.Instance.OnTick += Tick;
+            list.Add(this);
 
             raycastDistance = cubeSide / 2 + raycastOffsetDistance;
 
@@ -218,6 +222,15 @@ namespace Com.IsartDigital.Rush {
 
         private void OnDestroy() {
             TimeManager.Instance.OnTick -= Tick;
+            
+        }
+
+        public static void DestroyAll() {
+            for (int i = list.Count -1; i >= 0; i--) {
+                Destroy(list[i].gameObject);
+                list.RemoveAt(i);
+                
+            }
         }
     }
 }

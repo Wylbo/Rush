@@ -29,12 +29,12 @@ namespace Com.IsartDigital.Rush {
                 return;
             }
 
-            tickRate = 0;
+            GameManager.Instance.onPlay += onOff;
 
             instance = this;
         }
 
-        public void onOff() {
+        private void onOff() {
             isTicking = !isTicking;
             Debug.Log(isTicking);
             if (isTicking) {

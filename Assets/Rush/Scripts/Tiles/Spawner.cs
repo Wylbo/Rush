@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
     public class Spawner : MonoBehaviour {
+        static private List<Spawner> list = new List<Spawner>();
 
         [SerializeField] private GameObject cubePrefab;
         [SerializeField, Range(1, 10)] private int tickBetweenSpawn;
@@ -16,9 +17,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         [SerializeField] private int tickBeforeFirstSpawn;
         [SerializeField] private Color color;
 
-        [SerializeField] public string CubeTag;
-
-        MaterialPropertyBlock block;
+        private MaterialPropertyBlock block;
 
         private int elapsedTick;
         private int nSpawned = 0;
@@ -38,12 +37,35 @@ namespace Com.IsartDigital.Rush.Tiles {
             transform.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
         }
 
-        private void Start () {
+        public static void ResetAll() {
+            Debug.Log("<color=orange>" + list[0].nSpawned + "</color>");
+
+            for (int i = 0; i < list.Count; i++) {
+                Debug.Log("<color=cyan>" + list[i].nSpawned + "</color>");
+                list[i].Reset();
+                
+            }
+        }
+
+        private void Reset() {
+            nSpawned = 0;
+            elapsedTick = tickBeforeFirstSpawn;
+
+            TimeManager.Instance.OnTick -= Tick;
+            TimeManager.Instance.OnTick += Tick;
+
+        }
+
+        private void Awake() {
+            list.Add(this);
+            Debug.Log("<color=red>" + list.Count + "</color>");
+        }
+
+        private void Start() {
+            TimeManager.Instance.OnTick += Tick;
+
             ChangeColor();
 
-            transform.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
-
-            TimeManager.Instance.OnTick += Tick;
             doAction = doActionVoid;
 
             elapsedTick = tickBeforeFirstSpawn;
@@ -62,9 +84,9 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         }
 
-        private void Update () {
+        private void Update() {
             doAction();
-		}
+        }
 
         private void SetModeVoid() {
             doAction = doActionVoid;
@@ -80,10 +102,12 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private void doActionSpawn() {
             GameObject cube = Instantiate(cubePrefab, transform.position, transform.rotation);
+
             cube.GetComponent<Renderer>().SetPropertyBlock(block);
             cube.GetComponent<Renderer>().SetPropertyBlock(block);
-            cube.GetComponent<Cube>().light.color = color;
+            cube.GetComponent<Cube>().secondLight.color = color;
             cube.GetComponent<Cube>().lightHallo.color = color;
+
             SetModeVoid();
         }
     }

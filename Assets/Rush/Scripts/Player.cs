@@ -26,7 +26,7 @@ namespace Com.IsartDigital.Rush {
             RaycastToGround();
 
             if (Input.GetKeyDown(KeyCode.Space)) {
-                TimeManager.Instance.onOff();
+                GameManager.Instance.SwitchMode();
             }
 		}
 
@@ -49,7 +49,7 @@ namespace Com.IsartDigital.Rush {
 
         private void PutTileDown(Vector3 position) {
             if (inventory.Count == 0) {
-                return;
+                return; 
             }
 
             GameObject tile = Instantiate(inventory[inventoryIndex].Tiles);

@@ -357,7 +357,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   lightHallo: {fileID: 8807016483523850324}
-  light: {fileID: 4089255744772595713}
+  secondLight: {fileID: 4089255744772595713}
 --- !u!1 &7316157989717904961
 GameObject:
   m_ObjectHideFlags: 0
