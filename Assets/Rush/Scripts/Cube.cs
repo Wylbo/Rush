@@ -16,6 +16,7 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private AnimationCurve moveCurve;
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
+        [SerializeField] private LayerMask groundMask;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -81,8 +82,7 @@ namespace Com.IsartDigital.Rush {
             down = Vector3.down;
             forward = movementDirection;
 
-            if (Physics.Raycast(transform.position, down, out hit, raycastDistance)) {
-                GameObject hitObject = hit.collider.gameObject;
+            if (Physics.Raycast(transform.position, down, out hit, raycastDistance,groundMask)) {
 
                 if (Physics.Raycast(transform.position, forward, out hit, raycastDistance)) {
                     GameObject hitObjectInFront = hit.collider.gameObject;
@@ -222,15 +222,38 @@ namespace Com.IsartDigital.Rush {
 
         private void OnDestroy() {
             TimeManager.Instance.OnTick -= Tick;
-            
+
         }
 
         public static void DestroyAll() {
-            for (int i = list.Count -1; i >= 0; i--) {
+            for (int i = list.Count - 1; i >= 0; i--) {
                 Destroy(list[i].gameObject);
                 list.RemoveAt(i);
-                
+
             }
+        }
+
+        public static Action HitAnOtherCube;
+        private bool isGameOver = false;
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.CompareTag("Cube") && !isGameOver) {
+                SetModeGameOver();
+                other.GetComponent<Cube>().SetModeGameOver();
+                HitAnOtherCube();
+            }
+        }
+
+        private void SetModeGameOver() {
+            doAction = DoActionGameOver;
+            TimeManager.Instance.OnTick -= Tick;
+            isGameOver = true;
+
+
+        }
+
+        private void DoActionGameOver() {
+
         }
     }
 }

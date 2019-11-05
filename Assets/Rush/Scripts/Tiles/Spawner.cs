@@ -38,12 +38,8 @@ namespace Com.IsartDigital.Rush.Tiles {
         }
 
         public static void ResetAll() {
-            Debug.Log("<color=orange>" + list[0].nSpawned + "</color>");
-
             for (int i = 0; i < list.Count; i++) {
-                Debug.Log("<color=cyan>" + list[i].nSpawned + "</color>");
                 list[i].Reset();
-                
             }
         }
 

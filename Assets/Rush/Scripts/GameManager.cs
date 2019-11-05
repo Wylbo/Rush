@@ -16,8 +16,9 @@ namespace Com.IsartDigital.Rush {
         public static List<Cube> cubeList;
 
         private bool isInActionPhase = false;
+        private bool isLost = false;
 
-        public Action onPlay;
+        public Action onPausePlay;
 
         private void Awake() {
             if (instance) {
@@ -26,6 +27,8 @@ namespace Com.IsartDigital.Rush {
             }
 
             instance = this;
+
+            Cube.HitAnOtherCube += Loose;
         }
 
         private void Start() {
@@ -39,20 +42,30 @@ namespace Com.IsartDigital.Rush {
         public void SwitchMode() {
 
             isInActionPhase = !isInActionPhase;
-            Debug.Log(isInActionPhase);
+
 
             if (!isInActionPhase) {
                 Cube.DestroyAll();
                 Spawner.ResetAll();
-                Debug.Log("<size=18>merde</size>");
+                if (isLost) {
+                }
+            }
+            if (!isLost) {
+                onPausePlay();
             }
 
-            onPlay();
+            isLost = false;
+        }
 
+        public void Loose() {
+            Debug.Log("<color=red><size=21>GameOver</size></color>");
+            onPausePlay();
+            isLost = true;
         }
 
         private void OnDestroy() {
             if (this == instance) instance = null;
+            Cube.HitAnOtherCube -= Loose;
         }
     }
 }

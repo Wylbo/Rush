@@ -5328,6 +5328,26 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19890130231670042, guid: ad30342d870356b4bb44fa50588d271d,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19890130231670042, guid: ad30342d870356b4bb44fa50588d271d,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19890130750144164, guid: ad30342d870356b4bb44fa50588d271d,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19890130750144164, guid: ad30342d870356b4bb44fa50588d271d,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad30342d870356b4bb44fa50588d271d, type: 3}
 --- !u!4 &5298212619792583299 stripped
