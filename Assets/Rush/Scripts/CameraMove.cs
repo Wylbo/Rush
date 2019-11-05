@@ -7,7 +7,7 @@ using Com.IsartDigital.Common;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
-    public class Camera : MonoBehaviour {
+    public class CameraMove : MonoBehaviour {
         private static Camera instance;
 
 

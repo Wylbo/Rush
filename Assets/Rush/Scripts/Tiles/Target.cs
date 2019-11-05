@@ -9,17 +9,30 @@ namespace Com.IsartDigital.Rush.Tiles {
     public class Target : ATile {
 
         [SerializeField] Color color;
+        [SerializeField] MaterialPropertyBlock block;
+
+        protected override void Start() {
+            base.Start();
+            ChangeColor();
+        }
 
         private void OnValidate() {
-            for (int i = 0; i < transform.childCount; i++) {
-                //transform.GetChild(i).GetComponent<Renderer>().sharedMaterial.color = color; //SetColor("_Color", color);
+            ChangeColor();
+        }
 
+        private void ChangeColor() {
+            block = new MaterialPropertyBlock();
+            block.SetColor("_Color", color);
+            block.SetColor("_EmissionColor", color);
+
+            for (int i = 0; i < transform.childCount; i++) {
+                transform.GetChild(i).GetComponent<Renderer>().SetPropertyBlock(block);
             }
         }
 
         public override void SetCubeAction(Cube cube) {
-            if (cube.GetComponent<Renderer>().material.GetColor("_Color") == color) {
-               Destroy(cube.gameObject);
+            if (cube.GetComponent<Renderer>().material.color == color) {
+                Destroy(cube.gameObject);
             }
         }
     }

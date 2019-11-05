@@ -10,9 +10,9 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
-        [SerializeField] AnimationCurve moveCurve;
-        [SerializeField] Light lightHallo;
-        [SerializeField] Light light;
+        [SerializeField] private AnimationCurve moveCurve;
+        [SerializeField] public Light lightHallo;
+        [SerializeField] public Light light;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -63,8 +63,8 @@ namespace Com.IsartDigital.Rush {
             toRotation = transform.rotation;
 
 
-            lightHallo.color = GetComponent<Renderer>().material.color;
-            light.color = GetComponent<Renderer>().material.color;
+            //lightHallo.color = GetComponent<Renderer>().material.color;
+            //light.color = GetComponent<Renderer>().material.color;
 
 
 
