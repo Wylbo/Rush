@@ -223,13 +223,13 @@ namespace Com.IsartDigital.Rush {
 
         private void OnDestroy() {
             TimeManager.Instance.OnTick -= Tick;
+            list.Remove(this);
 
         }
 
         public static void DestroyAll() {
             for (int i = list.Count - 1; i >= 0; i--) {
                 Destroy(list[i].gameObject);
-                list.RemoveAt(i);
 
             }
         }

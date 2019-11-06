@@ -1,17 +1,19 @@
 ///-----------------------------------------------------------------
 /// Author : Maximilien Galea
-/// Date : 22/10/2019 17:19
+/// Date : 06/11/2019 15:03
 ///-----------------------------------------------------------------
 
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-	public class StopTile : DraggableTile {
-
-        public override void SetCubeAction(Cube cube) {
-            base.SetCubeAction(cube);
-
-            cube.SetModeWait(2);
-        }
-    }
+	public class DraggableTile : ATile {
+	
+		//private void Start () {
+			
+		//}
+		
+		//private void Update () {
+			
+		//}
+	}
 }
