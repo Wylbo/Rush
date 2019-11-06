@@ -11,14 +11,12 @@ namespace Com.IsartDigital.Rush {
 	public class Inventory : MonoBehaviour {
 
         [SerializeField] public List<ElementInventory> list;
-        
 
-		private void Start () {
-			
-		}
-		
-		private void Update () {
-			
-		}
-	}
+        private void Start() {
+            for (int i = list.Count - 1; i >= 0; i--) {
+                list[i].Init();
+            }
+        }
+
+    }
 }

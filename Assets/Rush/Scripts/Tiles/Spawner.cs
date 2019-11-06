@@ -3,11 +3,14 @@
 /// Date : 22/10/2019 12:15
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
+
+
     public class Spawner : MonoBehaviour {
         static private List<Spawner> list = new List<Spawner>();
 
@@ -15,7 +18,9 @@ namespace Com.IsartDigital.Rush.Tiles {
         [SerializeField, Range(1, 10)] private int tickBetweenSpawn;
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
-        [SerializeField] private Color color;
+        [SerializeField] private ColorChanger.EColor color;  
+
+        private ColorChanger colorChanger;
 
         private MaterialPropertyBlock block;
 
@@ -30,9 +35,8 @@ namespace Com.IsartDigital.Rush.Tiles {
 
 
         private void ChangeColor() {
-            block = new MaterialPropertyBlock();
-            block.SetColor("_Color", color);
-            block.SetColor("_EmissionColor", color);
+            colorChanger = GetComponent<ColorChanger>();
+            block = colorChanger.ChangeColor(color);
 
             transform.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
         }
@@ -61,6 +65,7 @@ namespace Com.IsartDigital.Rush.Tiles {
             TimeManager.Instance.OnTick += Tick;
 
             ChangeColor();
+
 
             doAction = doActionVoid;
 
@@ -99,10 +104,13 @@ namespace Com.IsartDigital.Rush.Tiles {
         private void doActionSpawn() {
             GameObject cube = Instantiate(cubePrefab, transform.position, transform.rotation);
 
+            Cube cubeScript = cube.GetComponent<Cube>();
+
             cube.GetComponent<Renderer>().SetPropertyBlock(block);
             cube.GetComponent<Renderer>().SetPropertyBlock(block);
-            cube.GetComponent<Cube>().secondLight.color = color;
-            cube.GetComponent<Cube>().lightHallo.color = color;
+            cubeScript.secondLight.color = block.GetColor("_Color");
+            cubeScript.lightHallo.color = block.GetColor("_Color");
+            cubeScript.colorIndex = (int)color;
 
             SetModeVoid();
         }

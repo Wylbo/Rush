@@ -4,39 +4,45 @@
 ///-----------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
 
-    public enum Orientation {
-        FORWARD,
-        BACKWARD,
-        RIGHT,
-        LEFT
+    public enum Orientation : int {
+        FORWARD = 0,
+        BACKWARD = 180,
+        RIGHT = 90,
+        LEFT = -90
     };
 
     [Serializable]
     public class ElementInventory {
-        [SerializeField] private GameObject tile;
-        [SerializeField] private Orientation direction;
-        public GameObject Tiles { get { return tile; } }
+        [SerializeField] private GameObject tilePrefab;
+        [SerializeField] private Orientation _direction;
+        [SerializeField] private int number;
 
+        public List<GameObject> Tiles { get; set; }
+
+        public int Number { get { return number; } }
+        public GameObject Tile { get { return tilePrefab; } }
         public Quaternion Direction {
-            get {
-                if (direction == Orientation.RIGHT) return Quaternion.AngleAxis(90, Vector3.up);
-                else if (direction == Orientation.LEFT) return Quaternion.AngleAxis(-90, Vector3.up);
-                else if (direction == Orientation.BACKWARD) return Quaternion.AngleAxis(180, Vector3.up);
-                else return Quaternion.identity;
+            get { return Quaternion.AngleAxis((int)_direction, Vector3.up); }
+        }
+
+        public void Init() {
+            Tiles = new List<GameObject>();
+            for (int i = 0; i < number; i++) {
+                Tiles.Add(tilePrefab);
             }
         }
 
-
-        private void Start() {
-
+        public bool CompareType(GameObject toCompare) {
+            return toCompare.tag == tilePrefab.tag;
         }
 
-        private void Update() {
-
+        public void AddOneToList() {
+            Tiles.Add(tilePrefab);
         }
     }
 }

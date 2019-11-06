@@ -6,7 +6,7 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-    public class ConveyorTile : ATile {
+    public class ConveyorTile : DraggableTile {
 
         public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);

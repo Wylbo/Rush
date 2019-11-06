@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4358187150086414}
   - component: {fileID: 65600886747357360}
   - component: {fileID: 2288385823626478667}
-  m_Layer: 2
+  - component: {fileID: 1163366787581752579}
+  m_Layer: 10
   m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +64,19 @@ MonoBehaviour:
   tickBetweenSpawn: 2
   nToSpawn: 1
   tickBeforeFirstSpawn: 0
-  color: {r: 0, g: 0, b: 1, a: 0}
+--- !u!114 &1163366787581752579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038689754661890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3054d58daa06759429fa38a1d927eb84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
 --- !u!1 &1451354327250352
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +88,7 @@ GameObject:
   - component: {fileID: 4997781578967948}
   - component: {fileID: 33384601887706480}
   - component: {fileID: 23577666094423652}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7568980082941858462}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +197,7 @@ GameObject:
   - component: {fileID: 3685259603422229344}
   - component: {fileID: 2405163729432382084}
   - component: {fileID: 2389947380917826572}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

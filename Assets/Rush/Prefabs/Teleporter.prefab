@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4421534965691716}
   - component: {fileID: 33077768466197230}
   - component: {fileID: 23659236855599622}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4883939388305742}
   - component: {fileID: 65479974298942724}
   - component: {fileID: 1080023026}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Teleporter
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 2130036556775664198}
   - component: {fileID: 5383423135220238231}
   - component: {fileID: 5924388102999632959}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: floor effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4907,7 +4907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1744598934197356189}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: tp particule system
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4943,7 +4943,7 @@ GameObject:
   - component: {fileID: 232028050370489424}
   - component: {fileID: 6836179553174565387}
   - component: {fileID: 4510834070249957568}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: floor effect (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9695,7 +9695,7 @@ GameObject:
   - component: {fileID: 3078575365346065808}
   - component: {fileID: 2199105465231916037}
   - component: {fileID: 1063646336211778560}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14451,7 +14451,7 @@ PrefabInstance:
     - target: {fileID: 5108083329979840105, guid: f71b647bd7978154da951d66186329cf,
         type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 911805350558768049, guid: f71b647bd7978154da951d66186329cf,
         type: 3}

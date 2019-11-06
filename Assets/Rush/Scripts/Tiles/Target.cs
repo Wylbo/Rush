@@ -3,13 +3,17 @@
 /// Date : 27/10/2019 15:47
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Common;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
     public class Target : ATile {
 
-        [SerializeField] Color color;
-        [SerializeField] MaterialPropertyBlock block;
+        [SerializeField] private ColorChanger.EColor color;
+
+        private MaterialPropertyBlock block;
+        private ColorChanger colorChanger;
+        private int colorIndex;
 
         protected override void Start() {
             base.Start();
@@ -21,17 +25,17 @@ namespace Com.IsartDigital.Rush.Tiles {
         }
 
         private void ChangeColor() {
-            block = new MaterialPropertyBlock();
-            block.SetColor("_Color", color);
-            block.SetColor("_EmissionColor", color);
+            colorChanger = GetComponent<ColorChanger>();
+            block = colorChanger.ChangeColor(color);
 
-            for (int i = 0; i < transform.childCount; i++) {
+            for (int i = transform.childCount - 1; i >= 0; i--) {
                 transform.GetChild(i).GetComponent<Renderer>().SetPropertyBlock(block);
             }
+            colorIndex = (int)color;
         }
 
         public override void SetCubeAction(Cube cube) {
-            if (cube.GetComponent<Renderer>().material.color == color) {
+            if (cube.colorIndex == colorIndex) {
                 Destroy(cube.gameObject);
             }
         }
