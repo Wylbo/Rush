@@ -12,8 +12,9 @@ namespace Com.IsartDigital.Rush {
     public class Player : MonoBehaviour {
 
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] private GameObject preview;
+        [SerializeField] private GameObject previewPrefab;
 
+        private GameObject preview;
         private int inventoryIndex = 0;
         public GameObject Levelinventory;
         private List<ElementInventory> inventory;
@@ -23,7 +24,7 @@ namespace Com.IsartDigital.Rush {
 
         private void Start() {
             inventory = Levelinventory.GetComponent<Inventory>().list;
-            Instantiate(preview);
+            preview = Instantiate(previewPrefab);
         }
 
 
@@ -35,7 +36,7 @@ namespace Com.IsartDigital.Rush {
                 inventoryIndex = Mathf.Clamp(inventoryIndex, 0, inventory.Count - 1);
 
                 //Destroy(ObjectInHand);
-                elementInHand = null;
+                //elementInHand = null;
                 Debug.Log(inventoryIndex);
             }
         }
@@ -52,12 +53,17 @@ namespace Com.IsartDigital.Rush {
         private void GetElementInHand() {
             if (elementInHand == null) {
                 elementInHand = inventory[inventoryIndex];
+                Debug.Log(elementInHand.Tile);
                 if (elementInHand.Tiles.Count > 0) {
-                    objectInHand = Instantiate(elementInHand.Tiles[0]);
-                    Debug.Log("Object in hand" + objectInHand);
-                    Debug.Log("Element 0 in hand" + elementInHand.Tiles[0]);
-                    objectInHand.transform.rotation = inventory[inventoryIndex].Direction;
-                    objectInHand.layer = 2; //ignore raycast
+
+                    preview.transform.rotation = elementInHand.Direction;
+
+                    for (int i = preview.transform.childCount - 1; i >= 0; i--) {
+                        if (elementInHand.CompareType(preview.transform.GetChild(i).gameObject)) {
+                            preview.transform.GetChild(i).gameObject.SetActive(true);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -74,6 +80,7 @@ namespace Com.IsartDigital.Rush {
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100, groundMask)) {
+
                 Transform ground = hit.collider.transform;
 
                 Ray rayAboveGround = new Ray(ground.position, Vector3.up);
@@ -84,35 +91,39 @@ namespace Com.IsartDigital.Rush {
                 OnClick(isFree, hitAbove);
 
                 GetElementInHand();
-                //if (ObjectInHand != null) {
-
-                Debug.Log("Transform" + objectInHand.transform);
-                    objectInHand.transform.position = ground.position + Vector3.up / 2;
+                ////if (ObjectInHand != null) {
+                //preview.transform.rotation = elementInHand.Direction;
+                preview.transform.position = ground.position + Vector3.up / 2;
                 //}
 
 
                 if (!isFree) {
-                    //ObjectInHand.SetActive(false);
+                    preview.SetActive(false);
                 } else {
-                    objectInHand.SetActive(true);
+                    preview.SetActive(true);
 
                 }
             } else {
-                //ObjectInHand.SetActive(false);
+                preview.SetActive(false);
             }
 
         }
 
+        private void ResetPreview() {
+            for (int i = preview.transform.childCount - 1; i >= 0; i--) {
+                preview.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
         private void PutTileDown() {
-            objectInHand.layer = 0;
             if (elementInHand.Tiles.Count > 0) {
+                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation);
                 elementInHand.Tiles.RemoveAt(0);
+
                 if (elementInHand.Tiles.Count == 0) {
                     inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
-                    //ObjectInHand = null;
-                }
-                Debug.Log(inventoryIndex);
-                elementInHand = null;
+
+                } 
             }
         }
 
@@ -120,11 +131,14 @@ namespace Com.IsartDigital.Rush {
             if (Input.GetMouseButtonUp(0)) {
                 Debug.Log(isFree);
                 if (isFree) {
-                    Debug.Log(objectInHand);
                     PutTileDown();
                 } else if (above.collider.GetComponent<DraggableTile>()) {
                     RemoveTile(above.collider.gameObject);
                 }
+                elementInHand = null;
+
+                ResetPreview();
+
             }
         }
 
@@ -132,6 +146,8 @@ namespace Com.IsartDigital.Rush {
             for (int i = 0; i < inventory.Count; i++) {
                 if (inventory[i].CompareType(above)) {
                     inventory[i].AddOneToList();
+                    inventoryIndex = i;
+                    Debug.Log(inventoryIndex);
                     Destroy(above);
                 }
             }
