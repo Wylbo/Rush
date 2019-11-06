@@ -5162,11 +5162,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8013748634333622930}
     m_Modifications:
-    - target: {fileID: 5988701292676990624, guid: ad30342d870356b4bb44fa50588d271d,
-        type: 3}
-      propertyPath: m_Name
-      value: Teleporter Pair
-      objectReference: {fileID: 0}
     - target: {fileID: 2885685115220812461, guid: ad30342d870356b4bb44fa50588d271d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5221,6 +5216,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988701292676990624, guid: ad30342d870356b4bb44fa50588d271d,
+        type: 3}
+      propertyPath: m_Name
+      value: Teleporter Pair
       objectReference: {fileID: 0}
     - target: {fileID: 2221183749140396113, guid: ad30342d870356b4bb44fa50588d271d,
         type: 3}

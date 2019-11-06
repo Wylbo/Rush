@@ -49,6 +49,7 @@ namespace Com.IsartDigital.Rush {
 
         private string groundTag = "Ground";
         private string tileTag = "Tile";
+        public int colorIndex;
 
         private Action doAction;
 
