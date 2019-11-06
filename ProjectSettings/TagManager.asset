@@ -8,12 +8,9 @@ TagManager:
   - Arrow
   - Tile
   - IsInHand
-  - Cube
-  - Cyan
-  - Orange
-  - Pink
-  - Purple
-  - Red
+  - Conveyor
+  - Stopper
+  - Turnstile
   layers:
   - Default
   - TransparentFX

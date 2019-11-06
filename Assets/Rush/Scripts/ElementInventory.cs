@@ -38,7 +38,6 @@ namespace Com.IsartDigital.Rush {
         }
 
         public bool CompareType(GameObject toCompare) {
-            Debug.Log(toCompare.tag == tilePrefab.tag);
             return toCompare.tag == tilePrefab.tag;
         }
 

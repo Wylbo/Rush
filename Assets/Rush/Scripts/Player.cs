@@ -12,16 +12,18 @@ namespace Com.IsartDigital.Rush {
     public class Player : MonoBehaviour {
 
         [SerializeField] private LayerMask groundMask;
+        [SerializeField] private GameObject preview;
 
         private int inventoryIndex = 0;
         public GameObject Levelinventory;
         private List<ElementInventory> inventory;
         private ElementInventory elementInHand;
-        private GameObject ObjectInHand;
+        private GameObject objectInHand;
 
 
         private void Start() {
             inventory = Levelinventory.GetComponent<Inventory>().list;
+            Instantiate(preview);
         }
 
 
@@ -32,7 +34,7 @@ namespace Com.IsartDigital.Rush {
                 inventoryIndex += (int)scroll;
                 inventoryIndex = Mathf.Clamp(inventoryIndex, 0, inventory.Count - 1);
 
-                Destroy(ObjectInHand);
+                //Destroy(ObjectInHand);
                 elementInHand = null;
                 Debug.Log(inventoryIndex);
             }
@@ -51,19 +53,22 @@ namespace Com.IsartDigital.Rush {
             if (elementInHand == null) {
                 elementInHand = inventory[inventoryIndex];
                 if (elementInHand.Tiles.Count > 0) {
-                    ObjectInHand = Instantiate(elementInHand.Tiles[0]);
-                    ObjectInHand.transform.rotation = inventory[inventoryIndex].Direction;
-                    ObjectInHand.layer = 2; //ignore raycast
+                    objectInHand = Instantiate(elementInHand.Tiles[0]);
+                    Debug.Log("Object in hand" + objectInHand);
+                    Debug.Log("Element 0 in hand" + elementInHand.Tiles[0]);
+                    objectInHand.transform.rotation = inventory[inventoryIndex].Direction;
+                    objectInHand.layer = 2; //ignore raycast
                 }
             }
         }
 
         private void RaycastToGround() {
-            //if (inventory.Count == 0) {
+
+
+            //if (elementInHand.Tiles.Count == 0) {
             //    return;
             //}
 
-            GetElementInHand();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -76,39 +81,48 @@ namespace Com.IsartDigital.Rush {
                 bool isFree = !Physics.Raycast(rayAboveGround, out hitAbove, 3);
 
 
-
-                ObjectInHand.transform.position = ground.position + Vector3.up / 2;
-
                 OnClick(isFree, hitAbove);
 
+                GetElementInHand();
+                //if (ObjectInHand != null) {
+
+                Debug.Log("Transform" + objectInHand.transform);
+                    objectInHand.transform.position = ground.position + Vector3.up / 2;
+                //}
+
+
                 if (!isFree) {
-                    ObjectInHand.SetActive(false);
+                    //ObjectInHand.SetActive(false);
                 } else {
-                    ObjectInHand.SetActive(true);
+                    objectInHand.SetActive(true);
 
                 }
             } else {
-                ObjectInHand.SetActive(false);
+                //ObjectInHand.SetActive(false);
             }
 
         }
 
         private void PutTileDown() {
-            ObjectInHand.layer = 0;
-            elementInHand.Tiles.RemoveAt(0);
-            if (elementInHand.Tiles.Count == 0) {
-                inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
-
+            objectInHand.layer = 0;
+            if (elementInHand.Tiles.Count > 0) {
+                elementInHand.Tiles.RemoveAt(0);
+                if (elementInHand.Tiles.Count == 0) {
+                    inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
+                    //ObjectInHand = null;
+                }
+                Debug.Log(inventoryIndex);
+                elementInHand = null;
             }
-            Debug.Log(inventoryIndex);
-            elementInHand = null;
         }
 
         private void OnClick(bool isFree, RaycastHit above) {
             if (Input.GetMouseButtonUp(0)) {
+                Debug.Log(isFree);
                 if (isFree) {
+                    Debug.Log(objectInHand);
                     PutTileDown();
-                } else if (above.collider.GetComponent<DraggableTile>() != null) {
+                } else if (above.collider.GetComponent<DraggableTile>()) {
                     RemoveTile(above.collider.gameObject);
                 }
             }
