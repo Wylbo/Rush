@@ -27,6 +27,7 @@ namespace Com.IsartDigital.Rush {
             }
 
             instance = this;
+            TimeManager.Instance.Init();
 
             Cube.HitAnOtherCube += Loose;
         }

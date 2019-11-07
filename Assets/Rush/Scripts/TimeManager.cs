@@ -29,9 +29,12 @@ namespace Com.IsartDigital.Rush {
                 return;
             }
 
-            GameManager.Instance.onPausePlay += onOff;
 
             instance = this;
+        }
+
+        public void Init() {
+            GameManager.Instance.onPausePlay += onOff;
         }
 
         private void onOff() {

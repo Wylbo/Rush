@@ -1875,6 +1875,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8541498372401300673, guid: 2e050e173b704c744b134a8c68790429,
         type: 3}
+    - target: {fileID: 8040153493836869738, guid: 829c57d068db7ed4eb8e6c99b885060c,
+        type: 3}
+      propertyPath: previewPrefab
+      value: 
+      objectReference: {fileID: 8541498372401300673, guid: 2e050e173b704c744b134a8c68790429,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 829c57d068db7ed4eb8e6c99b885060c, type: 3}
 --- !u!43 &812078668
@@ -4372,6 +4378,15 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1260995994}
+    - target: {fileID: 1640272701, guid: 68c5b7b3189e7d24eb7a5a47bf6af803, type: 3}
+      propertyPath: list.Array.data[0]._direction
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640272701, guid: 68c5b7b3189e7d24eb7a5a47bf6af803, type: 3}
+      propertyPath: list.Array.data[0].tilePrefab
+      value: 
+      objectReference: {fileID: 1107203473147756, guid: 7c58f80a63e8a7141b5b7377395135cc,
+        type: 3}
     - target: {fileID: 4109568022435276589, guid: 68c5b7b3189e7d24eb7a5a47bf6af803,
         type: 3}
       propertyPath: m_Mesh
