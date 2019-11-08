@@ -45,5 +45,10 @@ namespace Com.IsartDigital.Rush.Tiles {
         }
 
         public virtual void SetCubeAction(Cube cube) { }
-	}
+
+        private void OnDestroy() {
+            TimeManager.Instance.OnTick -= Tick;
+
+        }
+    }
 }

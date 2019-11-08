@@ -38,7 +38,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         public bool CompareType(GameObject toCompare) {
-            return toCompare.tag == tilePrefab.tag;
+            return toCompare.tag == tilePrefab.tag && toCompare.transform.rotation == Direction;
         }
 
         public void AddOneToList() {

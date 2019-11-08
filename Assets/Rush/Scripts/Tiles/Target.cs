@@ -10,6 +10,7 @@ namespace Com.IsartDigital.Rush.Tiles {
     public class Target : ATile {
 
         [SerializeField] private ColorChanger.EColor color;
+        [SerializeField] private Transform render;
 
         private MaterialPropertyBlock block;
         private ColorChanger colorChanger;
@@ -28,8 +29,8 @@ namespace Com.IsartDigital.Rush.Tiles {
             colorChanger = GetComponent<ColorChanger>();
             block = colorChanger.ChangeColor(color);
 
-            for (int i = transform.childCount - 1; i >= 0; i--) {
-                transform.GetChild(i).GetComponent<Renderer>().SetPropertyBlock(block);
+            for (int i = render.childCount - 1; i >= 0; i--) {
+                render.GetChild(i).GetComponent<Renderer>().SetPropertyBlock(block);
             }
             colorIndex = (int)color;
         }

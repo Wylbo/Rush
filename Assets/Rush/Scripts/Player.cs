@@ -85,7 +85,7 @@ namespace Com.IsartDigital.Rush {
 
                 Ray rayAboveGround = new Ray(ground.position, Vector3.up);
                 RaycastHit hitAbove;
-                bool isFree = !Physics.Raycast(rayAboveGround, out hitAbove, 3);
+                bool isFree = !Physics.Raycast(rayAboveGround, out hitAbove, 1);
 
 
                 OnClick(isFree, hitAbove);
@@ -132,7 +132,7 @@ namespace Com.IsartDigital.Rush {
                 Debug.Log(isFree);
                 if (isFree) {
                     PutTileDown();
-                } else if (above.collider.GetComponent<DraggableTile>()) {
+                } else if (above.collider.GetComponent<ADraggableTile>()) {
                     RemoveTile(above.collider.gameObject);
                 }
                 elementInHand = null;

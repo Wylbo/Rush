@@ -6,7 +6,7 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-	public class DraggableTile : ATile {
+	public abstract class ADraggableTile : ATile {
 	
 		//private void Start () {
 			

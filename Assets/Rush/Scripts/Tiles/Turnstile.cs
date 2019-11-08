@@ -6,7 +6,7 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-	public class Turnstile : DraggableTile {
+	public class Turnstile : ADraggableTile {
 
         private bool isRight = true;
         public override void SetCubeAction(Cube cube) {

@@ -29,7 +29,6 @@ namespace Com.IsartDigital.Rush {
                 return;
             }
 
-
             instance = this;
         }
 
@@ -67,7 +66,7 @@ namespace Com.IsartDigital.Rush {
 
         }
         private void OnDestroy() {
-
+            if (this == instance) instance = null;
         }
     }
 }

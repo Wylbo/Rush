@@ -28,22 +28,12 @@ namespace Com.IsartDigital.Rush {
 
             instance = this;
             TimeManager.Instance.Init();
-
+            
             Cube.HitAnOtherCube += Loose;
         }
 
-        private void Start() {
-
-        }
-
-        private void Update() {
-
-        }
-
         public void SwitchMode() {
-
             isInActionPhase = !isInActionPhase;
-
 
             if (!isInActionPhase) {
                 Cube.DestroyAll();

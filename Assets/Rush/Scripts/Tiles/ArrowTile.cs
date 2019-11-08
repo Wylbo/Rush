@@ -6,7 +6,7 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-    public class ArrowTile : DraggableTile {
+    public class ArrowTile : ADraggableTile {
         public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
             cube.SetDirection(transform.forward);   
