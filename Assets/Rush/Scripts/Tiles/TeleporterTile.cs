@@ -31,9 +31,6 @@ namespace Com.IsartDigital.Rush.Tiles {
             }
         }
 
-        protected override void Tick() {
-            base.Tick();
-        }
 
         public override void SetCubeAction(Cube cube) {
             cube.SetModeTeleport(target);

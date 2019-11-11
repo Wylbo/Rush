@@ -3,6 +3,7 @@
 /// Date : 21/10/2019 12:56
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
 using System;
 using System.Collections.Generic;

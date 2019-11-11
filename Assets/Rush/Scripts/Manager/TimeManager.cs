@@ -6,7 +6,7 @@
 using System;
 using UnityEngine;
 
-namespace Com.IsartDigital.Rush {
+namespace Com.IsartDigital.Rush.Manager {
     public class TimeManager : MonoBehaviour {
         private static TimeManager instance;
 

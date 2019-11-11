@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 using Com.IsartDigital.Common;
+using Com.IsartDigital.Rush.Manager;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

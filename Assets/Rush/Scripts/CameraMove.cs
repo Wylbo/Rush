@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
     public class CameraMove : MonoBehaviour {
-        private static Camera instance;
+        private static CameraMove instance;
 
 
         [SerializeField] private float speed;
@@ -21,13 +21,15 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private float MouseSensitivity;
         [SerializeField] private float OribitDampening;
         [SerializeField] private Transform cameraPivot;
-        
+
         private (float, float) angles;
 
         private float distance;
 
+        public Vector3 toPivot { get; private set; }
 
-        public static Camera Instance { get { return instance; } }
+
+        public static CameraMove Instance { get { return instance; } }
 
         private void Awake() {
             if (instance) {
@@ -43,6 +45,7 @@ namespace Com.IsartDigital.Rush {
 
         private void LateUpdate() {
             Move();
+            toPivot = cameraPivot.position - transform.position;
         }
 
         private void OnDestroy() {
@@ -54,7 +57,7 @@ namespace Com.IsartDigital.Rush {
             if (Input.GetAxis(mouseBtn) != 0) {
                 return (-Input.GetAxis(mouseHorizontalAxis), -Input.GetAxis(mouseVerticalAxis));
             }
-            return ( Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
+            return (Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
         }
 

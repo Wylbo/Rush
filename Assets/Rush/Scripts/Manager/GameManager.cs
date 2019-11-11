@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Com.IsartDigital.Rush {
+namespace Com.IsartDigital.Rush.Manager {
     public class GameManager : MonoBehaviour {
         private static GameManager instance;
         public static GameManager Instance { get { return instance; } }
@@ -27,9 +27,13 @@ namespace Com.IsartDigital.Rush {
             }
 
             instance = this;
-            TimeManager.Instance.Init();
             
             Cube.HitAnOtherCube += Loose;
+        }
+
+        private void Start() {
+            TimeManager.Instance.Init();
+            Hud.Hud.Instance.Init();
         }
 
         public void SwitchMode() {

@@ -3,6 +3,7 @@
 /// Date : 05/11/2019 11:33
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Com.IsartDigital.Rush {
         private void GetElementInHand() {
             if (elementInHand == null) {
                 elementInHand = inventory[inventoryIndex];
-                Debug.Log(elementInHand.Tile);
+
                 if (elementInHand.Tiles.Count > 0) {
 
                     preview.transform.rotation = elementInHand.Direction;
@@ -64,18 +65,13 @@ namespace Com.IsartDigital.Rush {
                             break;
                         }
                     }
+                } else {
+                    
                 }
             }
         }
 
         private void RaycastToGround() {
-
-
-            //if (elementInHand.Tiles.Count == 0) {
-            //    return;
-            //}
-
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -91,10 +87,7 @@ namespace Com.IsartDigital.Rush {
                 OnClick(isFree, hitAbove);
 
                 GetElementInHand();
-                ////if (ObjectInHand != null) {
-                //preview.transform.rotation = elementInHand.Direction;
                 preview.transform.position = ground.position + Vector3.up / 2;
-                //}
 
 
                 if (!isFree) {
@@ -115,18 +108,6 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
-        private void PutTileDown() {
-            if (elementInHand.Tiles.Count > 0) {
-                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation);
-                elementInHand.Tiles.RemoveAt(0);
-
-                if (elementInHand.Tiles.Count == 0) {
-                    inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
-
-                } 
-            }
-        }
-
         private void OnClick(bool isFree, RaycastHit above) {
             if (Input.GetMouseButtonUp(0)) {
                 Debug.Log(isFree);
@@ -139,6 +120,18 @@ namespace Com.IsartDigital.Rush {
 
                 ResetPreview();
 
+            }
+        }
+
+        private void PutTileDown() {
+            if (elementInHand.Tiles.Count > 0) {
+                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation);
+                elementInHand.Tiles.RemoveAt(0);
+
+                if (elementInHand.Tiles.Count == 0) {
+                    inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
+
+                }
             }
         }
 
