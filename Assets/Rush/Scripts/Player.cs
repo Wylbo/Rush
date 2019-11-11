@@ -110,7 +110,6 @@ namespace Com.IsartDigital.Rush {
 
         private void OnClick(bool isFree, RaycastHit above) {
             if (Input.GetMouseButtonUp(0)) {
-                Debug.Log(isFree);
                 if (isFree) {
                     PutTileDown();
                 } else if (above.collider.GetComponent<ADraggableTile>()) {
