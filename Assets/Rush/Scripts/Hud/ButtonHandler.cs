@@ -13,13 +13,16 @@ namespace Com.IsartDigital.Rush.Hud {
 
         private Button button;
 
+
+
 		private void Start () {
             button = GetComponent<Button>();
             button.onClick.AddListener(() => GetIndex());
+
 		}
 		
         public void GetIndex() {
-            Debug.Log(index);
+            Player.Instance.OnHudButtonClick(index);
         }
 	}
 }

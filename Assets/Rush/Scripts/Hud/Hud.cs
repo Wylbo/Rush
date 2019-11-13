@@ -20,11 +20,17 @@ namespace Com.IsartDigital.Rush.Hud {
 
         private List<GameObject> buttonList = new List<GameObject>();
 
+
+        public delegate int onButtonClick();
+        public onButtonClick onButtonClick_handler = new onButtonClick(InitEvent);
+
+        static private int InitEvent() {
+            return -1;
+        }
+
         private static Hud instance;
-
-        public event Action onClick;
-
         public static Hud Instance { get { return instance; } }
+            
         private void Awake() {
             if (instance) {
                 Destroy(gameObject);
@@ -35,6 +41,8 @@ namespace Com.IsartDigital.Rush.Hud {
         }
 
         public void Init() {
+            onButtonClick_handler -= InitEvent;
+
             levelInventory = level.GetComponent<Inventory>().list;
             GameObject uiTile;
             GameObject button;
@@ -43,17 +51,18 @@ namespace Com.IsartDigital.Rush.Hud {
                 button.transform.localScale = Vector3.one;
                 button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
                 button.GetComponent<ButtonHandler>().index = i;
-                button.GetComponent<Button>().SendMessage("returnIndex", i);
                 buttonList.Add(button);
+                //onButtonClick_handler += button.GetComponent<ButtonHandler>().GetIndex;
 
 
                 uiTile = Instantiate(levelInventory[i].UIPrefab, button.transform, false);
 
-                //uiTile.transform.localPosition = Vector3.zero;
                 uiTile.transform.localScale *= 100;
-                uiTile.transform.rotation = levelInventory[i].Direction;
+
                 //uiTile.transform.rotation = Camera.main.transform.rotation * uiTile.transform.rotation;
-                uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * uiTile.transform.rotation;
+                uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * levelInventory[i].Direction;
+                //uiTile.transform.rotation = Quaternion.AngleAxis(-90, uiTile.transform.up) * levelInventory[i].Direction;
+                //uiTile.transform.rotation = levelInventory[i].Direction * uiTile.transform.rotation;
             }
         }
 
@@ -69,7 +78,7 @@ namespace Com.IsartDigital.Rush.Hud {
             if (this == instance) instance = null;
         }
 
-        void returnIndex(int i) {
+        public void returnIndex(int i) {
             Debug.Log(i);
         }
     }

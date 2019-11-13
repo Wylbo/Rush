@@ -12,6 +12,8 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Player : MonoBehaviour {
 
+        static public Player Instance { get; private set; }
+
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private GameObject previewPrefab;
 
@@ -22,6 +24,15 @@ namespace Com.IsartDigital.Rush {
         private ElementInventory elementInHand;
         private GameObject objectInHand;
 
+
+        private void Awake() {
+            if (Instance) {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+        }
 
         private void Start() {
             inventory = Levelinventory.GetComponent<Inventory>().list;
@@ -49,6 +60,12 @@ namespace Com.IsartDigital.Rush {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 GameManager.Instance.SwitchMode();
             }
+        }
+
+        public void OnHudButtonClick(int index) {
+            inventoryIndex = index;
+            elementInHand = null;
+            ResetPreview();
         }
 
         private void GetElementInHand() {

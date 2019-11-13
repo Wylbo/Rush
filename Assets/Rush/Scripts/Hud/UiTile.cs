@@ -23,7 +23,7 @@ namespace Com.IsartDigital.Rush.Hud {
             toPivot = baseRotation  *  toPivot;
             Debug.DrawRay(transform.position, toPivot * 100, Color.red);
 
-            transform.rotation = Quaternion.LookRotation(toPivot,transform.up);
+            transform.rotation = Quaternion.LookRotation(toPivot, Vector3.forward);
         }
     }
 }
