@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4032429625451312}
   - component: {fileID: 33805657517034786}
   - component: {fileID: 23235612200930876}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,8 +88,8 @@ GameObject:
   - component: {fileID: 4858868011230972}
   - component: {fileID: 65362112007848178}
   - component: {fileID: 4084496340511427049}
-  m_Layer: 10
-  m_Name: Turnstile
+  m_Layer: 5
+  m_Name: UiTurnstile
   m_TagString: Turnstile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 5736072387112345946}
   - component: {fileID: 3179994625370151999}
   - component: {fileID: 7758756868232220829}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Arch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1737,7 +1737,7 @@ GameObject:
   - component: {fileID: 9166448543220994606}
   - component: {fileID: 3829584126879004300}
   - component: {fileID: 7052410762335209678}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Arch (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3318,7 +3318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8463558970976744195}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

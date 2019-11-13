@@ -235,14 +235,17 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
-        public static Action HitAnOtherCube;
+        public static Action LooseCondition;
         private bool isGameOver = false;
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Cube") && !isGameOver) {
                 SetModeGameOver();
                 other.GetComponent<Cube>().SetModeGameOver();
-                HitAnOtherCube();
+                LooseCondition();
+            } else if (other.CompareTag("KillZone")) {
+                SetModeGameOver();
+                LooseCondition();
             }
         }
 

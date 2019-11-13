@@ -28,7 +28,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
             instance = this;
             
-            Cube.HitAnOtherCube += Loose;
+            Cube.LooseCondition += Loose;
         }
 
         private void Start() {
@@ -60,7 +60,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         private void OnDestroy() {
             if (this == instance) instance = null;
-            Cube.HitAnOtherCube -= Loose;
+            Cube.LooseCondition -= Loose;
         }
     }
 }
