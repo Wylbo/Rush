@@ -17,6 +17,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         private bool isInActionPhase = false;
         private bool isLost = false;
+        private bool win = false;
 
         public Action onPausePlay;
 
@@ -31,6 +32,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Cube.LooseCondition += Loose;
         }
 
+        
+
         private void Start() {
             TimeManager.Instance.Init();
             Hud.Hud.Instance.Init();
@@ -40,8 +43,9 @@ namespace Com.IsartDigital.Rush.Manager {
             isInActionPhase = !isInActionPhase;
 
             if (!isInActionPhase) {
-                Cube.DestroyAll();
+                Turnstile.ResetAll();
                 Spawner.ResetAll();
+                Cube.DestroyAll();
                 if (isLost) {
                 }
             }
@@ -58,9 +62,24 @@ namespace Com.IsartDigital.Rush.Manager {
             isLost = true;
         }
 
+        private void Win() {
+            Debug.Log("<color=green><size=21>WIN</size></color>");
+            win = true;
+
+        }
         private void OnDestroy() {
             if (this == instance) instance = null;
             Cube.LooseCondition -= Loose;
+        }
+
+        private void Update() {
+            if (win || isLost) {
+                return;
+            }
+
+            if (Spawner.AllSpawnedAllCube() && Cube.list.Count == 0) {
+                Win();
+            }
         }
     }
 }

@@ -13,13 +13,13 @@ namespace Com.IsartDigital.Rush.Tiles {
 
 
     public class Spawner : MonoBehaviour {
-        static private List<Spawner> list = new List<Spawner>();
+        static public List<Spawner> list = new List<Spawner>();
 
         [SerializeField] private GameObject cubePrefab;
         [SerializeField, Range(1, 10)] private int tickBetweenSpawn;
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
-        [SerializeField] private ColorChanger.EColor color;  
+        [SerializeField] private ColorChanger.EColor color;
 
         private ColorChanger colorChanger;
 
@@ -29,6 +29,8 @@ namespace Com.IsartDigital.Rush.Tiles {
         private int nSpawned = 0;
 
         private Action doAction;
+
+        public bool hasSpawnAllCube { get; private set; } = false;
 
         private void OnValidate() {
             ChangeColor();
@@ -42,6 +44,16 @@ namespace Com.IsartDigital.Rush.Tiles {
             transform.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
         }
 
+        public static bool AllSpawnedAllCube() {
+            for (int i = list.Count - 1; i >= 0; i--) {
+                if (!list[i].hasSpawnAllCube) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public static void ResetAll() {
             for (int i = 0; i < list.Count; i++) {
                 list[i].Reset();
@@ -51,6 +63,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         private void Reset() {
             nSpawned = 0;
             elapsedTick = tickBeforeFirstSpawn;
+            hasSpawnAllCube = false;
 
             TimeManager.Instance.OnTick -= Tick;
             TimeManager.Instance.OnTick += Tick;
@@ -59,7 +72,6 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         private void Awake() {
             list.Add(this);
-            Debug.Log("<color=red>" + list.Count + "</color>");
         }
 
         private void Start() {
@@ -77,6 +89,8 @@ namespace Com.IsartDigital.Rush.Tiles {
         private void Tick() {
             if (nSpawned == nToSpawn) {
                 TimeManager.Instance.OnTick -= Tick;
+                hasSpawnAllCube = true;
+                Debug.Log(AllSpawnedAllCube());
             }
             if (elapsedTick == 0) {
                 SetModeSpawn();

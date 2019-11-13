@@ -49,7 +49,6 @@ namespace Com.IsartDigital.Rush {
 
                 //Destroy(ObjectInHand);
                 //elementInHand = null;
-                Debug.Log(inventoryIndex);
             }
         }
 

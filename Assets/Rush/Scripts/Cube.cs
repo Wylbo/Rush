@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
-        static private List<Cube> list = new List<Cube>();
+        static public List<Cube> list { get; private set; } = new List<Cube>();
 
         [SerializeField] private AnimationCurve moveCurve;
         [SerializeField] public Light lightHallo;
@@ -25,6 +25,9 @@ namespace Com.IsartDigital.Rush {
 
         private Quaternion toRotation;
 
+
+        public static Action LooseCondition;
+        private bool isGameOver = false;
 
         public Vector3 movementDirection { get; private set; }
         private Quaternion movementRotation;
@@ -235,8 +238,6 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
-        public static Action LooseCondition;
-        private bool isGameOver = false;
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Cube") && !isGameOver) {
@@ -260,5 +261,7 @@ namespace Com.IsartDigital.Rush {
         private void DoActionGameOver() {
 
         }
+
+
     }
 }
