@@ -11,6 +11,8 @@ TagManager:
   - Conveyor
   - Stopper
   - Turnstile
+  - Cube
+  - KillZone
   layers:
   - Default
   - TransparentFX
