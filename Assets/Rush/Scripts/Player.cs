@@ -35,10 +35,15 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Start() {
+            
+        }
+
+        public void Init(GameObject level) {
+            Levelinventory = level;
+            gameObject.SetActive(true);
             inventory = Levelinventory.GetComponent<Inventory>().list;
             preview = Instantiate(previewPrefab);
         }
-
 
         private void OnScroll() {
             float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -53,6 +58,10 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Update() {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                GameManager.Instance.SwitchMode();
+            }
+
             if (GameManager.Instance.isPause || GameManager.Instance.isInActionPhase) {
                 elementInHand = null;
                 return;
@@ -60,9 +69,7 @@ namespace Com.IsartDigital.Rush {
             OnScroll();
             RaycastToGround();
 
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                GameManager.Instance.SwitchMode();
-            }
+            
         }
 
         public void OnHudButtonClick(int index) {
@@ -148,7 +155,7 @@ namespace Com.IsartDigital.Rush {
                 elementInHand.Tiles.RemoveAt(0);
 
                 if (elementInHand.Tiles.Count == 0) {
-                    inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
+                    findNext();
 
                 }
             }
@@ -161,6 +168,14 @@ namespace Com.IsartDigital.Rush {
                     inventoryIndex = i;
                     Debug.Log(inventoryIndex);
                     Destroy(above);
+                }
+            }
+        }
+
+        private void findNext() {
+            for (int i = inventory.Count - 1; i >= 0; i--) {
+                if (inventory[i].Tiles.Count > 0) {
+                    inventoryIndex = i;
                 }
             }
         }

@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Com.IsartDigital.Rush.Hud {
+namespace Com.IsartDigital.Rush.Ui {
 	public class PlayPauseBtn : MonoBehaviour {
 
         [SerializeField] private Sprite spriteIsOff;

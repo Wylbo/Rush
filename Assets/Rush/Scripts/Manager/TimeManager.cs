@@ -36,8 +36,8 @@ namespace Com.IsartDigital.Rush.Manager {
             GameManager.Instance.onSwitchPhase += onOff;
         }
 
-        private void onOff() {
-            isTicking = !isTicking;
+        private void onOff(bool isOn) {
+            isTicking = isOn;
 
             if (isTicking) {
                 tickRate = speed;

@@ -5,7 +5,7 @@
 
 using UnityEngine;
 
-namespace Com.IsartDigital.Rush.Hud {
+namespace Com.IsartDigital.Rush.Ui {
 	public class UiTile : MonoBehaviour {
 
         private Quaternion baseRotation;

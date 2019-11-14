@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Com.IsartDigital.Rush.Hud {
+namespace Com.IsartDigital.Rush.Ui {
     public class Hud : MonoBehaviour {
 
         [SerializeField] private RectTransform tileButtonContainer;
@@ -48,7 +48,8 @@ namespace Com.IsartDigital.Rush.Hud {
             instance = this;
         }
 
-        public void Init() {
+        public void Init(GameObject levelToLoad) {
+            level = levelToLoad;
             onButtonClick_handler -= InitEvent;
 
             levelInventory = level.GetComponent<Inventory>().list;
@@ -85,6 +86,8 @@ namespace Com.IsartDigital.Rush.Hud {
         private void PlayPauseToggle_OnValueChanged(bool isOn) {
             PlayPause(isOn);
             switchPhaseToggle.enabled = isOn;
+            switchPhaseToggle.gameObject.SetActive(isOn);
+            tileButtonContainer.gameObject.SetActive(isOn);
         }
 
 

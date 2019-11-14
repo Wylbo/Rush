@@ -6,7 +6,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Com.IsartDigital.Rush.Hud {
+namespace Com.IsartDigital.Rush.Ui {
 	public class ButtonHandler : MonoBehaviour {
 
         public int index;

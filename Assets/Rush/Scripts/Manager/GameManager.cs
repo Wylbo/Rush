@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 using Com.IsartDigital.Rush.Tiles;
+using Com.IsartDigital.Rush.Ui;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public bool isPause { get; private set; } = false;
 
-        public Action onSwitchPhase;
+        public event Action<bool> onSwitchPhase;
 
         public delegate void PlayPauseEventHandler(bool isOn);
         public event PlayPauseEventHandler GameIsPaused;
@@ -37,14 +38,12 @@ namespace Com.IsartDigital.Rush.Manager {
             Cube.LooseCondition += Loose;
         }
 
-        
 
-        private void Start() {
+        public void Init() {
             TimeManager.Instance.Init();
-            Hud.Hud.Instance.Init();
 
-            Hud.Hud.Instance.PlayPause += PlayPauseGame;
-            Hud.Hud.Instance.SwitchPhase += SwitchMode;
+            Hud.Instance.PlayPause += PlayPauseGame;
+            Hud.Instance.SwitchPhase += SwitchMode;
         }
 
         private void PlayPauseGame(bool isOn) {
@@ -68,7 +67,7 @@ namespace Com.IsartDigital.Rush.Manager {
                 }
             }
             if (!isLost) {
-                onSwitchPhase();
+                onSwitchPhase(isInActionPhase);
             }
 
             isLost = false;
@@ -76,7 +75,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
-            onSwitchPhase();
+            onSwitchPhase(isInActionPhase);
             isLost = true;
         }
 
