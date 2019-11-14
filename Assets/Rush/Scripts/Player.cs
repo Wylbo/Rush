@@ -53,6 +53,10 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Update() {
+            if (GameManager.Instance.isPause || GameManager.Instance.isInActionPhase) {
+                elementInHand = null;
+                return;
+            }
             OnScroll();
             RaycastToGround();
 

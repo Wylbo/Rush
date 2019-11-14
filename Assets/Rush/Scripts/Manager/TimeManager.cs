@@ -33,7 +33,7 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         public void Init() {
-            GameManager.Instance.onPausePlay += onOff;
+            GameManager.Instance.onSwitchPhase += onOff;
         }
 
         private void onOff() {

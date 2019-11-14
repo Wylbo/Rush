@@ -15,11 +15,16 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public static List<Cube> cubeList;
 
-        private bool isInActionPhase = false;
+        public bool isInActionPhase { get; private set; } = false;
         private bool isLost = false;
         private bool win = false;
 
-        public Action onPausePlay;
+        public bool isPause { get; private set; } = false;
+
+        public Action onSwitchPhase;
+
+        public delegate void PlayPauseEventHandler(bool isOn);
+        public event PlayPauseEventHandler GameIsPaused;
 
         private void Awake() {
             if (instance) {
@@ -37,9 +42,22 @@ namespace Com.IsartDigital.Rush.Manager {
         private void Start() {
             TimeManager.Instance.Init();
             Hud.Hud.Instance.Init();
+
+            Hud.Hud.Instance.PlayPause += PlayPauseGame;
+            Hud.Hud.Instance.SwitchPhase += SwitchMode;
+        }
+
+        private void PlayPauseGame(bool isOn) {
+            Time.timeScale = isOn ? 1 : 0;
+
+            isPause = !isOn;
         }
 
         public void SwitchMode() {
+            if (isPause) {
+                return;
+            }
+
             isInActionPhase = !isInActionPhase;
 
             if (!isInActionPhase) {
@@ -50,7 +68,7 @@ namespace Com.IsartDigital.Rush.Manager {
                 }
             }
             if (!isLost) {
-                onPausePlay();
+                onSwitchPhase();
             }
 
             isLost = false;
@@ -58,7 +76,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
-            onPausePlay();
+            onSwitchPhase();
             isLost = true;
         }
 

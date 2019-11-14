@@ -15,6 +15,8 @@ namespace Com.IsartDigital.Rush.Hud {
         [SerializeField] private RectTransform tileButtonContainer;
         [SerializeField] private GameObject level;
         [SerializeField] private GameObject uiButton;
+        [SerializeField] private Toggle playPauseToggle;
+        [SerializeField] private Toggle switchPhaseToggle;
 
         private List<ElementInventory> levelInventory;
 
@@ -23,6 +25,12 @@ namespace Com.IsartDigital.Rush.Hud {
 
         public delegate int onButtonClick();
         public onButtonClick onButtonClick_handler = new onButtonClick(InitEvent);
+
+        public delegate void PlayPauseEventHandler(bool isOn);
+        public event PlayPauseEventHandler PlayPause;
+
+        public delegate void SwitchPhaseEventHandler();
+        public event SwitchPhaseEventHandler SwitchPhase;
 
         static private int InitEvent() {
             return -1;
@@ -63,16 +71,22 @@ namespace Com.IsartDigital.Rush.Hud {
                 uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * levelInventory[i].Direction;
                 //uiTile.transform.rotation = Quaternion.AngleAxis(-90, uiTile.transform.up) * levelInventory[i].Direction;
                 //uiTile.transform.rotation = levelInventory[i].Direction * uiTile.transform.rotation;
+
+                playPauseToggle.GetComponent<PlayPauseBtn>().OnClick += PlayPauseToggle_OnValueChanged;
+                switchPhaseToggle.GetComponent<SwitchPhaseBtn>().OnClick += SwitchPhaseToggle_OnValueChanged;
+
             }
         }
 
-        private void Start() {
-
+        private void SwitchPhaseToggle_OnValueChanged() {
+            SwitchPhase();
         }
 
-        private void Update() {
-
+        private void PlayPauseToggle_OnValueChanged(bool isOn) {
+            PlayPause(isOn);
+            switchPhaseToggle.enabled = isOn;
         }
+
 
         private void OnDestroy() {
             if (this == instance) instance = null;
