@@ -73,6 +73,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Hud.Instance.Reset();
         }
 
+        
+
         private void PlayPauseGame(bool isOn) {
             Time.timeScale = isOn ? 1 : 0;
 
@@ -102,7 +104,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
-            onSwitchPhase(isInActionPhase);
+            onSwitchPhase(!isInActionPhase);
             isLost = true;
         }
 

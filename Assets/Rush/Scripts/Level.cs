@@ -8,13 +8,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
-	public class Inventory : MonoBehaviour {
+	public class Level : MonoBehaviour {
 
         [SerializeField] public List<ElementInventory> list;
 
-        private void Start() {
-            //list.Clear();
 
+        public void Init() {
             for (int i = list.Count - 1; i >= 0; i--) {
                 list[i].Init();
             }

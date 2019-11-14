@@ -16,6 +16,7 @@ namespace Com.IsartDigital.Rush {
 
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private GameObject previewPrefab;
+        [SerializeField] private Transform tileContainer;
 
         private GameObject preview;
         private int inventoryIndex = 0;
@@ -43,7 +44,7 @@ namespace Com.IsartDigital.Rush {
         public void Init(GameObject level) {
             Levelinventory = level;
             gameObject.SetActive(true);
-            inventory = Levelinventory.GetComponent<Inventory>().list;
+            inventory = Levelinventory.GetComponent<Level>().list;
             preview = Instantiate(previewPrefab);
             isInit = true;
         }
@@ -158,7 +159,7 @@ namespace Com.IsartDigital.Rush {
 
         private void PutTileDown() {
             if (elementInHand.Tiles.Count > 0) {
-                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, Levelinventory.transform);
+                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, tileContainer);
                 elementInHand.Tiles.RemoveAt(0);
 
                 if (elementInHand.Tiles.Count == 0) {

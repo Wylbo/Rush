@@ -58,7 +58,7 @@ namespace Com.IsartDigital.Rush.Ui {
             level = levelToLoad;
             onButtonClick_handler -= InitEvent;
 
-            levelInventory = level.GetComponent<Inventory>().list;
+            levelInventory = level.GetComponent<Level>().list;
             GameObject uiTile;
             GameObject button;
             for (int i = levelInventory.Count - 1; i >= 0; i--) {

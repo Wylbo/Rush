@@ -31136,7 +31136,7 @@ PrefabInstance:
     - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
       propertyPath: levels.Array.size
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}

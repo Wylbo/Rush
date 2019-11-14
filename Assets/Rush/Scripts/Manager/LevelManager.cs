@@ -9,11 +9,14 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush.Manager {
 	public class LevelManager : MonoBehaviour {
 
-        [SerializeField] List<GameObject> levels = new List<GameObject>();
+        [SerializeField] List<GameObject> levelsPrefabsList = new List<GameObject>();
         [SerializeField] GameObject levelSelector;
+        [SerializeField] Transform tileContainer;
+
+        private GameObject level;
 
 
-		private static LevelManager instance;
+        private static LevelManager instance;
 		public static LevelManager Instance { get { return instance; } }
 		
 		private void Awake(){
@@ -31,8 +34,10 @@ namespace Com.IsartDigital.Rush.Manager {
 
 
         public void LoadLevel(int index) {
-            GameObject level = levels[index];
+            level = Instantiate(levelsPrefabsList[index]);
+            level.transform.position = Vector3.zero;
 
+            level.GetComponent<Level>().Init();
             level.SetActive(true);
             HudManager.Instance.Init(level);
             GameManager.Instance.Init();
@@ -40,13 +45,19 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         public void UnloadLevels() {
-            for (int i = levels.Count - 1; i >= 0; i--) {
-                levels[i].SetActive(false);
+            Destroy(level);
+
+            RemoveAllTile();
+        }
+
+
+        private void RemoveAllTile() {
+            for (int i = tileContainer.childCount - 1; i >= 0; i--) {
+                Destroy(tileContainer.GetChild(i).gameObject);
             }
         }
 
-		
-		private void OnDestroy(){
+        private void OnDestroy(){
 			if (this == instance) instance = null;
 		}
 	}
