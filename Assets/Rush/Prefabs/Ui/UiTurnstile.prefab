@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4858868011230972}
   - component: {fileID: 65362112007848178}
-  - component: {fileID: 4084496340511427049}
+  - component: {fileID: -1944263785781205743}
   m_Layer: 5
   m_Name: UiTurnstile
   m_TagString: Turnstile
@@ -124,7 +124,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.05, z: 1}
   m_Center: {x: 0, y: 0.025, z: 0}
---- !u!114 &4084496340511427049
+--- !u!114 &-1944263785781205743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,12 +133,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1324669775067448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e955809b87931e74d90f211be0078016, type: 3}
+  m_Script: {fileID: 11500000, guid: 903542e2f3d5e454ca794a0ca8018aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeMask:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!1 &287069422286279863
 GameObject:
   m_ObjectHideFlags: 0

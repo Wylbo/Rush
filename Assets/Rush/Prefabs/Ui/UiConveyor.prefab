@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4885800248076192}
   - component: {fileID: 65360627517417286}
-  - component: {fileID: 3590361509609828053}
+  - component: {fileID: -6695875992395726040}
   m_Layer: 5
   m_Name: UiConveyor
   m_TagString: Conveyor
@@ -47,7 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.05, z: 1}
   m_Center: {x: 0, y: 0.025, z: 0}
---- !u!114 &3590361509609828053
+--- !u!114 &-6695875992395726040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
