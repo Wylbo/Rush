@@ -13,6 +13,8 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] public List<ElementInventory> list;
 
         private void Start() {
+            //list.Clear();
+
             for (int i = list.Count - 1; i >= 0; i--) {
                 list[i].Init();
             }

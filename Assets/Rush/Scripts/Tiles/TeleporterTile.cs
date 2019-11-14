@@ -22,12 +22,12 @@ namespace Com.IsartDigital.Rush.Tiles {
 
             for (int i = 0; i < particules.Count; i++) {
                 ParticleSystem.MainModule main = particules[i].main;
-                main.startColor = color;
+                main.startColor = new ParticleSystem.MinMaxGradient(color);
             }
 
             for (int j = 0; j < targetScript.particules.Count; j++) {
                 ParticleSystem.MainModule main = targetScript.particules[j].main;
-                main.startColor = color;
+                main.startColor = new ParticleSystem.MinMaxGradient(color);
             }
         }
 

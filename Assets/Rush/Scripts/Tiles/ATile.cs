@@ -14,7 +14,6 @@ namespace Com.IsartDigital.Rush.Tiles {
         protected Vector3 raycastOffset = new Vector3(0, 0.5f, 0);
         protected virtual void Start() {
             TimeManager.Instance.OnTick += Tick;
-            Debug.Log("test");
         }
 
         protected virtual void Tick() {

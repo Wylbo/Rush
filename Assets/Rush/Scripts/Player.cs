@@ -24,6 +24,8 @@ namespace Com.IsartDigital.Rush {
         private ElementInventory elementInHand;
         private GameObject objectInHand;
 
+        private bool isInit = false;
+
 
         private void Awake() {
             if (Instance) {
@@ -43,21 +45,26 @@ namespace Com.IsartDigital.Rush {
             gameObject.SetActive(true);
             inventory = Levelinventory.GetComponent<Inventory>().list;
             preview = Instantiate(previewPrefab);
+            isInit = true;
         }
 
-        private void OnScroll() {
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            if (scroll != 0) {
+        //private void OnScroll() {
+        //    float scroll = Input.GetAxis("Mouse ScrollWheel");
+        //    if (scroll != 0) {
 
-                inventoryIndex += (int)scroll;
-                inventoryIndex = Mathf.Clamp(inventoryIndex, 0, inventory.Count - 1);
+        //        inventoryIndex += (int)scroll;
+        //        inventoryIndex = Mathf.Clamp(inventoryIndex, 0, inventory.Count - 1);
 
-                //Destroy(ObjectInHand);
-                //elementInHand = null;
-            }
-        }
+        //        //Destroy(ObjectInHand);
+        //        //elementInHand = null;
+        //    }
+        //}
 
         private void Update() {
+            if (!isInit) {
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Space)) {
                 GameManager.Instance.SwitchMode();
             }
@@ -66,7 +73,7 @@ namespace Com.IsartDigital.Rush {
                 elementInHand = null;
                 return;
             }
-            OnScroll();
+
             RaycastToGround();
 
             
@@ -151,7 +158,7 @@ namespace Com.IsartDigital.Rush {
 
         private void PutTileDown() {
             if (elementInHand.Tiles.Count > 0) {
-                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation);
+                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, Levelinventory.transform);
                 elementInHand.Tiles.RemoveAt(0);
 
                 if (elementInHand.Tiles.Count == 0) {
@@ -166,7 +173,6 @@ namespace Com.IsartDigital.Rush {
                 if (inventory[i].CompareType(above)) {
                     inventory[i].AddOneToList();
                     inventoryIndex = i;
-                    Debug.Log(inventoryIndex);
                     Destroy(above);
                 }
             }

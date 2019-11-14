@@ -30,6 +30,7 @@ namespace Com.IsartDigital.Rush.Manager {
             }
 
             instance = this;
+
         }
 
         public void Init() {
@@ -48,11 +49,9 @@ namespace Com.IsartDigital.Rush.Manager {
 
         private void Update() {
             Tick();
-
         }
 
         private void Tick() {
-
             if (elapsedTime > durationBetweenTicks) {
                 Debug.Log("<color=green><size=21>Tick</size></color>");
                 OnTick?.Invoke();

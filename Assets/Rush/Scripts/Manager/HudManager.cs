@@ -25,10 +25,18 @@ namespace Com.IsartDigital.Rush.Manager {
 		}
 
         public void Init(GameObject level) {
-            hud.SetActive(true);
+            AddScreen(hud);
             hud.GetComponent<Hud>().Init(level);
         }
-		
+
+        public void AddScreen(GameObject screen) {
+            screen.SetActive(true);
+        }
+
+        public void RemoveScreen(GameObject screen) {
+            screen.SetActive(false);
+        }
+
 		private void Start () {
 			
 		}

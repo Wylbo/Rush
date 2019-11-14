@@ -10,14 +10,14 @@ using UnityEngine.UI;
 namespace Com.IsartDigital.Rush.Ui.LevelSelector {
 	public class LevelButton : MonoBehaviour {
 
-        [SerializeField] private GameObject level;
+        [SerializeField] private int levelToLoad;
         private Button button;
 
-        public event Action<GameObject> OnButtonClick;
+        public event Action<int> OnButtonClick;
         
 		private void Start () {
             button = GetComponent<Button>();
-            button.onClick.AddListener(() => OnButtonClick(level));
+            button.onClick.AddListener(() => OnButtonClick(levelToLoad));
         }
 		
         private void _LoadLevel() {

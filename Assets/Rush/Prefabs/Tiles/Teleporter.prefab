@@ -9700,6 +9700,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 911805350558768049, guid: f71b647bd7978154da951d66186329cf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9754,26 +9774,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6875500020955923024, guid: f71b647bd7978154da951d66186329cf,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.a
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f71b647bd7978154da951d66186329cf, type: 3}

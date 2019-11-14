@@ -12,6 +12,8 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush.Manager {
     public class GameManager : MonoBehaviour {
         private static GameManager instance;
+        [SerializeField] GameObject winScreen;
+        [SerializeField] GameObject levelSelector;
         public static GameManager Instance { get { return instance; } }
 
         public static List<Cube> cubeList;
@@ -27,6 +29,8 @@ namespace Com.IsartDigital.Rush.Manager {
         public delegate void PlayPauseEventHandler(bool isOn);
         public event PlayPauseEventHandler GameIsPaused;
 
+        private bool isInit = false;
+
         private void Awake() {
             if (instance) {
                 Destroy(gameObject);
@@ -38,12 +42,35 @@ namespace Com.IsartDigital.Rush.Manager {
             Cube.LooseCondition += Loose;
         }
 
+        private void Start() {
+            HudManager.Instance.AddScreen(levelSelector);
+
+        }
+
 
         public void Init() {
             TimeManager.Instance.Init();
 
             Hud.Instance.PlayPause += PlayPauseGame;
             Hud.Instance.SwitchPhase += SwitchMode;
+            isInit = true;
+        }
+
+        private void UnInit() {
+            win = isLost = isInit = false;
+
+            Hud.Instance.PlayPause -= PlayPauseGame;
+            Hud.Instance.SwitchPhase -= SwitchMode;
+
+
+        }
+
+        public void OnBackToLevelSelector() {
+            UnInit();
+            if (isInActionPhase) {
+                SwitchMode();
+            }
+            Hud.Instance.Reset();
         }
 
         private void PlayPauseGame(bool isOn) {
@@ -81,6 +108,8 @@ namespace Com.IsartDigital.Rush.Manager {
 
         private void Win() {
             Debug.Log("<color=green><size=21>WIN</size></color>");
+            HudManager.Instance.AddScreen(winScreen);
+            HudManager.Instance.RemoveScreen(Hud.Instance.gameObject);
             win = true;
 
         }
@@ -90,7 +119,7 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         private void Update() {
-            if (win || isLost) {
+            if (win || isLost || !isInit) {
                 return;
             }
 

@@ -90,7 +90,6 @@ namespace Com.IsartDigital.Rush.Tiles {
             if (nSpawned == nToSpawn) {
                 TimeManager.Instance.OnTick -= Tick;
                 hasSpawnAllCube = true;
-                Debug.Log(AllSpawnedAllCube());
             }
             if (elapsedTick == 0) {
                 SetModeSpawn();

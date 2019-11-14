@@ -48,6 +48,12 @@ namespace Com.IsartDigital.Rush.Ui {
             instance = this;
         }
 
+        public void Reset() {
+            for (int i = buttonList.Count - 1; i >= 0; i--) {
+                Destroy(buttonList[i]);
+            }
+        }
+
         public void Init(GameObject levelToLoad) {
             level = levelToLoad;
             onButtonClick_handler -= InitEvent;
