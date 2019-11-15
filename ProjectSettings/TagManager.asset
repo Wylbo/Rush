@@ -7,6 +7,12 @@ TagManager:
   - Ground
   - Arrow
   - Tile
+  - IsInHand
+  - Conveyor
+  - Stopper
+  - Turnstile
+  - Cube
+  - KillZone
   layers:
   - Default
   - TransparentFX
@@ -17,8 +23,8 @@ TagManager:
   - 
   - 
   - Cube
-  - 
-  - 
+  - Ground
+  - Tile
   - 
   - 
   - 

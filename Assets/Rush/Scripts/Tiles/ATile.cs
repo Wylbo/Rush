@@ -3,6 +3,7 @@
 /// Date : 21/10/2019 15:25
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
@@ -13,16 +14,11 @@ namespace Com.IsartDigital.Rush.Tiles {
         protected Vector3 raycastOffset = new Vector3(0, 0.5f, 0);
         protected virtual void Start() {
             TimeManager.Instance.OnTick += Tick;
-            //TimeManager.Instance.OnStartTick += Tick;
         }
 
         protected virtual void Tick() {
             CubeAbove();
         }
-
-  //      protected virtual void Update () {
-  //          CubeAbove();
-		//}
 
         protected virtual void CubeAbove() {
             Ray ray = new Ray(transform.position - raycastOffset, Vector3.up);
@@ -37,7 +33,6 @@ namespace Com.IsartDigital.Rush.Tiles {
                 if (!cube.isWaiting) {
                     SetCubeAction(cube);
 
-                    Debug.Log("action");
                 }
 
             }
@@ -45,5 +40,9 @@ namespace Com.IsartDigital.Rush.Tiles {
         }
 
         public virtual void SetCubeAction(Cube cube) { }
-	}
+
+        private void OnDestroy() {
+            TimeManager.Instance.OnTick -= Tick;
+        }
+    }
 }

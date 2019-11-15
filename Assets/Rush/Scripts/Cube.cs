@@ -3,12 +3,21 @@
 /// Date : 21/10/2019 12:56
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
+
+        static public List<Cube> list { get; private set; } = new List<Cube>();
+
+        [SerializeField] private AnimationCurve moveCurve;
+        [SerializeField] public Light lightHallo;
+        [SerializeField] public Light secondLight;
+        [SerializeField] private LayerMask groundMask;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -16,7 +25,9 @@ namespace Com.IsartDigital.Rush {
 
         private Quaternion toRotation;
 
-        public int nTickToWait { get; set; }
+
+        public static Action LooseCondition;
+        private bool isGameOver = false;
 
         public Vector3 movementDirection { get; private set; }
         private Quaternion movementRotation;
@@ -33,17 +44,22 @@ namespace Com.IsartDigital.Rush {
         private Vector3 forward;
 
 
-        public bool isWaiting {get; private set; }
+        public int nTickToWait { get; set; }
+        public bool isWaiting { get; private set; }
         public bool isConvoyed { get; private set; }
         private int tickCounter = 0;
+        private Transform tpTarget;
+
 
         private string groundTag = "Ground";
         private string tileTag = "Tile";
+        public int colorIndex;
 
         private Action doAction;
 
         private void Start() {
             TimeManager.Instance.OnTick += Tick;
+            list.Add(this);
 
             raycastDistance = cubeSide / 2 + raycastOffsetDistance;
 
@@ -56,15 +72,22 @@ namespace Com.IsartDigital.Rush {
             toPosition = transform.position;
             toRotation = transform.rotation;
 
+
+            //lightHallo.color = GetComponent<Renderer>().material.color;
+            //light.color = GetComponent<Renderer>().material.color;
+
+
+
             SetModeVoid();
+
+
         }
 
         private void CheckCollision() {
             down = Vector3.down;
             forward = movementDirection;
 
-            if (Physics.Raycast(transform.position, down, out hit, raycastDistance)) {
-                GameObject hitObject = hit.collider.gameObject;
+            if (Physics.Raycast(transform.position, down, out hit, raycastDistance,groundMask)) {
 
                 if (Physics.Raycast(transform.position, forward, out hit, raycastDistance)) {
                     GameObject hitObjectInFront = hit.collider.gameObject;
@@ -124,9 +147,9 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void DoActionMove() {
-            transform.position = Vector3.Lerp(fromPosition, toPosition, TimeManager.Instance.Ratio)
-                + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(TimeManager.Instance.Ratio));
-            transform.rotation = Quaternion.Lerp(fromRotation, toRotation, TimeManager.Instance.Ratio);
+            transform.position = Vector3.Lerp(fromPosition, toPosition, moveCurve.Evaluate(TimeManager.Instance.Ratio))
+                + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(moveCurve.Evaluate(TimeManager.Instance.Ratio)));
+            transform.rotation = Quaternion.Lerp(fromRotation, toRotation, moveCurve.Evaluate(TimeManager.Instance.Ratio));
         }
 
         private void InitNextFall() {
@@ -185,11 +208,10 @@ namespace Com.IsartDigital.Rush {
 
         }
 
-        Transform tpTarget;
         public void SetModeTeleport(Transform target) {
             isWaiting = true;
             doAction = DoActionTeleport;
-            tpTarget = target;  
+            tpTarget = target;
         }
 
         private void DoActionTeleport() {
@@ -205,6 +227,41 @@ namespace Com.IsartDigital.Rush {
 
         private void OnDestroy() {
             TimeManager.Instance.OnTick -= Tick;
+            list.Remove(this);
+
         }
+
+        public static void DestroyAll() {
+            for (int i = list.Count - 1; i >= 0; i--) {
+                Destroy(list[i].gameObject);
+
+            }
+        }
+
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.CompareTag("Cube") && !isGameOver) {
+                SetModeGameOver();
+                other.GetComponent<Cube>().SetModeGameOver();
+                LooseCondition();
+            } else if (other.CompareTag("KillZone")) {
+                SetModeGameOver();
+                LooseCondition();
+            }
+        }
+
+        private void SetModeGameOver() {
+            doAction = DoActionGameOver;
+            TimeManager.Instance.OnTick -= Tick;
+            isGameOver = true;
+
+
+        }
+
+        private void DoActionGameOver() {
+
+        }
+
+
     }
 }

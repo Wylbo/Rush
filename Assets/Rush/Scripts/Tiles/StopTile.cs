@@ -6,7 +6,7 @@
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush.Tiles {
-	public class StopTile : ATile {
+	public class StopTile : ADraggableTile {
 
         public override void SetCubeAction(Cube cube) {
             base.SetCubeAction(cube);
