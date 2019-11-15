@@ -3,6 +3,7 @@
 /// Date : 21/10/2019 12:56
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Cube : MonoBehaviour {
 
-        static private List<Cube> list = new List<Cube>();
+        static public List<Cube> list { get; private set; } = new List<Cube>();
 
         [SerializeField] private AnimationCurve moveCurve;
         [SerializeField] public Light lightHallo;
@@ -24,6 +25,9 @@ namespace Com.IsartDigital.Rush {
 
         private Quaternion toRotation;
 
+
+        public static Action LooseCondition;
+        private bool isGameOver = false;
 
         public Vector3 movementDirection { get; private set; }
         private Quaternion movementRotation;
@@ -234,14 +238,15 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
-        public static Action HitAnOtherCube;
-        private bool isGameOver = false;
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Cube") && !isGameOver) {
                 SetModeGameOver();
                 other.GetComponent<Cube>().SetModeGameOver();
-                HitAnOtherCube();
+                LooseCondition();
+            } else if (other.CompareTag("KillZone")) {
+                SetModeGameOver();
+                LooseCondition();
             }
         }
 
@@ -256,5 +261,7 @@ namespace Com.IsartDigital.Rush {
         private void DoActionGameOver() {
 
         }
+
+
     }
 }

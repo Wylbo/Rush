@@ -17,23 +17,20 @@ namespace Com.IsartDigital.Rush.Tiles {
             if (target == null) {
                 return;
             }
-            var targetScript = target.GetComponent<TeleporterTile>();
+            TeleporterTile targetScript = target.GetComponent<TeleporterTile>();
             targetScript.color = color;
 
             for (int i = 0; i < particules.Count; i++) {
-                var main = particules[i].main;
-                main.startColor = color;
+                ParticleSystem.MainModule main = particules[i].main;
+                main.startColor = new ParticleSystem.MinMaxGradient(color);
             }
 
             for (int j = 0; j < targetScript.particules.Count; j++) {
-                var main = targetScript.particules[j].main;
-                main.startColor = color;
+                ParticleSystem.MainModule main = targetScript.particules[j].main;
+                main.startColor = new ParticleSystem.MinMaxGradient(color);
             }
         }
 
-        protected override void Tick() {
-            base.Tick();
-        }
 
         public override void SetCubeAction(Cube cube) {
             cube.SetModeTeleport(target);

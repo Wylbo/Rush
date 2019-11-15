@@ -6,7 +6,7 @@
 using System;
 using UnityEngine;
 
-namespace Com.IsartDigital.Rush {
+namespace Com.IsartDigital.Rush.Manager {
     public class TimeManager : MonoBehaviour {
         private static TimeManager instance;
 
@@ -30,14 +30,34 @@ namespace Com.IsartDigital.Rush {
             }
 
             instance = this;
+
         }
 
         public void Init() {
-            GameManager.Instance.onPausePlay += onOff;
+            //GameManager.Instance.onSwitchPhase += onOff;
+            GameManager.Instance.OnActionPhase += Activate;
+            GameManager.Instance.OnReflexionPhase += Desactivate;
         }
 
-        private void onOff() {
-            isTicking = !isTicking;
+        public void UnInit() {
+            //GameManager.Instance.onSwitchPhase -= onOff;
+            if (isTicking) {
+                onOff(true);
+            }
+        }
+
+        private void Activate() {
+            isTicking = true;
+            tickRate = speed;
+        }
+
+        private void Desactivate() {
+            isTicking = false;
+            tickRate = 0;
+        }
+
+        private void onOff(bool isOn) {
+            isTicking = isOn;
 
             if (isTicking) {
                 tickRate = speed;
@@ -48,11 +68,9 @@ namespace Com.IsartDigital.Rush {
 
         private void Update() {
             Tick();
-
         }
 
         private void Tick() {
-
             if (elapsedTime > durationBetweenTicks) {
                 Debug.Log("<color=green><size=21>Tick</size></color>");
                 OnTick?.Invoke();

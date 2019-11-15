@@ -3,6 +3,7 @@
 /// Date : 05/11/2019 11:33
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
 using System;
 using System.Collections.Generic;
@@ -11,49 +12,83 @@ using UnityEngine;
 namespace Com.IsartDigital.Rush {
     public class Player : MonoBehaviour {
 
+        static public Player Instance { get; private set; }
+
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private GameObject previewPrefab;
+        [SerializeField] private Transform tileContainer;
 
         private GameObject preview;
         private int inventoryIndex = 0;
-        public GameObject Levelinventory;
+        public GameObject level;
         private List<ElementInventory> inventory;
         private ElementInventory elementInHand;
         private GameObject objectInHand;
 
+        private bool isInit = false;
+
+
+        private void Awake() {
+            if (Instance) {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+        }
 
         private void Start() {
-            inventory = Levelinventory.GetComponent<Inventory>().list;
-            preview = Instantiate(previewPrefab);
+            
         }
 
-
-        private void OnScroll() {
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            if (scroll != 0) {
-
-                inventoryIndex += (int)scroll;
-                inventoryIndex = Mathf.Clamp(inventoryIndex, 0, inventory.Count - 1);
-
-                //Destroy(ObjectInHand);
-                //elementInHand = null;
-                Debug.Log(inventoryIndex);
-            }
+        public void Init(GameObject level) {
+            this.level = level;
+            inventory = this.level.GetComponent<Level>().list;
+            preview = Instantiate(previewPrefab,level.transform);
+            isInit = true;
         }
+
+        public void UnIinit() {
+            isInit = false;
+            preview = null;
+            level = null;
+            inventory = null;
+        }
+
 
         private void Update() {
-            OnScroll();
-            RaycastToGround();
+            if (!isInit) {
+                return;
+            }
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 GameManager.Instance.SwitchMode();
             }
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                GameManager.Instance.PlayPauseGame(GameManager.Instance.isPause);
+            }
+
+            if (GameManager.Instance.isPause || GameManager.Instance.isInActionPhase) {
+                elementInHand = null;
+                preview.SetActive(false);
+                return;
+            }
+
+            RaycastToGround();
+
+            
+        }
+
+        public void OnHudButtonClick(int index) {
+            inventoryIndex = index;
+            elementInHand = null;
+            ResetPreview();
         }
 
         private void GetElementInHand() {
             if (elementInHand == null) {
                 elementInHand = inventory[inventoryIndex];
-                Debug.Log(elementInHand.Tile);
+
                 if (elementInHand.Tiles.Count > 0) {
 
                     preview.transform.rotation = elementInHand.Direction;
@@ -64,18 +99,13 @@ namespace Com.IsartDigital.Rush {
                             break;
                         }
                     }
+                } else {
+                    
                 }
             }
         }
 
         private void RaycastToGround() {
-
-
-            //if (elementInHand.Tiles.Count == 0) {
-            //    return;
-            //}
-
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -91,10 +121,7 @@ namespace Com.IsartDigital.Rush {
                 OnClick(isFree, hitAbove);
 
                 GetElementInHand();
-                ////if (ObjectInHand != null) {
-                //preview.transform.rotation = elementInHand.Direction;
                 preview.transform.position = ground.position + Vector3.up / 2;
-                //}
 
 
                 if (!isFree) {
@@ -115,21 +142,8 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
-        private void PutTileDown() {
-            if (elementInHand.Tiles.Count > 0) {
-                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation);
-                elementInHand.Tiles.RemoveAt(0);
-
-                if (elementInHand.Tiles.Count == 0) {
-                    inventoryIndex = inventoryIndex >= inventory.Count - 1 ? inventory.Count - 1 : inventoryIndex + 1;
-
-                } 
-            }
-        }
-
         private void OnClick(bool isFree, RaycastHit above) {
             if (Input.GetMouseButtonUp(0)) {
-                Debug.Log(isFree);
                 if (isFree) {
                     PutTileDown();
                 } else if (above.collider.GetComponent<ADraggableTile>()) {
@@ -142,13 +156,32 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
+        private void PutTileDown() {
+            if (elementInHand.Tiles.Count > 0) {
+                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, level.transform);
+                elementInHand.Tiles.RemoveAt(0);
+
+                if (elementInHand.Tiles.Count == 0) {
+                    findNext();
+
+                }
+            }
+        }
+
         private void RemoveTile(GameObject above) {
             for (int i = 0; i < inventory.Count; i++) {
                 if (inventory[i].CompareType(above)) {
                     inventory[i].AddOneToList();
                     inventoryIndex = i;
-                    Debug.Log(inventoryIndex);
                     Destroy(above);
+                }
+            }
+        }
+
+        private void findNext() {
+            for (int i = inventory.Count - 1; i >= 0; i--) {
+                if (inventory[i].Tiles.Count > 0) {
+                    inventoryIndex = i;
                 }
             }
         }
