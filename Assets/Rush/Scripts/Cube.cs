@@ -25,7 +25,6 @@ namespace Com.IsartDigital.Rush {
 
         private Quaternion toRotation;
 
-
         public static Action LooseCondition;
         private bool isGameOver = false;
 

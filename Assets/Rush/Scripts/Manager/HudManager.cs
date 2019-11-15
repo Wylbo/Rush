@@ -4,25 +4,26 @@
 ///-----------------------------------------------------------------
 
 using Com.IsartDigital.Rush.Ui;
+using System.Collections.Generic;
 using UnityEngine;
 
 
 
 namespace Com.IsartDigital.Rush.Manager {
-	public class HudManager : MonoBehaviour {
-		private static HudManager instance;
-		public static HudManager Instance { get { return instance; } }
+    public class HudManager : MonoBehaviour {
+        private static HudManager instance;
+        public static HudManager Instance { get { return instance; } }
 
         [SerializeField] GameObject hud;
 
-		private void Awake(){
-			if (instance){
-				Destroy(gameObject);
-				return;
-			}
-			
-			instance = this;
-		}
+        private void Awake() {
+            if (instance) {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+        }
 
         public void Init(GameObject level) {
             AddScreen(hud);
@@ -37,16 +38,10 @@ namespace Com.IsartDigital.Rush.Manager {
             screen.SetActive(false);
         }
 
-		private void Start () {
-			
-		}
-		
-		private void Update () {
-			
-		}
-		
-		private void OnDestroy(){
-			if (this == instance) instance = null;
-		}
-	}
+
+
+        private void OnDestroy() {
+            if (this == instance) instance = null;
+        }
+    }
 }
