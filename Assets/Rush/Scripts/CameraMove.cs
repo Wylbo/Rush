@@ -18,7 +18,7 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private string mouseHorizontalAxis;
         [SerializeField] private string mouseVerticalAxis;
 
-        [SerializeField] private float MouseSensitivity;
+        [SerializeField] private float mouseSensitivity;
         [SerializeField] private float OribitDampening;
         [SerializeField] private Transform cameraPivot;
 
@@ -55,7 +55,7 @@ namespace Com.IsartDigital.Rush {
 
         private (float, float) GetAxis() {
             if (Input.GetAxis(mouseBtn) != 0) {
-                return (-Input.GetAxis(mouseHorizontalAxis), -Input.GetAxis(mouseVerticalAxis));
+                return (-Input.GetAxis(mouseHorizontalAxis) * mouseSensitivity, -Input.GetAxis(mouseVerticalAxis) * mouseSensitivity);
             }
             return (Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 

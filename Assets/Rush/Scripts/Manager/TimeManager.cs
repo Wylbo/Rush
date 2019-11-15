@@ -34,7 +34,26 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         public void Init() {
-            GameManager.Instance.onSwitchPhase += onOff;
+            //GameManager.Instance.onSwitchPhase += onOff;
+            GameManager.Instance.OnActionPhase += Activate;
+            GameManager.Instance.OnReflexionPhase += Desactivate;
+        }
+
+        public void UnInit() {
+            //GameManager.Instance.onSwitchPhase -= onOff;
+            if (isTicking) {
+                onOff(true);
+            }
+        }
+
+        private void Activate() {
+            isTicking = true;
+            tickRate = speed;
+        }
+
+        private void Desactivate() {
+            isTicking = false;
+            tickRate = 0;
         }
 
         private void onOff(bool isOn) {

@@ -20,7 +20,7 @@ namespace Com.IsartDigital.Rush {
 
         private GameObject preview;
         private int inventoryIndex = 0;
-        public GameObject Levelinventory;
+        public GameObject level;
         private List<ElementInventory> inventory;
         private ElementInventory elementInHand;
         private GameObject objectInHand;
@@ -42,24 +42,19 @@ namespace Com.IsartDigital.Rush {
         }
 
         public void Init(GameObject level) {
-            Levelinventory = level;
-            gameObject.SetActive(true);
-            inventory = Levelinventory.GetComponent<Level>().list;
-            preview = Instantiate(previewPrefab);
+            this.level = level;
+            inventory = this.level.GetComponent<Level>().list;
+            preview = Instantiate(previewPrefab,level.transform);
             isInit = true;
         }
 
-        //private void OnScroll() {
-        //    float scroll = Input.GetAxis("Mouse ScrollWheel");
-        //    if (scroll != 0) {
+        public void UnIinit() {
+            isInit = false;
+            preview = null;
+            level = null;
+            inventory = null;
+        }
 
-        //        inventoryIndex += (int)scroll;
-        //        inventoryIndex = Mathf.Clamp(inventoryIndex, 0, inventory.Count - 1);
-
-        //        //Destroy(ObjectInHand);
-        //        //elementInHand = null;
-        //    }
-        //}
 
         private void Update() {
             if (!isInit) {
@@ -69,9 +64,13 @@ namespace Com.IsartDigital.Rush {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 GameManager.Instance.SwitchMode();
             }
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                GameManager.Instance.PlayPauseGame(GameManager.Instance.isPause);
+            }
 
             if (GameManager.Instance.isPause || GameManager.Instance.isInActionPhase) {
                 elementInHand = null;
+                preview.SetActive(false);
                 return;
             }
 
@@ -159,7 +158,7 @@ namespace Com.IsartDigital.Rush {
 
         private void PutTileDown() {
             if (elementInHand.Tiles.Count > 0) {
-                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, tileContainer);
+                Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, level.transform);
                 elementInHand.Tiles.RemoveAt(0);
 
                 if (elementInHand.Tiles.Count == 0) {

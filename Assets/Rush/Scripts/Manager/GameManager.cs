@@ -26,6 +26,9 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public event Action<bool> onSwitchPhase;
 
+        public event Action OnActionPhase;
+        public event Action OnReflexionPhase;
+
         public delegate void PlayPauseEventHandler(bool isOn);
         public event PlayPauseEventHandler GameIsPaused;
 
@@ -54,14 +57,17 @@ namespace Com.IsartDigital.Rush.Manager {
             Hud.Instance.PlayPause += PlayPauseGame;
             Hud.Instance.SwitchPhase += SwitchMode;
             isInit = true;
+            PlayPauseGame(true);
         }
 
         private void UnInit() {
-            win = isLost = isInit = false;
+            win = isLost = isInit = isPause = false;
 
+            TimeManager.Instance.UnInit();
             Hud.Instance.PlayPause -= PlayPauseGame;
             Hud.Instance.SwitchPhase -= SwitchMode;
 
+            Player.Instance.UnIinit();
 
         }
 
@@ -71,40 +77,49 @@ namespace Com.IsartDigital.Rush.Manager {
                 SwitchMode();
             }
             Hud.Instance.Reset();
+            Cube.DestroyAll();
         }
 
         
 
-        private void PlayPauseGame(bool isOn) {
+        public void PlayPauseGame(bool isOn) {
             Time.timeScale = isOn ? 1 : 0;
-
             isPause = !isOn;
+
+            GameIsPaused?.Invoke(isPause);
         }
 
         public void SwitchMode() {
             if (isPause) {
                 return;
             }
-
+            
             isInActionPhase = !isInActionPhase;
 
             if (!isInActionPhase) {
-                Turnstile.ResetAll();
-                Spawner.ResetAll();
-                Cube.DestroyAll();
-                if (isLost) {
-                }
-            }
-            if (!isLost) {
-                onSwitchPhase(isInActionPhase);
+                SwitchToReflexionPhase();
+            } else {
+                SwitchToActionPhase();
             }
 
             isLost = false;
         }
 
+        private void SwitchToReflexionPhase() {
+            Turnstile.ResetAll();
+            Spawner.ResetAll();
+            Cube.DestroyAll();
+
+            OnReflexionPhase();
+        }
+
+        private void SwitchToActionPhase() {
+            OnActionPhase();
+        }
+
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
-            onSwitchPhase(!isInActionPhase);
+            OnReflexionPhase();
             isLost = true;
         }
 
@@ -112,6 +127,7 @@ namespace Com.IsartDigital.Rush.Manager {
             Debug.Log("<color=green><size=21>WIN</size></color>");
             HudManager.Instance.AddScreen(winScreen);
             HudManager.Instance.RemoveScreen(Hud.Instance.gameObject);
+            PlayPauseGame(true);
             win = true;
 
         }

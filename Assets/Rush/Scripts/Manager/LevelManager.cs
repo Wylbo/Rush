@@ -47,15 +47,8 @@ namespace Com.IsartDigital.Rush.Manager {
         public void UnloadLevels() {
             Destroy(level);
 
-            RemoveAllTile();
         }
 
-
-        private void RemoveAllTile() {
-            for (int i = tileContainer.childCount - 1; i >= 0; i--) {
-                Destroy(tileContainer.GetChild(i).gameObject);
-            }
-        }
 
         private void OnDestroy(){
 			if (this == instance) instance = null;

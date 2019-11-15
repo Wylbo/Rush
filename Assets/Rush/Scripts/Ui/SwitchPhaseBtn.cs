@@ -9,33 +9,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Com.IsartDigital.Rush.Ui {
-	public class SwitchPhaseBtn : MonoBehaviour {
-
-        [SerializeField] private Sprite spriteIsOff;
-        private Sprite spriteIsOn;
-        private Image image;
-        private Toggle toggle;
+	public class SwitchPhaseBtn : ToggleBtn {
 
         public delegate void SwitchPhaseEventHandler();
         public event SwitchPhaseEventHandler OnClick;
 
-		private void Start () {
-            toggle = GetComponent<Toggle>();
-            image = toggle.image;
-            spriteIsOn = image.sprite;
-            toggle.onValueChanged.AddListener(toggle_onValueChanged);
+		override protected void Start () {
+            base.Start();
             GameManager.Instance.onSwitchPhase += changeSprite;
         }
 
-        private void changeSprite(bool isOn) {
-            image.sprite = !isOn ? spriteIsOn : spriteIsOff;
-        }
 
-        private void toggle_onValueChanged(bool isOn) {
-            changeSprite(isOn);
+        override protected void toggle_onValueChanged(bool isOn) {
+            base.toggle_onValueChanged(isOn);
             OnClick();
-            toggle.gameObject.SetActive(false);
-            toggle.gameObject.SetActive(true);
         }
 
 
