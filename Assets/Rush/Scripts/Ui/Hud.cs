@@ -55,12 +55,15 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         public void Init(GameObject levelToLoad) {
+            buttonList.Clear();
+
             level = levelToLoad;
             onButtonClick_handler -= InitEvent;
 
             Player.Instance.OnElementPlaced += UpdateHud;
 
             levelInventory = level.GetComponent<Level>().list;
+
             GameObject uiTile;
             GameObject button;
             for (int i = 0; i < levelInventory.Count; i++) {
@@ -105,6 +108,8 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private void OnDestroy() {
             if (this == instance) instance = null;
+            Player.Instance.OnElementPlaced -= UpdateHud;
+
         }
 
         public void returnIndex(int i) {

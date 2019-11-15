@@ -117,11 +117,11 @@ namespace Com.IsartDigital.Rush {
                 RaycastHit hitAbove;
                 bool isFree = !Physics.Raycast(rayAboveGround, out hitAbove, 1);
 
+                GetElementInHand();
+
+                preview.transform.position = ground.position + Vector3.up / 2;
 
                 OnClick(isFree, hitAbove);
-
-                GetElementInHand();
-                preview.transform.position = ground.position + Vector3.up / 2;
 
 
                 if (!isFree) {
