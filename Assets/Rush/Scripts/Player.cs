@@ -38,13 +38,13 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Start() {
-            
+
         }
 
         public void Init(GameObject level) {
             this.level = level;
             inventory = this.level.GetComponent<Level>().list;
-            preview = Instantiate(previewPrefab,level.transform);
+            preview = Instantiate(previewPrefab, level.transform);
             isInit = true;
         }
 
@@ -76,7 +76,7 @@ namespace Com.IsartDigital.Rush {
 
             RaycastToGround();
 
-            
+
         }
 
         public void OnHudButtonClick(int index) {
@@ -100,7 +100,7 @@ namespace Com.IsartDigital.Rush {
                         }
                     }
                 } else {
-                    
+
                 }
             }
         }
@@ -156,10 +156,13 @@ namespace Com.IsartDigital.Rush {
             }
         }
 
+        public event Action<int, int> OnElementPlaced;
+
         private void PutTileDown() {
             if (elementInHand.Tiles.Count > 0) {
                 Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, level.transform);
                 elementInHand.Tiles.RemoveAt(0);
+                OnElementPlaced?.Invoke(elementInHand.Tiles.Count, inventoryIndex);
 
                 if (elementInHand.Tiles.Count == 0) {
                     findNext();
@@ -173,6 +176,7 @@ namespace Com.IsartDigital.Rush {
                 if (inventory[i].CompareType(above)) {
                     inventory[i].AddOneToList();
                     inventoryIndex = i;
+                    OnElementPlaced?.Invoke(inventory[inventoryIndex].Tiles.Count, inventoryIndex);
                     Destroy(above);
                 }
             }

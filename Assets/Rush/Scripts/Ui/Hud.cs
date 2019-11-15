@@ -38,7 +38,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private static Hud instance;
         public static Hud Instance { get { return instance; } }
-            
+
         private void Awake() {
             if (instance) {
                 Destroy(gameObject);
@@ -58,10 +58,12 @@ namespace Com.IsartDigital.Rush.Ui {
             level = levelToLoad;
             onButtonClick_handler -= InitEvent;
 
+            Player.Instance.OnElementPlaced += UpdateHud;
+
             levelInventory = level.GetComponent<Level>().list;
             GameObject uiTile;
             GameObject button;
-            for (int i = levelInventory.Count - 1; i >= 0; i--) {
+            for (int i = 0; i < levelInventory.Count; i++) {
                 button = Instantiate(uiButton, tileButtonContainer, false);
                 button.transform.localScale = Vector3.one;
                 button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
@@ -83,6 +85,10 @@ namespace Com.IsartDigital.Rush.Ui {
                 switchPhaseToggle.GetComponent<SwitchPhaseBtn>().OnClick += SwitchPhaseToggle_OnValueChanged;
 
             }
+        }
+
+        private void UpdateHud(int ntile, int index) {
+            buttonList[index].GetComponentInChildren<Text>().text = ntile.ToString();
         }
 
         private void SwitchPhaseToggle_OnValueChanged() {

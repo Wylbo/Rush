@@ -37,13 +37,7 @@ namespace Com.IsartDigital.Rush.Manager {
             screen.SetActive(false);
         }
 
-		private void Start () {
-			
-		}
-		
-		private void Update () {
-			
-		}
+        
 		
 		private void OnDestroy(){
 			if (this == instance) instance = null;
