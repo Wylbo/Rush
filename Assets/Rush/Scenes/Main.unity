@@ -151,18 +151,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &422773752 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 422773752, guid: b5af561231d28c24ba8ce8f23e798283,
-    type: 3}
-  m_PrefabInstance: {fileID: 4240557820635815278}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &505650726
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +192,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1
+  far clip plane: 3
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -1349,16 +1337,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 505650728}
-    - target: {fileID: 1998263074161525423, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_IsOn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2871004497001251949, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: back
-      value: 
-      objectReference: {fileID: 422773752}
     - target: {fileID: 422773751, guid: b5af561231d28c24ba8ce8f23e798283, type: 3}
       propertyPath: levelSelector
       value: 

@@ -30,14 +30,5 @@ namespace Com.IsartDigital.Rush.Ui {
             CameraMove.Instance.OnMove -= UpdateRotation;
         }
 
-        //private void Update() {
-        //    CameraMove cam = Camera.main.GetComponent<CameraMove>();
-        //    Vector3 toPivot = cam.toPivot;
-        //    toPivot = Vector3.ProjectOnPlane(toPivot, Vector3.up);
-
-        //    float angle = Vector3.SignedAngle(toPivot, Vector3.forward,Vector3.up);
-        //    Quaternion finalRotation =  Quaternion.AngleAxis(-45, Vector3.right) * Quaternion.AngleAxis(angle,Vector3.up) * baseRotation ;
-        //    transform.rotation = finalRotation;
-        //}
     }
 }

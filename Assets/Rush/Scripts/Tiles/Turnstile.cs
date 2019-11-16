@@ -12,9 +12,16 @@ namespace Com.IsartDigital.Rush.Tiles {
         static private List<Turnstile> list { get; set; } = new List<Turnstile>();
 
         private bool isRight = true;
+        private float rotationAngle;
 
         private void Awake() {
             list.Add(this);
+        }
+
+        private void Update() {
+            rotationAngle = isRight ? 90 : -90;
+
+            transform.rotation = Quaternion.AngleAxis(rotationAngle * Time.deltaTime, transform.up) * transform.rotation;
         }
 
         public override void SetCubeAction(Cube cube) {
