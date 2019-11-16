@@ -8,8 +8,8 @@ using System;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
-    public class CameraMove : MonoBehaviour {
-        private static CameraMove instance;
+    public class CameraController : MonoBehaviour {
+        private static CameraController instance;
 
 
         [SerializeField] private float speed;
@@ -21,18 +21,16 @@ namespace Com.IsartDigital.Rush {
 
         [SerializeField] private float mouseSensitivity;
         [SerializeField] private float OribitDampening;
-        [SerializeField] private Transform cameraPivot;
+        [SerializeField] public Transform cameraPivot;
 
-        private (float hori, float vert) angles;
+        public (float hori, float vert) angles;
 
-        private float distance;
+        public float distance;
 
         public Vector3 toPivot { get; private set; }
 
-        public event Action<CameraMove> OnMove;
-
-
-        public static CameraMove Instance { get { return instance; } }
+        public event Action<CameraController> OnMove;
+        public static CameraController Instance { get { return instance; } }
 
         private void Awake() {
             if (instance) {
@@ -48,28 +46,41 @@ namespace Com.IsartDigital.Rush {
 
         }
 
-        private void Update() {
-            Move();
-            toPivot = cameraPivot.position - transform.position;
-        }
-
         private void OnDestroy() {
             if (this == instance) instance = null;
+
+            OnMove = null;
         }
+
+
 
         private (float hori, float vert) GetAxis() {
             (float hori, float vert) axis = (0, 0);
 
+#if UNITY_WEBGL || UNITY_EDITOR
             if (Input.GetAxis(mouseBtn) != 0) {
                 axis = (-Input.GetAxis(mouseHorizontalAxis) * mouseSensitivity, -Input.GetAxis(mouseVerticalAxis) * mouseSensitivity);
             } else {
                 axis = (Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
             }
+#endif
 
+#if UNITY_ANDROID || UNITY_EDITOR
+            if (Input.touchCount >= 2) {
+                Touch touch = Input.GetTouch(1);
+
+                if (touch.deltaPosition.magnitude > 1) {
+                    axis = (touch.deltaPosition.x, touch.deltaPosition.y);
+                }
+            }
+#endif
+
+            OnMove?.Invoke(this);
             return axis;
         }
 
-        private void Move() {
+
+        public Vector3 Position() {
             (float hori, float vert) axis = GetAxis();
 
             angles.hori += axis.hori * speed * Time.deltaTime;
@@ -77,12 +88,11 @@ namespace Com.IsartDigital.Rush {
 
             angles.vert = Mathf.Clamp(angles.vert, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
 
+            toPivot = cameraPivot.position - transform.position;
 
-            transform.position = MathTools.SphericalToCarthesian(distance, angles.vert, angles.hori) + cameraPivot.position;
+            return (MathTools.SphericalToCarthesian(distance, angles.vert, angles.hori) + cameraPivot.position);
 
-            transform.LookAt(cameraPivot);
-
-            OnMove?.Invoke(this);
         }
+
     }
 }

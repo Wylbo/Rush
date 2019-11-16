@@ -25,6 +25,8 @@ namespace Com.IsartDigital.Rush {
         private ElementInventory elementInHand;
         private GameObject objectInHand;
 
+        private CameraController controller;
+
         private bool isInit = false;
 
 
@@ -33,6 +35,8 @@ namespace Com.IsartDigital.Rush {
                 Destroy(gameObject);
                 return;
             }
+
+            controller = GetComponent<CameraController>();
 
             Instance = this;
         }
@@ -55,8 +59,15 @@ namespace Com.IsartDigital.Rush {
             inventory = null;
         }
 
+        private void Move() {
+            transform.position = controller.Position();
+
+            transform.LookAt(controller.cameraPivot);
+        }
 
         private void Update() {
+            Move();
+
             if (!isInit) {
                 return;
             }
