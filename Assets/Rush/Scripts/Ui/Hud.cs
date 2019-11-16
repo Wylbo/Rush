@@ -63,16 +63,15 @@ namespace Com.IsartDigital.Rush.Ui {
                 button.GetComponent<ButtonHandler>().index = i;
                 buttonList.Add(button);
                 button.GetComponent<ButtonHandler>().OnClick += Player.Instance.OnHudButtonClick;
-                //onButtonClick_handler += button.GetComponent<ButtonHandler>().GetIndex;
 
-
-                uiTile = Instantiate(levelInventory[i].UIPrefab, button.transform, false);
+                uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform,false);
 
                 uiTile.transform.localScale *= 100;
 
-                //uiTile.transform.rotation = Camera.main.transform.rotation * uiTile.transform.rotation;
-                uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * levelInventory[i].Direction;
-                //uiTile.transform.rotation = Quaternion.AngleAxis(-90, uiTile.transform.up) * levelInventory[i].Direction;
+                //uiTile.transform.rotation = levelInventory[i].Direction;
+                //uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * uiTile.transform.rotation;
+                //uiTile.transform.rotation = Quaternion.AngleAxis(90, uiTile.transform.up) * uiTile.transform.rotation;
+                uiTile.GetComponent<UiTile>().baseRotation = levelInventory[i].Direction;
                 //uiTile.transform.rotation = levelInventory[i].Direction * uiTile.transform.rotation;
 
                 playPauseToggle.GetComponent<PlayPauseBtn>().OnClick += PlayPauseToggle_OnValueChanged;

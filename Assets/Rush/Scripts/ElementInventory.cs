@@ -18,7 +18,6 @@ namespace Com.IsartDigital.Rush {
 
     [Serializable]
     public class ElementInventory {
-        [SerializeField] private GameObject uiPrefab;
         [SerializeField] private GameObject tilePrefab;
         [SerializeField] private Orientation _direction;
         [SerializeField] private int number;
@@ -26,7 +25,6 @@ namespace Com.IsartDigital.Rush {
         public List<GameObject> Tiles { get; set; }
 
 
-        public GameObject UIPrefab { get { return uiPrefab; } }
         public int Number { get { return number; } }
         public GameObject Tile { get { return tilePrefab; } }
         public Quaternion Direction {

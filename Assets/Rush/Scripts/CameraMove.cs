@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 using Com.IsartDigital.Common;
+using System;
 using UnityEngine;
 
 namespace Com.IsartDigital.Rush {
@@ -22,11 +23,13 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private float OribitDampening;
         [SerializeField] private Transform cameraPivot;
 
-        private (float, float) angles;
+        private (float hori, float vert) angles;
 
         private float distance;
 
         public Vector3 toPivot { get; private set; }
+
+        public event Action<CameraMove> OnMove;
 
 
         public static CameraMove Instance { get { return instance; } }
@@ -36,6 +39,8 @@ namespace Com.IsartDigital.Rush {
                 Destroy(gameObject);
                 return;
             }
+
+            instance = this;
         }
 
         private void Start() {
@@ -43,7 +48,7 @@ namespace Com.IsartDigital.Rush {
 
         }
 
-        private void LateUpdate() {
+        private void Update() {
             Move();
             toPivot = cameraPivot.position - transform.position;
         }
@@ -52,26 +57,32 @@ namespace Com.IsartDigital.Rush {
             if (this == instance) instance = null;
         }
 
+        private (float hori, float vert) GetAxis() {
+            (float hori, float vert) axis = (0, 0);
 
-        private (float, float) GetAxis() {
             if (Input.GetAxis(mouseBtn) != 0) {
-                return (-Input.GetAxis(mouseHorizontalAxis) * mouseSensitivity, -Input.GetAxis(mouseVerticalAxis) * mouseSensitivity);
+                axis = (-Input.GetAxis(mouseHorizontalAxis) * mouseSensitivity, -Input.GetAxis(mouseVerticalAxis) * mouseSensitivity);
+            } else {
+                axis = (Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
             }
-            return (Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 
+            return axis;
         }
 
         private void Move() {
+            (float hori, float vert) axis = GetAxis();
 
-            angles.Item1 += GetAxis().Item1 * speed * Time.deltaTime;
-            angles.Item2 += GetAxis().Item2 * speed * Time.deltaTime;
+            angles.hori += axis.hori * speed * Time.deltaTime;
+            angles.vert += axis.vert * speed * Time.deltaTime;
 
-            angles.Item2 = Mathf.Clamp(angles.Item2, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
+            angles.vert = Mathf.Clamp(angles.vert, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);
 
 
-            transform.position = MathTools.SphericalToCarthesian(distance, angles.Item2, angles.Item1) + cameraPivot.position;
+            transform.position = MathTools.SphericalToCarthesian(distance, angles.vert, angles.hori) + cameraPivot.position;
 
             transform.LookAt(cameraPivot);
+
+            OnMove?.Invoke(this);
         }
     }
 }
