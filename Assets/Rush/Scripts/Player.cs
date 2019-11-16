@@ -65,10 +65,10 @@ namespace Com.IsartDigital.Rush {
                 GameManager.Instance.SwitchMode();
             }
             if (Input.GetKeyDown(KeyCode.Escape)) {
-                GameManager.Instance.PlayPauseGame(GameManager.Instance.isPause);
+                GameManager.Instance.PlayPauseGame(GameManager.Instance.IsPause);
             }
 
-            if (GameManager.Instance.isPause || GameManager.Instance.isInActionPhase) {
+            if (GameManager.Instance.IsPause || GameManager.Instance.IsInActionPhase) {
                 elementInHand = null;
                 preview.SetActive(false);
                 return;

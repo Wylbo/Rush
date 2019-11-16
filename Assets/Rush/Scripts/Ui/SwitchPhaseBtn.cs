@@ -16,7 +16,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
 		override protected void Start () {
             base.Start();
-            GameManager.Instance.onSwitchPhase += changeSprite;
+            GameManager.Instance.OnSwitchPhase += changeSprite;
         }
 
 
