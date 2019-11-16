@@ -22,6 +22,7 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] private float mouseSensitivity;
         [SerializeField] private float OribitDampening;
         [SerializeField] public Transform cameraPivot;
+        [SerializeField] private LayerMask groundMask;
 
         public (float hori, float vert) angles;
 
@@ -103,17 +104,18 @@ namespace Com.IsartDigital.Rush {
             }
 #endif
 
-#if UNITY_ANDROID || UNITY_EDITOR
-            if (Input.touchCount > 0 ) {
+#if UNITY_ANDROID 
+            if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(0);
-                Vector3 startPos = Vector3.zero;
                 if (touch.phase == TouchPhase.Began) {
                     startPos = touch.position;
                 }
                 Ray ray = Camera.main.ScreenPointToRay(startPos);
-                bool raycast = Physics.Raycast(ray, 100);
+                RaycastHit hit;
+                bool raycast = Physics.Raycast(ray, out hit, 100, groundMask);
+                Debug.Log(touch.deltaPosition.magnitude);
 
-                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 1 && !raycast) {
+                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 5 && !raycast) {
                     axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
                 }
             }
@@ -122,6 +124,7 @@ namespace Com.IsartDigital.Rush {
             OnMove?.Invoke(this);
             return axis;
         }
+        Vector3 startPos = Vector3.zero;
 
 
         public Vector3 Position() {

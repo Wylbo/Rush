@@ -404,6 +404,11 @@ PrefabInstance:
       propertyPath: tileContainer
       value: 
       objectReference: {fileID: 47495118}
+    - target: {fileID: 2561229558420717540, guid: 829c57d068db7ed4eb8e6c99b885060c,
+        type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 829c57d068db7ed4eb8e6c99b885060c, type: 3}
 --- !u!1 &1692696691 stripped
