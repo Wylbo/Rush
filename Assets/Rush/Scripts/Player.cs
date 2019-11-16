@@ -117,7 +117,8 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void RaycastToGround() {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = controller.RaycastToGround();
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100, groundMask)) {

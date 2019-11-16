@@ -30,6 +30,10 @@ namespace Com.IsartDigital.Rush {
         public Vector3 toPivot { get; private set; }
 
         public event Action<CameraController> OnMove;
+
+        public delegate Ray RaycastToGroundEventHandler();
+        public RaycastToGroundEventHandler RaycastToGround;
+
         public static CameraController Instance { get { return instance; } }
 
         private void Awake() {
@@ -43,7 +47,24 @@ namespace Com.IsartDigital.Rush {
 
         private void Start() {
             distance = Vector3.Distance(transform.position, cameraPivot.position);
+#if UNITY_WEBGL || UNITY_EDITOR
+            RaycastToGround += RaycastMouse;
+            Debug.Log("isok");
+#elif UNITY_ANDROID
+            RaycastToGround += RaycastTouch;
+#endif
+        }
 
+        private Ray RaycastMouse() {
+            return Camera.main.ScreenPointToRay(Input.mousePosition);
+        }
+
+        private Ray RaycastTouch() {
+            if (Input.touchCount == 1) {
+                Touch touch = Input.GetTouch(0);
+                return Camera.main.ScreenPointToRay(touch.position);
+            }
+            return new Ray();
         }
 
         private void OnDestroy() {
