@@ -70,7 +70,7 @@ namespace Com.IsartDigital.Rush {
                 Touch touch = Input.GetTouch(1);
 
                 if (touch.deltaPosition.magnitude > 1) {
-                    axis = (touch.deltaPosition.x, touch.deltaPosition.y);
+                    axis = (-touch.deltaPosition.x /2, -touch.deltaPosition.y /2);
                 }
             }
 #endif
