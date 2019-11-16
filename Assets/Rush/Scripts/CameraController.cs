@@ -104,11 +104,16 @@ namespace Com.IsartDigital.Rush {
 #endif
 
 #if UNITY_ANDROID || UNITY_EDITOR
-            if (Input.touchCount > 0 && !Physics.Raycast(RaycastToGround(),100)) {
+            if (Input.touchCount > 0 ) {
                 Touch touch = Input.GetTouch(0);
-                Debug.Log(touch.deltaTime);
+                Vector3 startPos = Vector3.zero;
+                if (touch.phase == TouchPhase.Began) {
+                    startPos = touch.position;
+                }
+                Ray ray = Camera.main.ScreenPointToRay(startPos);
+                bool raycast = Physics.Raycast(ray, 100);
 
-                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 1) {
+                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 1 && !raycast) {
                     axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
                 }
             }
