@@ -104,7 +104,7 @@ namespace Com.IsartDigital.Rush {
 #endif
 
 #if UNITY_ANDROID || UNITY_EDITOR
-            if (Input.touchCount > 0) {
+            if (Input.touchCount > 0 && !Physics.Raycast(RaycastToGround(),100)) {
                 Touch touch = Input.GetTouch(0);
                 Debug.Log(touch.deltaTime);
 
