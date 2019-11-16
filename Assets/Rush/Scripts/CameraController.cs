@@ -67,7 +67,7 @@ namespace Com.IsartDigital.Rush {
         private bool ClickTouch() {
             if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(0);
-                return touch.deltaTime < 1;
+                return touch.phase == TouchPhase.Ended && touch.deltaTime < 1;
             }
             return false;
         }
@@ -105,11 +105,11 @@ namespace Com.IsartDigital.Rush {
 
 #if UNITY_ANDROID || UNITY_EDITOR
             if (Input.touchCount > 0) {
-                Touch touch = Input.GetTouch(1);
-                
+                Touch touch = Input.GetTouch(0);
+
 
                 if (touch.deltaTime > 1 && touch.deltaPosition.magnitude > 1) {
-                    axis = (-touch.deltaPosition.x /2, -touch.deltaPosition.y /2);
+                    axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
                 }
             }
 #endif
