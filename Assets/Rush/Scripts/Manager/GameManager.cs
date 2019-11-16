@@ -16,15 +16,13 @@ namespace Com.IsartDigital.Rush.Manager {
         [SerializeField] GameObject levelSelector;
         public static GameManager Instance { get { return instance; } }
 
-        public static List<Cube> cubeList;
-
-        public bool isInActionPhase { get; private set; } = false;
+        public bool IsInActionPhase { get; private set; } = false;
         private bool isLost = false;
         private bool win = false;
 
-        public bool isPause { get; private set; } = false;
+        public bool IsPause { get; private set; } = false;
 
-        public event Action<bool> onSwitchPhase;
+        public event Action<bool> OnSwitchPhase;
 
         public event Action OnActionPhase;
         public event Action OnReflexionPhase;
@@ -42,7 +40,6 @@ namespace Com.IsartDigital.Rush.Manager {
 
             instance = this;
             
-            Cube.LooseCondition += Loose;
         }
 
         private void Start() {
@@ -52,20 +49,27 @@ namespace Com.IsartDigital.Rush.Manager {
 
 
         public void Init() {
+            win = isLost = IsPause = false;
+
             TimeManager.Instance.Init();
 
             Hud.Instance.PlayPause += PlayPauseGame;
             Hud.Instance.SwitchPhase += SwitchMode;
+            Cube.LooseCondition += Loose;
+
+
             isInit = true;
             PlayPauseGame(true);
         }
 
         private void UnInit() {
-            win = isLost = isInit = isPause = false;
+            win = isLost = isInit = IsPause = false;
 
             TimeManager.Instance.UnInit();
             Hud.Instance.PlayPause -= PlayPauseGame;
             Hud.Instance.SwitchPhase -= SwitchMode;
+            Cube.LooseCondition -= Loose;
+
 
             Player.Instance.UnIinit();
 
@@ -73,7 +77,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public void OnBackToLevelSelector() {
             UnInit();
-            if (isInActionPhase) {
+            if (IsInActionPhase) {
                 SwitchMode();
             }
             Hud.Instance.Reset();
@@ -84,23 +88,24 @@ namespace Com.IsartDigital.Rush.Manager {
 
         public void PlayPauseGame(bool isOn) {
             Time.timeScale = isOn ? 1 : 0;
-            isPause = !isOn;
+            IsPause = !isOn;
 
-            GameIsPaused?.Invoke(isPause);
+            GameIsPaused?.Invoke(IsPause);
         }
 
         public void SwitchMode() {
-            if (isPause) {
+            if (IsPause) {
                 return;
             }
             
-            isInActionPhase = !isInActionPhase;
+            IsInActionPhase = !IsInActionPhase;
 
-            if (!isInActionPhase) {
+            if (!IsInActionPhase) {
                 SwitchToReflexionPhase();
             } else {
                 SwitchToActionPhase();
             }
+            OnSwitchPhase(IsInActionPhase);
 
             isLost = false;
         }
@@ -133,7 +138,7 @@ namespace Com.IsartDigital.Rush.Manager {
         }
         private void OnDestroy() {
             if (this == instance) instance = null;
-            Cube.LooseCondition -= Loose;
+            UnInit();
         }
 
         private void Update() {

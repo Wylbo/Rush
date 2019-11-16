@@ -19,22 +19,12 @@ namespace Com.IsartDigital.Rush.Ui {
         [SerializeField] private Toggle switchPhaseToggle;
 
         private List<ElementInventory> levelInventory;
-
         private List<GameObject> buttonList = new List<GameObject>();
 
+        public event Action onButtonClick_handler;
+        public event Action<bool> PlayPause;
+        public event Action SwitchPhase;
 
-        public delegate int onButtonClick();
-        public onButtonClick onButtonClick_handler = new onButtonClick(InitEvent);
-
-        public delegate void PlayPauseEventHandler(bool isOn);
-        public event PlayPauseEventHandler PlayPause;
-
-        public delegate void SwitchPhaseEventHandler();
-        public event SwitchPhaseEventHandler SwitchPhase;
-
-        static private int InitEvent() {
-            return -1;
-        }
 
         private static Hud instance;
         public static Hud Instance { get { return instance; } }
@@ -56,9 +46,9 @@ namespace Com.IsartDigital.Rush.Ui {
 
         public void Init(GameObject levelToLoad) {
             buttonList.Clear();
+            ActivateSidePanel(true);
 
             level = levelToLoad;
-            onButtonClick_handler -= InitEvent;
 
             Player.Instance.OnElementPlaced += UpdateHud;
 
@@ -72,16 +62,16 @@ namespace Com.IsartDigital.Rush.Ui {
                 button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
                 button.GetComponent<ButtonHandler>().index = i;
                 buttonList.Add(button);
-                //onButtonClick_handler += button.GetComponent<ButtonHandler>().GetIndex;
+                button.GetComponent<ButtonHandler>().OnClick += Player.Instance.OnHudButtonClick;
 
-
-                uiTile = Instantiate(levelInventory[i].UIPrefab, button.transform, false);
+                uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform,false);
 
                 uiTile.transform.localScale *= 100;
 
-                //uiTile.transform.rotation = Camera.main.transform.rotation * uiTile.transform.rotation;
-                uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * levelInventory[i].Direction;
-                //uiTile.transform.rotation = Quaternion.AngleAxis(-90, uiTile.transform.up) * levelInventory[i].Direction;
+                //uiTile.transform.rotation = levelInventory[i].Direction;
+                //uiTile.transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * uiTile.transform.rotation;
+                //uiTile.transform.rotation = Quaternion.AngleAxis(90, uiTile.transform.up) * uiTile.transform.rotation;
+                uiTile.GetComponent<UiTile>().baseRotation = levelInventory[i].Direction;
                 //uiTile.transform.rotation = levelInventory[i].Direction * uiTile.transform.rotation;
 
                 playPauseToggle.GetComponent<PlayPauseBtn>().OnClick += PlayPauseToggle_OnValueChanged;
@@ -100,6 +90,10 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private void PlayPauseToggle_OnValueChanged(bool isOn) {
             PlayPause(isOn);
+            ActivateSidePanel(isOn);
+        }
+
+        private void ActivateSidePanel(bool isOn) {
             switchPhaseToggle.enabled = isOn;
             switchPhaseToggle.gameObject.SetActive(isOn);
             tileButtonContainer.gameObject.SetActive(isOn);

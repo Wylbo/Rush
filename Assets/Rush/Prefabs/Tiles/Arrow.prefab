@@ -140,6 +140,7 @@ MonoBehaviour:
   cubeMask:
     serializedVersion: 2
     m_Bits: 256
+  uiTile: {fileID: 1820389188126086, guid: 8912201e0b1eee643a7e5a76d0e5e1f2, type: 3}
 --- !u!95 &6581014035898998024
 Animator:
   serializedVersion: 3

@@ -3,6 +3,7 @@
 /// Date : 11/11/2019 18:21
 ///-----------------------------------------------------------------
 
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,9 @@ namespace Com.IsartDigital.Rush.Ui {
 	public class ButtonHandler : MonoBehaviour {
 
         public int index;
-
         private Button button;
 
-
+        public Action<int> OnClick;
 
 		private void Start () {
             button = GetComponent<Button>();
@@ -22,7 +22,8 @@ namespace Com.IsartDigital.Rush.Ui {
 		}
 		
         public void GetIndex() {
-            Player.Instance.OnHudButtonClick(index);
+            OnClick(index);
+            //Player.Instance.OnHudButtonClick(index);
         }
 	}
 }
