@@ -132,9 +132,9 @@ namespace Com.IsartDigital.Rush {
                 GetElementInHand();
 
                 preview.transform.position = ground.position + Vector3.up / 2;
-                Debug.Log(hitAbove.collider?.name);
-
-                OnClick(isFree, hitAbove);
+                if (controller.OnClick()) {
+                    OnClick(isFree, hitAbove);
+                }
 
 
                 if (!isFree) {
@@ -156,17 +156,14 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void OnClick(bool isFree, RaycastHit above) {
-            if (Input.GetMouseButtonUp(0)) {
-                if (isFree) {
-                    PutTileDown();
-                } else if (above.collider.GetComponent<ADraggableTile>()) {
-                    RemoveTile(above.collider.gameObject);
-                }
-                elementInHand = null;
-
-                ResetPreview();
-
+            if (isFree) {
+                PutTileDown();
+            } else if (above.collider.GetComponent<ADraggableTile>()) {
+                RemoveTile(above.collider.gameObject);
             }
+            elementInHand = null;
+
+            ResetPreview();
         }
 
         public event Action<int, int> OnElementPlaced;

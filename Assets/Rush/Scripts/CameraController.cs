@@ -34,6 +34,9 @@ namespace Com.IsartDigital.Rush {
         public delegate Ray RaycastToGroundEventHandler();
         public RaycastToGroundEventHandler RaycastToGround;
 
+        public delegate bool OnClickEventHandler();
+        public OnClickEventHandler OnClick;
+
         public static CameraController Instance { get { return instance; } }
 
         private void Awake() {
@@ -49,10 +52,24 @@ namespace Com.IsartDigital.Rush {
             distance = Vector3.Distance(transform.position, cameraPivot.position);
 #if UNITY_WEBGL || UNITY_EDITOR
             RaycastToGround += RaycastMouse;
-            Debug.Log("isok");
+            OnClick += ClickMouse;
 #elif UNITY_ANDROID
             RaycastToGround += RaycastTouch;
+            OnClick += ClickTouch;
+
 #endif
+        }
+
+        private bool ClickMouse() {
+            return Input.GetMouseButtonUp(0);
+        }
+
+        private bool ClickTouch() {
+            if (Input.touchCount > 0) {
+                Touch touch = Input.GetTouch(0);
+                return touch.deltaTime < 1;
+            }
+            return false;
         }
 
         private Ray RaycastMouse() {
@@ -87,10 +104,11 @@ namespace Com.IsartDigital.Rush {
 #endif
 
 #if UNITY_ANDROID || UNITY_EDITOR
-            if (Input.touchCount >= 2) {
+            if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(1);
+                
 
-                if (touch.deltaPosition.magnitude > 1) {
+                if (touch.deltaTime > 1 && touch.deltaPosition.magnitude > 1) {
                     axis = (-touch.deltaPosition.x /2, -touch.deltaPosition.y /2);
                 }
             }
