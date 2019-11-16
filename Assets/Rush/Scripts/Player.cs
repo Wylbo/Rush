@@ -132,6 +132,7 @@ namespace Com.IsartDigital.Rush {
                 GetElementInHand();
 
                 preview.transform.position = ground.position + Vector3.up / 2;
+                Debug.Log(hitAbove.collider?.name);
 
                 OnClick(isFree, hitAbove);
 
