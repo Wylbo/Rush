@@ -106,9 +106,9 @@ namespace Com.IsartDigital.Rush {
 #if UNITY_ANDROID || UNITY_EDITOR
             if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(0);
+                Debug.Log(touch.deltaTime);
 
-
-                if (touch.deltaTime > 1 && touch.deltaPosition.magnitude > 1) {
+                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 1) {
                     axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
                 }
             }
