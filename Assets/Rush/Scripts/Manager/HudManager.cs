@@ -23,12 +23,12 @@ namespace Com.IsartDigital.Rush.Manager {
             }
 
             instance = this;
-            LevelManager.Instance.OnLevelLoading += Init;
-            LevelManager.Instance.OnLevelUnload += Reset;
+
         }
 
         public void Init(GameObject level) {
             AddScreen(hud);
+            Reset();
             hud.GetComponent<Hud>().Init(level);
         }
 
