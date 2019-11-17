@@ -19,12 +19,11 @@ namespace Com.IsartDigital.Rush.Ui {
             GameManager.Instance.OnSwitchPhase += changeSprite;
         }
 
-
-        override protected void toggle_onValueChanged(bool isOn) {
-            base.toggle_onValueChanged(isOn);
-            OnClick();
+        protected override void button_onClick() {
+            base.button_onClick();
+            OnClick?.Invoke();
         }
 
 
-	}
+    }
 }

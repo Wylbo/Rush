@@ -246,28 +246,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   list:
-  - uiPrefab: {fileID: 0}
-    tilePrefab: {fileID: 1107203473147756, guid: 7c58f80a63e8a7141b5b7377395135cc,
+  - tilePrefab: {fileID: 1107203473147756, guid: 7c58f80a63e8a7141b5b7377395135cc,
       type: 3}
     _direction: 90
     number: 2
-  - uiPrefab: {fileID: 0}
-    tilePrefab: {fileID: 1820389188126086, guid: 16957ef68a439ee4fb120ba2ffa2519e,
+  - tilePrefab: {fileID: 1820389188126086, guid: 16957ef68a439ee4fb120ba2ffa2519e,
       type: 3}
     _direction: 0
     number: 2
-  - uiPrefab: {fileID: 0}
-    tilePrefab: {fileID: 1324669775067448, guid: c6a4f00d8e6ee94408e741323199cb71,
+  - tilePrefab: {fileID: 1324669775067448, guid: c6a4f00d8e6ee94408e741323199cb71,
       type: 3}
     _direction: 0
     number: 1
-  - uiPrefab: {fileID: 0}
-    tilePrefab: {fileID: 1107203473147756, guid: 7c58f80a63e8a7141b5b7377395135cc,
+  - tilePrefab: {fileID: 1107203473147756, guid: 7c58f80a63e8a7141b5b7377395135cc,
       type: 3}
     _direction: 180
     number: 1
-  - uiPrefab: {fileID: 0}
-    tilePrefab: {fileID: 1820389188126086, guid: 16957ef68a439ee4fb120ba2ffa2519e,
+  - tilePrefab: {fileID: 1820389188126086, guid: 16957ef68a439ee4fb120ba2ffa2519e,
       type: 3}
     _direction: 90
     number: 1
@@ -3158,7 +3153,7 @@ PrefabInstance:
     - target: {fileID: 7584318631633558904, guid: 77a2df11bd5b51442b91615fba5b53d9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6857054
+      value: -0.31429455
       objectReference: {fileID: 0}
     - target: {fileID: 7584318631633558904, guid: 77a2df11bd5b51442b91615fba5b53d9,
         type: 3}

@@ -12,15 +12,19 @@ namespace Com.IsartDigital.Rush.Ui {
         [SerializeField] private Sprite spriteIsOff;
         protected Sprite spriteIsOn;
         protected Image image;
-        protected Toggle toggle;
+        protected Button button;
+        public bool isOn = false;
+        
         protected virtual void Start () {
-            toggle = GetComponent<Toggle>();
-            image = toggle.image;
+            button = GetComponent<Button>();
+            image = GetComponent<Image>();
             spriteIsOn = image.sprite;
-            toggle.onValueChanged.AddListener(toggle_onValueChanged);
+            button.onClick.AddListener(button_onClick);
         }
 
-        protected virtual void toggle_onValueChanged(bool isOn) {
+
+        protected virtual void button_onClick() {
+            isOn = !isOn;
             changeSprite(isOn);
         }
 
