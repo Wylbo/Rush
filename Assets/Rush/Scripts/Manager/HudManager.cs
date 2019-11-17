@@ -23,11 +23,17 @@ namespace Com.IsartDigital.Rush.Manager {
             }
 
             instance = this;
+
         }
 
         public void Init(GameObject level) {
             AddScreen(hud);
+            Reset();
             hud.GetComponent<Hud>().Init(level);
+        }
+
+        private void Reset() {
+            hud.GetComponent<Hud>().Reset();
         }
 
         public void AddScreen(GameObject screen) {

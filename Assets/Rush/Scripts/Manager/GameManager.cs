@@ -43,21 +43,22 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         private void Start() {
+            LevelManager.Instance.OnLevelLoading += Init;
+            LevelManager.Instance.OnLevelUnload += UnInit;
             HudManager.Instance.AddScreen(levelSelector);
 
         }
 
 
-        public void Init() {
+        public void Init(GameObject level) {
             win = isLost = IsPause = false;
 
             TimeManager.Instance.Init();
 
+            HudManager.Instance.Init(level);
             Hud.Instance.PlayPause += PlayPauseGame;
             Hud.Instance.SwitchPhase += SwitchMode;
             Cube.OnLooseCondition += Loose;
-
-
             isInit = true;
             PlayPauseGame(true);
         }
@@ -66,10 +67,12 @@ namespace Com.IsartDigital.Rush.Manager {
             win = isLost = isInit = IsPause = false;
 
             TimeManager.Instance.UnInit();
+
             Hud.Instance.PlayPause -= PlayPauseGame;
             Hud.Instance.SwitchPhase -= SwitchMode;
             Cube.OnLooseCondition -= Loose;
 
+            SwitchToReflexionPhase();
 
             Player.Instance.UnIinit();
 
@@ -80,7 +83,6 @@ namespace Com.IsartDigital.Rush.Manager {
             if (IsInActionPhase) {
                 SwitchMode();
             }
-            Hud.Instance.Reset();
             Cube.DestroyAll();
         }
 
@@ -98,14 +100,15 @@ namespace Com.IsartDigital.Rush.Manager {
                 return;
             }
             
-            IsInActionPhase = !IsInActionPhase;
 
-            if (!IsInActionPhase) {
+            if (IsInActionPhase) {
                 SwitchToReflexionPhase();
             } else {
                 SwitchToActionPhase();
             }
-            OnSwitchPhase(IsInActionPhase);
+
+            IsInActionPhase = !IsInActionPhase;
+
 
             isLost = false;
         }
@@ -115,11 +118,14 @@ namespace Com.IsartDigital.Rush.Manager {
             Spawner.ResetAll();
             Cube.DestroyAll();
 
+            OnSwitchPhase(false);
             OnReflexionPhase();
         }
 
         private void SwitchToActionPhase() {
             OnActionPhase();
+            OnSwitchPhase(true);
+
         }
 
         public void Loose() {

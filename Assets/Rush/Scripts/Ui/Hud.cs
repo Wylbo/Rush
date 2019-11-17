@@ -21,7 +21,6 @@ namespace Com.IsartDigital.Rush.Ui {
         private List<ElementInventory> levelInventory;
         private List<GameObject> buttonList = new List<GameObject>();
 
-        public event Action onButtonClick_handler;
         public event Action<bool> PlayPause;
         public event Action SwitchPhase;
 
@@ -92,11 +91,11 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void SwitchPhaseToggle_OnValueChanged() {
-            SwitchPhase();
+            SwitchPhase?.Invoke();
         }
 
         private void PlayPauseToggle_OnValueChanged(bool isOn) {
-            PlayPause(isOn);
+            PlayPause?.Invoke(isOn);
             ActivateSidePanel(isOn);
         }
 
