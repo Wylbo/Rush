@@ -255,8 +255,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: Builds/Rush.keystore'
-  AndroidKeyaliasName: rush
+  AndroidKeystoreName: '{inproject}: user.keystore'
+  AndroidKeyaliasName: rush key
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

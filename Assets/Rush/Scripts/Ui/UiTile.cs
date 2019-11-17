@@ -13,11 +13,11 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private void Start() {
             //transform.rotation = Quaternion.AngleAxis(-90, Vector3.right) * baseRotation;
-            CameraMove.Instance.OnMove += UpdateRotation;
+            CameraController.Instance.OnMove += UpdateRotation;
         }
 
-        private void UpdateRotation(CameraMove cam) {
-             cam = Camera.main.GetComponent<CameraMove>();
+        private void UpdateRotation(CameraController cam) {
+             cam = Camera.main.GetComponent<CameraController>();
             Vector3 toPivot = cam.toPivot;
             toPivot = Vector3.ProjectOnPlane(toPivot, Vector3.up);
 
@@ -27,7 +27,7 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void OnDestroy() {
-            CameraMove.Instance.OnMove -= UpdateRotation;
+            CameraController.Instance.OnMove -= UpdateRotation;
         }
 
     }

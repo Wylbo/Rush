@@ -15,8 +15,8 @@ namespace Com.IsartDigital.Rush.Ui {
         [SerializeField] private RectTransform tileButtonContainer;
         [SerializeField] private GameObject level;
         [SerializeField] private GameObject uiButton;
-        [SerializeField] private Toggle playPauseToggle;
-        [SerializeField] private Toggle switchPhaseToggle;
+        [SerializeField] private Button playPauseButton;
+        [SerializeField] private Button switchPhaseButton;
 
         private List<ElementInventory> levelInventory;
         private List<GameObject> buttonList = new List<GameObject>();
@@ -39,6 +39,10 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         public void Reset() {
+
+            playPauseButton.GetComponent<PlayPauseBtn>().OnClick -= PlayPauseToggle_OnValueChanged;
+            switchPhaseButton.GetComponent<SwitchPhaseBtn>().OnClick -= SwitchPhaseToggle_OnValueChanged;
+
             for (int i = buttonList.Count - 1; i >= 0; i--) {
                 Destroy(buttonList[i]);
             }
@@ -56,6 +60,10 @@ namespace Com.IsartDigital.Rush.Ui {
 
             GameObject uiTile;
             GameObject button;
+            playPauseButton.GetComponent<PlayPauseBtn>().isOn = true;
+            playPauseButton.GetComponent<PlayPauseBtn>().OnClick += PlayPauseToggle_OnValueChanged;
+            switchPhaseButton.GetComponent<SwitchPhaseBtn>().OnClick += SwitchPhaseToggle_OnValueChanged;
+
             for (int i = 0; i < levelInventory.Count; i++) {
                 button = Instantiate(uiButton, tileButtonContainer, false);
                 button.transform.localScale = Vector3.one;
@@ -70,14 +78,17 @@ namespace Com.IsartDigital.Rush.Ui {
 
                 uiTile.GetComponent<UiTile>().baseRotation = levelInventory[i].Direction;
 
-                playPauseToggle.GetComponent<PlayPauseBtn>().OnClick += PlayPauseToggle_OnValueChanged;
-                switchPhaseToggle.GetComponent<SwitchPhaseBtn>().OnClick += SwitchPhaseToggle_OnValueChanged;
 
             }
         }
 
         private void UpdateHud(int ntile, int index) {
             buttonList[index].GetComponentInChildren<Text>().text = ntile.ToString();
+            if (ntile == 0) {
+                buttonList[index].SetActive(false);
+            } else {
+                buttonList[index].SetActive(true);
+            }
         }
 
         private void SwitchPhaseToggle_OnValueChanged() {
@@ -90,8 +101,8 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void ActivateSidePanel(bool isOn) {
-            switchPhaseToggle.enabled = isOn;
-            switchPhaseToggle.gameObject.SetActive(isOn);
+            switchPhaseButton.enabled = isOn;
+            switchPhaseButton.gameObject.SetActive(isOn);
             tileButtonContainer.gameObject.SetActive(isOn);
         }
 

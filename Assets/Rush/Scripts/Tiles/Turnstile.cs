@@ -21,7 +21,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         private void Update() {
             rotationAngle = isRight ? 90 : -90;
 
-            transform.rotation = Quaternion.AngleAxis(rotationAngle * Time.deltaTime, transform.up) * transform.rotation;
+            //transform.rotation = Quaternion.AngleAxis(rotationAngle * Time.deltaTime, transform.up) * transform.rotation;
         }
 
         public override void SetCubeAction(Cube cube) {

@@ -8,22 +8,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Com.IsartDigital.Rush.Ui {
-	public class ButtonHandler : MonoBehaviour {
+    public class ButtonHandler : MonoBehaviour {
 
         public int index;
         private Button button;
 
         public Action<int> OnClick;
 
-		private void Start () {
+        private void Start() {
             button = GetComponent<Button>();
-            button.onClick.AddListener(() => GetIndex());
+            button.onClick.AddListener(GetIndex);
 
-		}
-		
+        }
+
         public void GetIndex() {
             OnClick(index);
             //Player.Instance.OnHudButtonClick(index);
         }
-	}
+    }
 }

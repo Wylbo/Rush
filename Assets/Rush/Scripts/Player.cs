@@ -25,6 +25,8 @@ namespace Com.IsartDigital.Rush {
         private ElementInventory elementInHand;
         private GameObject objectInHand;
 
+        private CameraController controller;
+
         private bool isInit = false;
 
 
@@ -33,6 +35,8 @@ namespace Com.IsartDigital.Rush {
                 Destroy(gameObject);
                 return;
             }
+
+            controller = GetComponent<CameraController>();
 
             Instance = this;
         }
@@ -55,8 +59,15 @@ namespace Com.IsartDigital.Rush {
             inventory = null;
         }
 
+        private void Move() {
+            transform.position = controller.Position();
+
+            transform.LookAt(controller.cameraPivot);
+        }
 
         private void Update() {
+            Move();
+
             if (!isInit) {
                 return;
             }
@@ -106,7 +117,8 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void RaycastToGround() {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = controller.RaycastToGround();
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100, groundMask)) {
@@ -120,8 +132,9 @@ namespace Com.IsartDigital.Rush {
                 GetElementInHand();
 
                 preview.transform.position = ground.position + Vector3.up / 2;
-
-                OnClick(isFree, hitAbove);
+                if (controller.OnClick()) {
+                    OnClick(isFree, hitAbove);
+                }
 
 
                 if (!isFree) {
@@ -143,17 +156,14 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void OnClick(bool isFree, RaycastHit above) {
-            if (Input.GetMouseButtonUp(0)) {
-                if (isFree) {
-                    PutTileDown();
-                } else if (above.collider.GetComponent<ADraggableTile>()) {
-                    RemoveTile(above.collider.gameObject);
-                }
-                elementInHand = null;
-
-                ResetPreview();
-
+            if (isFree) {
+                PutTileDown();
+            } else if (above.collider.GetComponent<ADraggableTile>()) {
+                RemoveTile(above.collider.gameObject);
             }
+            elementInHand = null;
+
+            ResetPreview();
         }
 
         public event Action<int, int> OnElementPlaced;

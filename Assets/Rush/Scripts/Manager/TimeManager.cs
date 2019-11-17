@@ -19,7 +19,7 @@ namespace Com.IsartDigital.Rush.Manager {
         private float _ratio;
         public float Ratio { get => _ratio; }
 
-        public Action OnTick;
+        public event Action OnTick;
 
         public static TimeManager Instance { get { return instance; } }
 
@@ -85,6 +85,7 @@ namespace Com.IsartDigital.Rush.Manager {
         }
         private void OnDestroy() {
             if (this == instance) instance = null;
+            OnTick = null;
         }
     }
 }
