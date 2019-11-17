@@ -3,6 +3,7 @@
 /// Date : 14/11/2019 21:56
 ///-----------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,11 @@ namespace Com.IsartDigital.Rush.Manager {
         [SerializeField] GameObject levelSelector;
         [SerializeField] Transform tileContainer;
 
+        public event Action<GameObject> OnLevelLoading;
+        public event Action OnLevelUnload;
+
         private GameObject level;
+        private int indexLevel;
 
 
         private static LevelManager instance;
@@ -34,19 +39,28 @@ namespace Com.IsartDigital.Rush.Manager {
 
 
         public void LoadLevel(int index) {
+            indexLevel = index;
             level = Instantiate(levelsPrefabsList[index]);
             level.transform.position = Vector3.zero;
 
             level.GetComponent<Level>().Init();
             level.SetActive(true);
-            HudManager.Instance.Init(level);
-            GameManager.Instance.Init();
-            Player.Instance.Init(level);
+
+            OnLevelLoading(level);
+
+            //HudManager.Instance.Init(level);
+            //Player.Instance.Init(level);
         }
 
         public void UnloadLevels() {
             Destroy(level);
+            OnLevelUnload();
 
+        }
+
+        public void RestartLevel() {
+            UnloadLevels();
+            LoadLevel(indexLevel);
         }
 
 

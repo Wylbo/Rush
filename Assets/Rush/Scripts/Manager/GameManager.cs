@@ -43,12 +43,14 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         private void Start() {
+            LevelManager.Instance.OnLevelLoading += Init;
+            LevelManager.Instance.OnLevelUnload += UnInit;
             HudManager.Instance.AddScreen(levelSelector);
 
         }
 
 
-        public void Init() {
+        public void Init(GameObject level) {
             win = isLost = IsPause = false;
 
             TimeManager.Instance.Init();

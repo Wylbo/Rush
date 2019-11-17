@@ -12,6 +12,7 @@ namespace Com.IsartDigital.Rush.Ui {
 	public class PlayPauseBtn : ToggleBtn {
 
         [SerializeField] private Button back;
+        [SerializeField] private Button reset;
 
         public delegate void PlayPauseBtnEventHandler(bool isOn);
         public event PlayPauseBtnEventHandler OnClick;
@@ -25,7 +26,7 @@ namespace Com.IsartDigital.Rush.Ui {
         protected override void changeSprite(bool isOn) {
             base.changeSprite(isOn);
             back.gameObject.SetActive(isOn);
-
+            reset.gameObject.SetActive(isOn);
         }
 
         protected override void button_onClick() {

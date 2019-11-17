@@ -25,9 +25,5 @@ namespace Com.IsartDigital.Rush.Manager {
             OnLoadLevel(levelToLoad);
             HudManager.Instance.RemoveScreen(gameObject);
         }
-
-        private void Update () {
-			
-		}
 	}
 }
