@@ -404,6 +404,11 @@ PrefabInstance:
       propertyPath: tileContainer
       value: 
       objectReference: {fileID: 47495118}
+    - target: {fileID: 9196384078809974657, guid: 829c57d068db7ed4eb8e6c99b885060c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14
+      objectReference: {fileID: 0}
     - target: {fileID: 2561229558420717540, guid: 829c57d068db7ed4eb8e6c99b885060c,
         type: 3}
       propertyPath: groundMask.m_Bits
@@ -1255,6 +1260,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UiInGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4240557819540221075, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4240557819540221807, guid: b5af561231d28c24ba8ce8f23e798283,
         type: 3}
