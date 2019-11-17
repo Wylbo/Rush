@@ -18,6 +18,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
 		override protected void Start () {
             base.Start();
+            isOn = true;
             GameManager.Instance.GameIsPaused += changeSprite;
 		}
 
@@ -27,11 +28,11 @@ namespace Com.IsartDigital.Rush.Ui {
 
         }
 
-        override protected void toggle_onValueChanged(bool isOn) {
-            base.toggle_onValueChanged(!isOn);
+        protected override void button_onClick() {
+            base.button_onClick();
             OnClick(isOn);
         }
 
 
-	}
+    }
 }

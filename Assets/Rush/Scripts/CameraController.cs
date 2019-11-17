@@ -68,7 +68,7 @@ namespace Com.IsartDigital.Rush {
         private bool ClickTouch() {
             if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(0);
-                return touch.phase == TouchPhase.Ended && touch.deltaTime < 1;
+                return !isMoving && touch.phase == TouchPhase.Ended && touch.deltaPosition.magnitude < 5 ;
             }
             return false;
         }
@@ -78,7 +78,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private Ray RaycastTouch() {
-            if (Input.touchCount == 1) {
+            if (!isMoving && Input.touchCount >= 1) {
                 Touch touch = Input.GetTouch(0);
                 return Camera.main.ScreenPointToRay(touch.position);
             }
@@ -107,24 +107,45 @@ namespace Com.IsartDigital.Rush {
 #if UNITY_ANDROID 
             if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(0);
+
+                switch (touch.phase) {
+                    case TouchPhase.Began:
+                        startPos = touch.position;
+                        break;
+                    case TouchPhase.Moved:
+                        isMoving = true;
+                        break;
+                    case TouchPhase.Ended:
+                        isMoving = false;
+                        break;
+                }
+
                 if (touch.phase == TouchPhase.Began) {
                     startPos = touch.position;
                 }
+
+                if (touch.phase == TouchPhase.Moved) {
+                    isMoving = true;
+
+                }
+
                 Ray ray = Camera.main.ScreenPointToRay(startPos);
                 RaycastHit hit;
                 bool raycast = Physics.Raycast(ray, out hit, 100, groundMask);
-                Debug.Log(touch.deltaPosition.magnitude);
 
-                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 5 && !raycast) {
+                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 5 /*&& !raycast*/) {
                     axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
                 }
+                
             }
 #endif
-
+            
             OnMove?.Invoke(this);
             return axis;
         }
-        Vector3 startPos = Vector3.zero;
+
+        private bool isMoving = false;
+        private Vector3 startPos = Vector3.zero;
 
 
         public Vector3 Position() {

@@ -294,7 +294,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 505650728}
-  m_PlaneDistance: 2
+  m_PlaneDistance: 3
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -411,6 +411,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 829c57d068db7ed4eb8e6c99b885060c, type: 3}
+--- !u!114 &1021554575 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4242828525920481361, guid: b5af561231d28c24ba8ce8f23e798283,
+    type: 3}
+  m_PrefabInstance: {fileID: 4240557820635815278}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1692696691 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4240557819540221075, guid: b5af561231d28c24ba8ce8f23e798283,
@@ -501,6 +513,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1426084050583378645}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2116888176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2116888176, guid: b5af561231d28c24ba8ce8f23e798283,
+    type: 3}
+  m_PrefabInstance: {fileID: 4240557820635815278}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1426084050583378645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1346,5 +1370,15 @@ PrefabInstance:
       propertyPath: levelSelector
       value: 
       objectReference: {fileID: 572635319}
+    - target: {fileID: 4240557819540221804, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: playPauseButton
+      value: 
+      objectReference: {fileID: 1021554575}
+    - target: {fileID: 4240557819540221804, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: switchPhaseButton
+      value: 
+      objectReference: {fileID: 2116888176}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5af561231d28c24ba8ce8f23e798283, type: 3}
