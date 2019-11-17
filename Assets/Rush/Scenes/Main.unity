@@ -1158,11 +1158,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6995568211560383077, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 3372049070923450837, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
       propertyPath: winScreen
@@ -1173,52 +1168,11 @@ PrefabInstance:
       propertyPath: levelSelector
       value: 
       objectReference: {fileID: 572635319}
-    - target: {fileID: 3372049070923450837, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: tileContainer
-      value: 
-      objectReference: {fileID: 47495118}
     - target: {fileID: 3822687757283656628, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
       propertyPath: hud
       value: 
       objectReference: {fileID: 1692696691}
-    - target: {fileID: 3822687757283656628, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: hudPrfab
-      value: 
-      objectReference: {fileID: 4240557819540221075, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-    - target: {fileID: 3822687757283656628, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: rootCanvas
-      value: 
-      objectReference: {fileID: 524078071}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levels.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levelsPrefabsList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levels.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levels.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levels.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
       propertyPath: levelSelector
@@ -1229,24 +1183,6 @@ PrefabInstance:
       propertyPath: tileContainer
       value: 
       objectReference: {fileID: 47495118}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levelsPrefabsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 2820995075528875924, guid: b0077306a4301464a9b4ab767ba3ad29,
-        type: 3}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levelsPrefabsList.Array.data[1]
-      value: 
-      objectReference: {fileID: 7109419484497874262, guid: 6f12793e415d1584fa4f808d8d35c8be,
-        type: 3}
-    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
-        type: 3}
-      propertyPath: levelsPrefabsList.Array.data[2]
-      value: 
-      objectReference: {fileID: 8013748634333622931, guid: 68c5b7b3189e7d24eb7a5a47bf6af803,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c84c5445d58be8d4f95879e38988322d, type: 3}
 --- !u!1001 &4240557820635815278

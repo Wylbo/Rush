@@ -87,7 +87,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c3a46caa7e88c4aab559c7b07bfe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelsPrefabsList: []
+  levelsPrefabsList:
+  - {fileID: 2820995075528875924, guid: b0077306a4301464a9b4ab767ba3ad29, type: 3}
+  - {fileID: 7109419484497874262, guid: 6f12793e415d1584fa4f808d8d35c8be, type: 3}
+  - {fileID: 7109419484497874262, guid: 49a245e5b9658334bb2c947a5d927d65, type: 3}
+  - {fileID: 8013748634333622931, guid: 68c5b7b3189e7d24eb7a5a47bf6af803, type: 3}
   levelSelector: {fileID: 0}
   tileContainer: {fileID: 0}
 --- !u!1 &3372049070923450836
@@ -239,7 +243,7 @@ PrefabInstance:
     - target: {fileID: 2285048515906221622, guid: afd3c61c2bbad9f47a2b5c79a747edf3,
         type: 3}
       propertyPath: speed
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd3c61c2bbad9f47a2b5c79a747edf3, type: 3}
