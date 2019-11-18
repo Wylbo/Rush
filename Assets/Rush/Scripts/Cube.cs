@@ -225,7 +225,6 @@ namespace Com.IsartDigital.Rush {
         public static void DestroyAll() {
             for (int i = list.Count - 1; i >= 0; i--) {
                 Destroy(list[i].gameObject);
-
             }
         }
 
