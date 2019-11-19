@@ -242,9 +242,17 @@ namespace Com.IsartDigital.Rush {
             isWaiting = true;
             doAction = DoActionTeleport;
             tpTarget = target;
+            lightHallo.enabled = false;
+            Tween.Position(transform, transform.position + Vector3.up, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
         }
 
         private void DoActionTeleport() {
+            if (tickCounter < 1) {
+                Tween.Position(transform, transform.position - Vector3.up, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+                Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            }
+
             if (tickCounter > 1) {
                 isWaiting = false;
 
