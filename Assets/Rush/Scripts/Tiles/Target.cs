@@ -11,6 +11,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         [SerializeField] private ColorChanger.EColor color;
         [SerializeField] private Transform render;
+        [SerializeField] private ParticleSystem particleSystemBurst;
 
         private MaterialPropertyBlock block;
         private ColorChanger colorChanger;
@@ -37,7 +38,12 @@ namespace Com.IsartDigital.Rush.Tiles {
 
         public override void SetCubeAction(Cube cube) {
             if (cube.colorIndex == colorIndex) {
-                Destroy(cube.gameObject);
+                particleSystemBurst.Play();
+
+                ParticleSystem.MainModule main = particleSystemBurst.main;
+                main.startColor = block.GetColor("_Color");
+                cube.SetModeOnTarget();
+                
             }
         }
     }

@@ -5,6 +5,7 @@
 
 using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
+using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,11 @@ namespace Com.IsartDigital.Rush {
         static public List<Cube> list { get; private set; } = new List<Cube>();
 
         [SerializeField] private AnimationCurve moveCurve;
+        [Space]
+        [Space]
+        [Space]
+        [Space]
+        [SerializeField] private ParticleSystem dustParticle;
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
         [SerializeField] private LayerMask groundMask;
@@ -70,7 +76,28 @@ namespace Com.IsartDigital.Rush {
 
             toPosition = transform.position;
             toRotation = transform.rotation;
+            //SetModeVoid();
+            SetModeSpawn();
+            lightHallo.enabled = false;
+
+            ParticleSystem.MainModule main = dustParticle.main;
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            GetComponent<Renderer>().GetPropertyBlock(block);
+            main.startColor = block.GetColor("_Color");
+
+        }
+
+        private void SetModeSpawn() {
             SetModeVoid();
+            Tween.LocalScale(transform, Vector3.zero, Vector3.one, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseBounce, Tween.LoopType.None, null, () => { lightHallo.enabled = true; });
+
+        }
+        private void DoActionSpawn() {
+
+        }
+        private void Ytest() {
+            SetModeMove();
+            Debug.Log(doAction.Method.Name);
         }
 
         private void CheckCollision() {
@@ -105,8 +132,9 @@ namespace Com.IsartDigital.Rush {
                 tickCounter++;
                 return;
             }
-
-            CheckCollision();
+            if (doAction != DoActionOnTarget) {
+                CheckCollision();
+            }
 
 
         }
@@ -135,12 +163,24 @@ namespace Com.IsartDigital.Rush {
         private void SetModeMove() {
             InitNextMove();
             doAction = DoActionMove;
+            playDustParticle();
         }
 
         private void DoActionMove() {
             transform.position = Vector3.Lerp(fromPosition, toPosition, moveCurve.Evaluate(TimeManager.Instance.Ratio))
                 + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(moveCurve.Evaluate(TimeManager.Instance.Ratio)));
             transform.rotation = Quaternion.Lerp(fromRotation, toRotation, moveCurve.Evaluate(TimeManager.Instance.Ratio));
+
+            if (TimeManager.Instance.Ratio >= 1) {
+                //playDustParticle();
+            }
+        }
+
+        private void playDustParticle() {
+            dustParticle.transform.position = transform.position - Vector3.up / 2;
+            dustParticle.transform.rotation = Quaternion.identity;
+
+            dustParticle.Play();
         }
 
         private void InitNextFall() {
@@ -248,6 +288,25 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void DoActionGameOver() {
+
+        }
+
+        GameObject test;
+        public void SetModeOnTarget() {
+            doAction = DoActionOnTarget;
+            lightHallo.enabled = false;
+            secondLight.enabled = false;
+            GetComponent<Collider>().enabled = false;
+
+            transform.rotation = Quaternion.identity;
+            Tween.Position(transform, transform.position + Vector3.up * 1, 1f, 0f, Tween.EaseInOutStrong, Tween.LoopType.None,
+                null, () => Destroy(gameObject));
+            Tween.LocalScale(transform, Vector3.zero, 1f, 0f, Tween.EaseInBack);
+            Tween.Rotate(transform, new Vector3(300, 500), Space.Self, 1f, 0f, Tween.EaseInOutBack);
+
+        }
+
+        private void DoActionOnTarget() {
 
         }
 
