@@ -93,11 +93,7 @@ namespace Com.IsartDigital.Rush {
 
         }
         private void DoActionSpawn() {
-
-        }
-        private void Ytest() {
-            SetModeMove();
-            Debug.Log(doAction.Method.Name);
+                
         }
 
         private void CheckCollision() {
@@ -160,10 +156,13 @@ namespace Com.IsartDigital.Rush {
             toRotation = movementRotation * fromRotation;
         }
 
+        bool haveToPlayParticle = false;
         private void SetModeMove() {
             InitNextMove();
             doAction = DoActionMove;
-            playDustParticle();
+            haveToPlayParticle = Physics.Raycast(transform.position + movementDirection, Vector3.down,1,groundMask);
+
+            //playDustParticle();
         }
 
         private void DoActionMove() {
@@ -171,8 +170,8 @@ namespace Com.IsartDigital.Rush {
                 + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(moveCurve.Evaluate(TimeManager.Instance.Ratio)));
             transform.rotation = Quaternion.Lerp(fromRotation, toRotation, moveCurve.Evaluate(TimeManager.Instance.Ratio));
 
-            if (TimeManager.Instance.Ratio >= 1) {
-                //playDustParticle();
+            if (haveToPlayParticle && TimeManager.Instance.Ratio >= 1) {
+                playDustParticle();
             }
         }
 
