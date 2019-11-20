@@ -30,6 +30,7 @@ namespace Com.IsartDigital.Common {
 
 
             block = new MaterialPropertyBlock();
+            //block.set
             block.SetColor("_Color", _color);
             block.SetColor("_EmissionColor", _color);
 

@@ -108,12 +108,11 @@ namespace Com.IsartDigital.Rush {
 
         private void CheckCollision() {
             down = Vector3.down;
-            forward = movementDirection;
 
             //check if ground under
             if (Physics.Raycast(transform.position, down, out hit, raycastDistance, groundMask)) {
                 //check for wall forward
-                if (Physics.Raycast(transform.position, forward, out hit, raycastDistance)) {
+                if (Physics.Raycast(transform.position, movementDirection, out hit, raycastDistance,groundMask)) {
                     GameObject hitObjectInFront = hit.collider.gameObject;
 
                     if (hitObjectInFront.CompareTag(groundTag)) {
@@ -243,6 +242,15 @@ namespace Com.IsartDigital.Rush {
 
         public void SetModeConvoyed(Vector3 convoyeurDirection) {
             isConvoyed = true;
+            if (Physics.Raycast(transform.position, movementDirection, out hit, raycastDistance, groundMask)) {
+                //convoyeurDirection = Vector3.zero;
+                //SetDirection(Vector3.Cross(Vector3.up, movementDirection));
+                //InitNextConvoyedMovement(convoyeurDirection);
+                isConvoyed = false;
+                SetModeWait(1);
+                return;
+            }
+            
             InitNextConvoyedMovement(convoyeurDirection);
             doAction = DoActionConveyed;
         }
