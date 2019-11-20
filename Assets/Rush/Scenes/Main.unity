@@ -1151,6 +1151,11 @@ PrefabInstance:
       objectReference: {fileID: 1692696691}
     - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
+      propertyPath: levelsPrefabsList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
+        type: 3}
       propertyPath: levelSelector
       value: 
       objectReference: {fileID: 572635319}
@@ -1159,6 +1164,18 @@ PrefabInstance:
       propertyPath: tileContainer
       value: 
       objectReference: {fileID: 47495118}
+    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
+        type: 3}
+      propertyPath: levelsPrefabsList.Array.data[4]
+      value: 
+      objectReference: {fileID: 5966803629693067285, guid: 9d78b15188415b24a8eb74d7e4f107c8,
+        type: 3}
+    - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
+        type: 3}
+      propertyPath: levelsPrefabsList.Array.data[5]
+      value: 
+      objectReference: {fileID: 5966803629693067285, guid: bca56df9c2092d3418993729b8b4db57,
+        type: 3}
     - target: {fileID: 6995568211560383077, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
       propertyPath: speed
@@ -1292,5 +1309,15 @@ PrefabInstance:
       propertyPath: levelSelector
       value: 
       objectReference: {fileID: 572635319}
+    - target: {fileID: 4218016723264578575, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218016723264578575, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: m_MinValue
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5af561231d28c24ba8ce8f23e798283, type: 3}

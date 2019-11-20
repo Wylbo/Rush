@@ -198,12 +198,18 @@ namespace Com.IsartDigital.Rush {
         }
 
         public void SetModeWait(int nTickToWait) {
+            if (isWaiting) {
+                nTickToWait--;
+            }
             isWaiting = true;
+           
             this.nTickToWait = nTickToWait;
+
             doAction = doActionWait;
         }
 
         private void doActionWait() {
+
             if (tickCounter > nTickToWait) {
                 CheckCollision();
                 tickCounter = 0;
@@ -260,9 +266,9 @@ namespace Com.IsartDigital.Rush {
 
                 SetModeWait(2);
 
-                    Tween.Position(transform, transform.position + Vector3.up * 5,transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
-                    Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
-                
+                Tween.Position(transform, transform.position + Vector3.up * 5, transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+                Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
+
             }
         }
 

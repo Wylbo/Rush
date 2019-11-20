@@ -39,7 +39,7 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         public void UpdateTickRate(float value) {
-            if (tickRate > 0) {
+            if (GameManager.Instance.IsInActionPhase) {
                 tickRate = value;
             }
         }

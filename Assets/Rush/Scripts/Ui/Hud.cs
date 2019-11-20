@@ -48,7 +48,6 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private void OnSliderValueChanged(float value) {
             OnSliderMoved?.Invoke(value);
-            //Time.timeScale = value;
         }
 
         public void Reset() {

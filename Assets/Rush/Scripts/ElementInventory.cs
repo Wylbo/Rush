@@ -29,7 +29,7 @@ namespace Com.IsartDigital.Rush {
         public GameObject Tile { get { return tilePrefab; } }
         public Quaternion Direction {
             get { return Quaternion.AngleAxis((int)_direction, Vector3.up); }
-        }
+        } 
 
         public void Init() {
             Tiles = new List<GameObject>();
