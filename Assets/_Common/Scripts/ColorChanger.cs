@@ -26,7 +26,7 @@ namespace Com.IsartDigital.Common {
             else if (color == EColor.Red) _color = Color.red;
             else if (color == EColor.Blue) _color = Color.blue;
 
-            _color.a = 0;
+            _color.a = 0.5f;
 
 
             block = new MaterialPropertyBlock();

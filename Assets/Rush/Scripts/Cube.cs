@@ -242,7 +242,7 @@ namespace Com.IsartDigital.Rush {
 
         public void SetModeConvoyed(Vector3 convoyeurDirection) {
             isConvoyed = true;
-            if (Physics.Raycast(transform.position, movementDirection, out hit, raycastDistance, groundMask)) {
+            if (convoyeurDirection == movementDirection && Physics.Raycast(transform.position, movementDirection, out hit, raycastDistance, groundMask)) {
                 //convoyeurDirection = Vector3.zero;
                 //SetDirection(Vector3.Cross(Vector3.up, movementDirection));
                 //InitNextConvoyedMovement(convoyeurDirection);
