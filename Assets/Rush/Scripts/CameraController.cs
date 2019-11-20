@@ -6,6 +6,7 @@
 using Com.IsartDigital.Common;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Com.IsartDigital.Rush {
     public class CameraController : MonoBehaviour {
@@ -62,13 +63,14 @@ namespace Com.IsartDigital.Rush {
         }
 
         private bool ClickMouse() {
-            return Input.GetMouseButtonUp(0);
+            return Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject();
         }
 
         private bool ClickTouch() {
             if (Input.touchCount > 0) {
                 Touch touch = Input.GetTouch(0);
-                return !isMoving && touch.phase == TouchPhase.Ended && touch.deltaPosition.magnitude < 5 ;
+                
+                return !EventSystem.current.IsPointerOverGameObject(touch.fingerId) && touch.phase == TouchPhase.Ended;
             }
             return false;
         }
@@ -133,7 +135,7 @@ namespace Com.IsartDigital.Rush {
                 RaycastHit hit;
                 bool raycast = Physics.Raycast(ray, out hit, 100, groundMask);
 
-                if (touch.deltaTime > 0 && touch.deltaPosition.magnitude > 5 /*&& !raycast*/) {
+                if ((touch.position - startPos).magnitude > 45) {
                     axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
                 }
                 
@@ -145,7 +147,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private bool isMoving = false;
-        private Vector3 startPos = Vector3.zero;
+        private Vector2 startPos = Vector2.zero;
 
 
         public Vector3 Position() {

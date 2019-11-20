@@ -16,7 +16,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         static public List<Spawner> list = new List<Spawner>();
 
         [SerializeField] private GameObject cubePrefab;
-        [SerializeField, Range(1, 10)] private int tickBetweenSpawn;
+        [SerializeField] private int tickBetweenSpawn;
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
         [SerializeField] private ColorChanger.EColor color;
@@ -120,7 +120,6 @@ namespace Com.IsartDigital.Rush.Tiles {
 
             Cube cubeScript = cube.GetComponent<Cube>();
 
-            cube.GetComponent<Renderer>().SetPropertyBlock(block);
             cube.GetComponent<Renderer>().SetPropertyBlock(block);
             cubeScript.secondLight.color = block.GetColor("_Color");
             cubeScript.lightHallo.color = block.GetColor("_Color");

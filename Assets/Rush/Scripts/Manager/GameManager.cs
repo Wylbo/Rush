@@ -67,7 +67,7 @@ namespace Com.IsartDigital.Rush.Manager {
             win = isLost = isInit = IsPause = false;
 
             TimeManager.Instance.UnInit();
-
+            
             Hud.Instance.PlayPause -= PlayPauseGame;
             Hud.Instance.SwitchPhase -= SwitchMode;
             Cube.OnLooseCondition -= Loose;

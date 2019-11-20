@@ -16,11 +16,10 @@ namespace Com.IsartDigital.Rush {
 
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private GameObject previewPrefab;
-        [SerializeField] private Transform tileContainer;
+        [NonSerialized]public GameObject level;
 
         private GameObject preview;
         private int inventoryIndex = 0;
-        public GameObject level;
         private List<ElementInventory> inventory;
         private ElementInventory elementInHand;
         private GameObject objectInHand;
@@ -110,9 +109,8 @@ namespace Com.IsartDigital.Rush {
                             break;
                         }
                     }
-                } else {
-
                 }
+
             }
         }
 
