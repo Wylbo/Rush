@@ -121,36 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &47495117
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 47495118}
-  m_Layer: 0
-  m_Name: TileContainer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &47495118
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47495117}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505650726
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 6333432057763777880, guid: 829c57d068db7ed4eb8e6c99b885060c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6333432057763777880, guid: 829c57d068db7ed4eb8e6c99b885060c,
         type: 3}
@@ -403,16 +373,11 @@ PrefabInstance:
         type: 3}
       propertyPath: tileContainer
       value: 
-      objectReference: {fileID: 47495118}
-    - target: {fileID: 9196384078809974657, guid: 829c57d068db7ed4eb8e6c99b885060c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -14
       objectReference: {fileID: 0}
-    - target: {fileID: 2561229558420717540, guid: 829c57d068db7ed4eb8e6c99b885060c,
+    - target: {fileID: 5885386439419614475, guid: 829c57d068db7ed4eb8e6c99b885060c,
         type: 3}
-      propertyPath: groundMask.m_Bits
-      value: 512
+      propertyPath: m_ClearFlags
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 829c57d068db7ed4eb8e6c99b885060c, type: 3}
@@ -1163,7 +1128,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tileContainer
       value: 
-      objectReference: {fileID: 47495118}
+      objectReference: {fileID: 0}
     - target: {fileID: 1818762871219093140, guid: c84c5445d58be8d4f95879e38988322d,
         type: 3}
       propertyPath: levelsPrefabsList.Array.data[4]
@@ -1318,6 +1283,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_MinValue
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218016723264578575, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 422773752, guid: b5af561231d28c24ba8ce8f23e798283, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779601174602425286, guid: b5af561231d28c24ba8ce8f23e798283,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5af561231d28c24ba8ce8f23e798283, type: 3}

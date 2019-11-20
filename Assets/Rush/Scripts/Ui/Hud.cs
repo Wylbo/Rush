@@ -100,9 +100,9 @@ namespace Com.IsartDigital.Rush.Ui {
         private void UpdateHud(int ntile, int index) {
             buttonList[index].GetComponentInChildren<Text>().text = ntile.ToString();
             if (ntile == 0) {
-                buttonList[index].SetActive(false);
+                buttonList[index].transform.GetChild(1).gameObject.SetActive(false);
             } else {
-                buttonList[index].SetActive(true);
+                buttonList[index].transform.GetChild(1).gameObject.SetActive(true);
             }
         }
 

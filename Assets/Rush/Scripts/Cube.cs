@@ -20,6 +20,7 @@ namespace Com.IsartDigital.Rush {
         [Space]
         [Space]
         [Space]
+        [SerializeField] private ParticleSystem trailParticle;
         [SerializeField] private ParticleSystem dustParticle;
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
@@ -63,6 +64,8 @@ namespace Com.IsartDigital.Rush {
 
         private Action doAction;
 
+        private ParticleSystem.MainModule mainTrail;
+
         private void Start() {
             list.Add(this);
             TimeManager.Instance.OnTick += Tick;
@@ -79,19 +82,25 @@ namespace Com.IsartDigital.Rush {
             toRotation = transform.rotation;
             //SetModeVoid();
             SetModeSpawn();
-            lightHallo.enabled = false;
+            //lightHallo.enabled = false;
 
-            ParticleSystem.MainModule main = dustParticle.main;
             MaterialPropertyBlock block = new MaterialPropertyBlock();
             GetComponentInChildren<Renderer>().GetPropertyBlock(block);
+
+            ParticleSystem.MainModule main = dustParticle.main;
             main.startColor = block.GetColor("_Color");
+
+            mainTrail = trailParticle.main;
+            mainTrail.startColor = block.GetColor("_Color");
+
+
 
         }
 
         private void SetModeSpawn() {
             SetModeVoid();
-            Tween.LocalScale(transform, Vector3.zero, Vector3.one, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseBounce, Tween.LoopType.None, null, () => { lightHallo.enabled = true; });
-
+            Tween.LocalScale(transform, Vector3.zero, Vector3.one, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseBounce);
+            Tween.LightRange(lightHallo, 0, 2, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseBounce);
         }
         private void DoActionSpawn() {
 
@@ -172,7 +181,8 @@ namespace Com.IsartDigital.Rush {
             transform.rotation = Quaternion.Lerp(fromRotation, toRotation, moveCurve.Evaluate(TimeManager.Instance.Ratio));
 
             if (haveToPlayParticle && TimeManager.Instance.Ratio >= 1) {
-                playDustParticle();
+                //playDustParticle();
+                playTrailParticle();
             }
         }
 
@@ -181,6 +191,15 @@ namespace Com.IsartDigital.Rush {
             dustParticle.transform.rotation = Quaternion.identity;
 
             dustParticle.Play();
+        }
+
+        private void playTrailParticle() {
+            trailParticle.transform.position = transform.position - Vector3.up / 2;
+            trailParticle.transform.rotation = Quaternion.identity;
+
+            
+            mainTrail.simulationSpeed = TimeManager.Instance.tickRate;
+            trailParticle.Play();
         }
 
         private void InitNextFall() {
@@ -202,7 +221,7 @@ namespace Com.IsartDigital.Rush {
                 nTickToWait--;
             }
             isWaiting = true;
-           
+
             this.nTickToWait = nTickToWait;
 
             doAction = doActionWait;
@@ -241,6 +260,7 @@ namespace Com.IsartDigital.Rush {
                     }
                 }
                 isConvoyed = false;
+                playTrailParticle();
             }
 
         }
@@ -249,9 +269,11 @@ namespace Com.IsartDigital.Rush {
             isWaiting = true;
             doAction = DoActionTeleport;
             tpTarget = target;
-            lightHallo.enabled = false;
+
             Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            Tween.LightRange(lightHallo, 0, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+
         }
 
         private void DoActionTeleport() {
@@ -267,7 +289,9 @@ namespace Com.IsartDigital.Rush {
                 SetModeWait(2);
 
                 Tween.Position(transform, transform.position + Vector3.up * 5, transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+                Tween.LightRange(lightHallo, 0, 2, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
                 Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
+
 
             }
         }
