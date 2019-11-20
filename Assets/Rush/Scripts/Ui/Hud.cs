@@ -3,6 +3,7 @@
 /// Date : 08/11/2019 10:24
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,12 @@ namespace Com.IsartDigital.Rush.Ui {
     public class Hud : MonoBehaviour {
 
         [SerializeField] private RectTransform tileButtonContainer;
-        [SerializeField] private GameObject level;
         [SerializeField] private GameObject uiButton;
         [SerializeField] private Button playPauseButton;
         [SerializeField] private Button switchPhaseButton;
+        [SerializeField] private Slider sliderTime;
 
+        private GameObject level;
         private List<ElementInventory> levelInventory;
         private List<GameObject> buttonList = new List<GameObject>();
 
@@ -27,6 +29,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private static Hud instance;
         public static Hud Instance { get { return instance; } }
+        public event Action<float> OnSliderMoved;
 
         private void Awake() {
             if (instance) {
@@ -35,9 +38,21 @@ namespace Com.IsartDigital.Rush.Ui {
             }
 
             instance = this;
+            //sliderTime.OnMove(() =>OnSliderMoved());
+        }
+
+        private void Start() {
+            Debug.Log(sliderTime);
+            sliderTime.onValueChanged.AddListener(OnSliderValueChanged);
+        }
+
+        private void OnSliderValueChanged(float value) {
+            OnSliderMoved?.Invoke(value);
+            //Time.timeScale = value;
         }
 
         public void Reset() {
+            OnSliderMoved -= TimeManager.Instance.UpdateTickRate;
 
             playPauseButton.GetComponent<PlayPauseBtn>().OnClick -= PlayPauseToggle_OnValueChanged;
             switchPhaseButton.GetComponent<SwitchPhaseBtn>().OnClick -= SwitchPhaseToggle_OnValueChanged;
@@ -53,6 +68,8 @@ namespace Com.IsartDigital.Rush.Ui {
 
             level = levelToLoad;
 
+            sliderTime.value = 1;
+            OnSliderMoved += TimeManager.Instance.UpdateTickRate;
             Player.Instance.OnElementPlaced += UpdateHud;
 
             levelInventory = level.GetComponent<Level>().list;
@@ -92,6 +109,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private void SwitchPhaseToggle_OnValueChanged() {
             SwitchPhase?.Invoke();
+            OnSliderMoved?.Invoke(sliderTime.value);
         }
 
         private void PlayPauseToggle_OnValueChanged(bool isOn) {

@@ -153,7 +153,7 @@ namespace Com.IsartDigital.Rush {
         public Vector3 Position() {
             (float hori, float vert) axis = GetAxis();
 
-            angles.hori += axis.hori * speed * Time.deltaTime;
+            angles.hori += axis.hori * speed * Time.deltaTime ;
             angles.vert += axis.vert * speed * Time.deltaTime;
 
             angles.vert = Mathf.Clamp(angles.vert, -Mathf.PI / 2 + 0.1f, Mathf.PI / 2 - 0.1f);

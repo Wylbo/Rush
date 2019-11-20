@@ -3,14 +3,17 @@
 /// Date : 21/10/2019 14:03
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Ui;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com.IsartDigital.Rush.Manager {
     public class TimeManager : MonoBehaviour {
         private static TimeManager instance;
 
         [SerializeField, Range(0f, 5f)] private float speed = 1;
+        //[SerializeField] Slider slider;
 
         public float tickRate;
         private bool isTicking = false;
@@ -31,6 +34,14 @@ namespace Com.IsartDigital.Rush.Manager {
 
             instance = this;
 
+            //Hud.Instance.OnSliderMoved += UpdateTickRate;
+
+        }
+
+        public void UpdateTickRate(float value) {
+            if (tickRate > 0) {
+                tickRate = value;
+            }
         }
 
         public void Init() {
