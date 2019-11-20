@@ -120,8 +120,7 @@ namespace Com.IsartDigital.Rush.Tiles {
 
             Cube cubeScript = cube.GetComponent<Cube>();
 
-            cube.GetComponent<Renderer>().SetPropertyBlock(block);
-            cube.GetComponent<Renderer>().SetPropertyBlock(block);
+            cubeScript.neon.GetComponent<Renderer>().SetPropertyBlock(block);
             cubeScript.secondLight.color = block.GetColor("_Color");
             cubeScript.lightHallo.color = block.GetColor("_Color");
             cubeScript.colorIndex = (int)color;

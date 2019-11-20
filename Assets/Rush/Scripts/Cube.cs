@@ -24,6 +24,7 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
         [SerializeField] private LayerMask groundMask;
+        [SerializeField] public GameObject neon;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -82,7 +83,7 @@ namespace Com.IsartDigital.Rush {
 
             ParticleSystem.MainModule main = dustParticle.main;
             MaterialPropertyBlock block = new MaterialPropertyBlock();
-            GetComponent<Renderer>().GetPropertyBlock(block);
+            GetComponentInChildren<Renderer>().GetPropertyBlock(block);
             main.startColor = block.GetColor("_Color");
 
         }
@@ -93,7 +94,7 @@ namespace Com.IsartDigital.Rush {
 
         }
         private void DoActionSpawn() {
-                
+
         }
 
         private void CheckCollision() {
@@ -160,7 +161,7 @@ namespace Com.IsartDigital.Rush {
         private void SetModeMove() {
             InitNextMove();
             doAction = DoActionMove;
-            haveToPlayParticle = Physics.Raycast(transform.position + movementDirection, Vector3.down,1,groundMask);
+            haveToPlayParticle = Physics.Raycast(transform.position + movementDirection, Vector3.down, 1, groundMask);
 
             //playDustParticle();
         }
@@ -243,14 +244,12 @@ namespace Com.IsartDigital.Rush {
             doAction = DoActionTeleport;
             tpTarget = target;
             lightHallo.enabled = false;
-            Tween.Position(transform, transform.position + Vector3.up, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
         }
 
         private void DoActionTeleport() {
             if (tickCounter < 1) {
-                Tween.Position(transform, transform.position - Vector3.up, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
-                Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             }
 
             if (tickCounter > 1) {
@@ -260,6 +259,10 @@ namespace Com.IsartDigital.Rush {
                 toPosition = transform.position;
 
                 SetModeWait(2);
+
+                    Tween.Position(transform, transform.position + Vector3.up * 5,transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+                    Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
+                
             }
         }
 
