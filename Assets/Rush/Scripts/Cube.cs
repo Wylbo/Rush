@@ -181,6 +181,11 @@ namespace Com.IsartDigital.Rush {
 
             if (haveToPlayParticle && TimeManager.Instance.Ratio >= 1) {
                 //playDustParticle();
+                transform.rotation = Quaternion.identity;
+
+                Tween.LocalScale(transform, Vector3.one / 2, 0.4f, 0f, Tween.EaseIn);
+                Tween.LocalScale(transform, Vector3.one, 0.4f, 0.4f, Tween.EaseIn);
+
                 playTrailParticle();
             }
         }
