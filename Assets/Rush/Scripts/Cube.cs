@@ -183,8 +183,12 @@ namespace Com.IsartDigital.Rush {
                 //playDustParticle();
                 transform.rotation = Quaternion.identity;
 
-                Tween.LocalScale(transform, Vector3.one / 2, 0.4f, 0f, Tween.EaseIn);
-                Tween.LocalScale(transform, Vector3.one, 0.4f, 0.4f, Tween.EaseIn);
+                Tween.LocalScale(transform, Vector3.one * 0.9f , 0.1f, 0f, Tween.EaseIn);
+                Tween.LocalScale(transform, Vector3.one, 0.1f, 0.1f, Tween.EaseIn);
+                //Tween.Position(transform, Vector3)
+
+                Tween.LightIntensity(lightHallo, lightHallo.intensity * 0.9f, 0.1f, 0f, Tween.EaseIn);
+                Tween.LightIntensity(lightHallo, 2, 0.1f, 0f, Tween.EaseIn);
 
                 playTrailParticle();
             }

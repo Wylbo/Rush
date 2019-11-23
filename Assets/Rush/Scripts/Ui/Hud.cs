@@ -5,6 +5,7 @@
 
 using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
+using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,7 +43,6 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void Start() {
-            Debug.Log(sliderTime);
             sliderTime.onValueChanged.AddListener(OnSliderValueChanged);
         }
 
@@ -70,6 +70,7 @@ namespace Com.IsartDigital.Rush.Ui {
             sliderTime.value = 1;
             OnSliderMoved += TimeManager.Instance.UpdateTickRate;
             Player.Instance.OnElementPlaced += UpdateHud;
+            Player.Instance.NewElemInHand += SelectElem;
 
             levelInventory = level.GetComponent<Level>().list;
 
@@ -80,27 +81,53 @@ namespace Com.IsartDigital.Rush.Ui {
             switchPhaseButton.GetComponent<SwitchPhaseBtn>().OnClick += SwitchPhaseToggle_OnValueChanged;
 
             for (int i = 0; i < levelInventory.Count; i++) {
-                button = Instantiate(uiButton, tileButtonContainer, false);
+                button = Instantiate(uiButton, tileButtonContainer);
                 button.transform.localScale = Vector3.one;
                 button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
                 button.GetComponent<ButtonHandler>().index = i;
                 buttonList.Add(button);
                 button.GetComponent<ButtonHandler>().OnClick += Player.Instance.OnHudButtonClick;
 
-                uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform,false);
+                uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform, false);
                 uiTile.transform.position += Vector3.back;
                 uiTile.transform.localScale *= 100;
 
                 uiTile.GetComponent<UiTile>().baseRotation = levelInventory[i].Direction;
 
+                Color textColor = uiTile.GetComponentInChildren<Renderer>().material.color;
+                textColor.a = 1;
+
+                button.GetComponentInChildren<Text>().color = textColor;
+            }
+
+            SelectElem(0);
+        }
+
+        private void SelectElem(int index) {
+            for (int i = buttonList.Count - 1; i >= 0; i--) {
+                Tween.LocalScale(buttonList[i].transform, Vector3.one, 0.2f, 0f, Tween.EaseInOutBack);
+
+                buttonList[i].GetComponent<ButtonHandler>().lightOnOff(false, Color.black);
 
             }
+
+            Tween.LocalScale(buttonList[index].transform, Vector3.one * 1.5f, 0.2f, 0f, Tween.EaseInOutBack);
+            Color lightColor = buttonList[index].GetComponentInChildren<Renderer>().material.color;
+            lightColor.a = 1;
+            buttonList[index].GetComponent<ButtonHandler>().lightOnOff(true, lightColor);
         }
 
         private void UpdateHud(int ntile, int index) {
-            buttonList[index].GetComponentInChildren<Text>().text = ntile.ToString();
+            Text text = buttonList[index].GetComponentInChildren<Text>();
+            text.text = ntile.ToString();
+            //Tween.Shake(text.transform, text.rectTransform.position,Vector3.one * 1, 10, 0);
+
             if (ntile == 0) {
                 buttonList[index].transform.GetChild(1).gameObject.SetActive(false);
+                Tween.LocalScale(buttonList[index].transform, Vector3.one, 0.2f, 0f, Tween.EaseInOutBack);
+                buttonList[index].GetComponent<ButtonHandler>().lightOnOff(false, Color.black);
+
+
             } else {
                 buttonList[index].transform.GetChild(1).gameObject.SetActive(true);
             }

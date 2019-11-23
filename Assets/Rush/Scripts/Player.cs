@@ -92,12 +92,15 @@ namespace Com.IsartDigital.Rush {
         public void OnHudButtonClick(int index) {
             inventoryIndex = index;
             elementInHand = null;
+            NewElemInHand(index);
             ResetPreview();
         }
 
+        public Action<int> NewElemInHand;
         private void GetElementInHand() {
             if (elementInHand == null) {
                 elementInHand = inventory[inventoryIndex];
+                //NewElemInHand?.Invoke(inventoryIndex);
 
                 if (elementInHand.Tiles.Count > 0) {
 
@@ -185,6 +188,7 @@ namespace Com.IsartDigital.Rush {
                     inventory[i].AddOneToList();
                     inventoryIndex = i;
                     OnElementPlaced?.Invoke(inventory[inventoryIndex].Tiles.Count, inventoryIndex);
+                    NewElemInHand(inventoryIndex);
                     Destroy(above);
                 }
             }
@@ -194,6 +198,8 @@ namespace Com.IsartDigital.Rush {
             for (int i = inventory.Count - 1; i >= 0; i--) {
                 if (inventory[i].Tiles.Count > 0) {
                     inventoryIndex = i;
+                    NewElemInHand(inventoryIndex);
+                    break;
                 }
             }
         }
