@@ -14,6 +14,7 @@ namespace Com.IsartDigital.Rush.Manager {
         private static GameManager instance;
         [SerializeField] GameObject winScreen;
         [SerializeField] GameObject levelSelector;
+        [SerializeField] GameObject TitleCard;
         public static GameManager Instance { get { return instance; } }
 
         public bool IsInActionPhase { get; private set; } = false;
@@ -45,7 +46,7 @@ namespace Com.IsartDigital.Rush.Manager {
         private void Start() {
             LevelManager.Instance.OnLevelLoading += Init;
             LevelManager.Instance.OnLevelUnload += UnInit;
-            HudManager.Instance.AddScreen(levelSelector);
+            HudManager.Instance.AddScreen(TitleCard);
 
         }
 
