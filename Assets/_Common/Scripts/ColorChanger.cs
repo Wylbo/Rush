@@ -12,7 +12,7 @@ namespace Com.IsartDigital.Common {
             Cyan,
             Yellow,
             Pink,
-            Blue,
+            Orange,
             Red
         }
 
@@ -24,7 +24,7 @@ namespace Com.IsartDigital.Common {
             else if (color == EColor.Pink) _color = Color.magenta;
             else if (color == EColor.Yellow) _color = Color.yellow;
             else if (color == EColor.Red) _color = Color.red;
-            else if (color == EColor.Blue) _color = Color.blue;
+            else if (color == EColor.Orange) _color = new Color(1,0.3f,0);
 
             _color.a = 0.5f;
 
