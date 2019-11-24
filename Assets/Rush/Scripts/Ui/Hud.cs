@@ -82,10 +82,11 @@ namespace Com.IsartDigital.Rush.Ui {
 
             for (int i = 0; i < levelInventory.Count; i++) {
                 button = Instantiate(uiButton, tileButtonContainer);
-                button.transform.localScale = Vector3.one;
-                button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
-                button.GetComponent<ButtonHandler>().index = i;
                 buttonList.Add(button);
+                button.transform.localScale = Vector3.one;
+                //button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
+                UpdateText(levelInventory[i].Number, i);
+                button.GetComponent<ButtonHandler>().index = i;
                 button.GetComponent<ButtonHandler>().OnClick += Player.Instance.OnHudButtonClick;
 
                 uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform, false);
@@ -97,7 +98,7 @@ namespace Com.IsartDigital.Rush.Ui {
                 Color textColor = uiTile.GetComponentInChildren<Renderer>().material.color;
                 textColor.a = 1;
 
-                button.GetComponentInChildren<Text>().color = textColor;
+                button.GetComponent<ButtonHandler>().number[0].color = Color.white;
             }
 
             SelectElem(0);
@@ -118,9 +119,7 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void UpdateHud(int ntile, int index) {
-            Text text = buttonList[index].GetComponentInChildren<Text>();
-            text.text = ntile.ToString();
-            //Tween.Shake(text.transform, text.rectTransform.position,Vector3.one * 1, 10, 0);
+            UpdateText(ntile,index);
 
             if (ntile == 0) {
                 buttonList[index].transform.GetChild(1).gameObject.SetActive(false);
@@ -130,6 +129,14 @@ namespace Com.IsartDigital.Rush.Ui {
 
             } else {
                 buttonList[index].transform.GetChild(1).gameObject.SetActive(true);
+            }
+        }
+
+        private void UpdateText(int ntile, int index) {
+            Text[] text = buttonList[index].GetComponent<ButtonHandler>().number;
+
+            for (int i = 0; i < text.Length; i++) {
+                text[i].text = ntile.ToString();
             }
         }
 

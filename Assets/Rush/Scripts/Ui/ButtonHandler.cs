@@ -14,6 +14,7 @@ namespace Com.IsartDigital.Rush.Ui {
         private Button button;
         private Image image;
         [SerializeField] private Sprite imageOff;
+        public Text[] number;
         private Sprite imageOn;
 
         public Action<int> OnClick;
