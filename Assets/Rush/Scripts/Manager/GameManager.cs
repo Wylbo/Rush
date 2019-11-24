@@ -15,6 +15,7 @@ namespace Com.IsartDigital.Rush.Manager {
         [SerializeField] GameObject winScreen;
         [SerializeField] GameObject levelSelector;
         [SerializeField] GameObject TitleCard;
+        [SerializeField] AudioSource menuMusic;
         public static GameManager Instance { get { return instance; } }
 
         public bool IsInActionPhase { get; private set; } = false;
@@ -61,6 +62,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Hud.Instance.SwitchPhase += SwitchMode;
             Cube.OnLooseCondition += Loose;
             isInit = true;
+            menuMusic.Stop();
+
             PlayPauseGame(true);
         }
 
@@ -74,6 +77,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Cube.OnLooseCondition -= Loose;
 
             SwitchToReflexionPhase();
+
+            menuMusic.Play();
 
             Player.Instance.UnIinit();
 

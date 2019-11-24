@@ -17,7 +17,7 @@ namespace Com.IsartDigital.Rush.Ui.LevelSelector {
         
 		private void Start () {
             button = GetComponent<Button>();
-            button.onClick.AddListener(() => OnButtonClick(levelToLoad));
+            button.onClick.AddListener(() => { OnButtonClick(levelToLoad); });
         }
 	}
 }
