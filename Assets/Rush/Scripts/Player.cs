@@ -16,11 +16,10 @@ namespace Com.IsartDigital.Rush {
 
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private GameObject previewPrefab;
-        [SerializeField] private Transform tileContainer;
+        [NonSerialized]public GameObject level;
 
         private GameObject preview;
         private int inventoryIndex = 0;
-        public GameObject level;
         private List<ElementInventory> inventory;
         private ElementInventory elementInHand;
         private GameObject objectInHand;
@@ -37,14 +36,19 @@ namespace Com.IsartDigital.Rush {
             }
 
             controller = GetComponent<CameraController>();
-            LevelManager.Instance.OnLevelLoading += Init;
-            LevelManager.Instance.OnLevelUnload += UnIinit;
 
             Instance = this;
         }
 
+        private void Start() {
+
+            LevelManager.Instance.OnLevelLoading += Init;
+            LevelManager.Instance.OnLevelUnload += UnIinit;
+            
+        }
 
         public void Init(GameObject level) {
+
             this.level = level;
             inventory = this.level.GetComponent<Level>().list;
             preview = Instantiate(previewPrefab, level.transform);
@@ -93,12 +97,15 @@ namespace Com.IsartDigital.Rush {
         public void OnHudButtonClick(int index) {
             inventoryIndex = index;
             elementInHand = null;
+            NewElemInHand(index);
             ResetPreview();
         }
 
+        public Action<int> NewElemInHand;
         private void GetElementInHand() {
             if (elementInHand == null) {
                 elementInHand = inventory[inventoryIndex];
+                //NewElemInHand?.Invoke(inventoryIndex);
 
                 if (elementInHand.Tiles.Count > 0) {
 
@@ -110,9 +117,8 @@ namespace Com.IsartDigital.Rush {
                             break;
                         }
                     }
-                } else {
-
                 }
+
             }
         }
 
@@ -187,6 +193,7 @@ namespace Com.IsartDigital.Rush {
                     inventory[i].AddOneToList();
                     inventoryIndex = i;
                     OnElementPlaced?.Invoke(inventory[inventoryIndex].Tiles.Count, inventoryIndex);
+                    NewElemInHand(inventoryIndex);
                     Destroy(above);
                 }
             }
@@ -196,6 +203,8 @@ namespace Com.IsartDigital.Rush {
             for (int i = inventory.Count - 1; i >= 0; i--) {
                 if (inventory[i].Tiles.Count > 0) {
                     inventoryIndex = i;
+                    NewElemInHand(inventoryIndex);
+                    break;
                 }
             }
         }

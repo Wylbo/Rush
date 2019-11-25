@@ -3,7 +3,9 @@
 /// Date : 08/11/2019 10:24
 ///-----------------------------------------------------------------
 
+using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
+using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +15,12 @@ namespace Com.IsartDigital.Rush.Ui {
     public class Hud : MonoBehaviour {
 
         [SerializeField] private RectTransform tileButtonContainer;
-        [SerializeField] private GameObject level;
         [SerializeField] private GameObject uiButton;
         [SerializeField] private Button playPauseButton;
         [SerializeField] private Button switchPhaseButton;
+        [SerializeField] private Slider sliderTime;
 
+        private GameObject level;
         private List<ElementInventory> levelInventory;
         private List<GameObject> buttonList = new List<GameObject>();
 
@@ -27,6 +30,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
         private static Hud instance;
         public static Hud Instance { get { return instance; } }
+        public event Action<float> OnSliderMoved;
 
         private void Awake() {
             if (instance) {
@@ -35,9 +39,19 @@ namespace Com.IsartDigital.Rush.Ui {
             }
 
             instance = this;
+            //sliderTime.OnMove(() =>OnSliderMoved());
+        }
+
+        private void Start() {
+            sliderTime.onValueChanged.AddListener(OnSliderValueChanged);
+        }
+
+        private void OnSliderValueChanged(float value) {
+            OnSliderMoved?.Invoke(value);
         }
 
         public void Reset() {
+            OnSliderMoved -= TimeManager.Instance.UpdateTickRate;
 
             playPauseButton.GetComponent<PlayPauseBtn>().OnClick -= PlayPauseToggle_OnValueChanged;
             switchPhaseButton.GetComponent<SwitchPhaseBtn>().OnClick -= SwitchPhaseToggle_OnValueChanged;
@@ -53,7 +67,10 @@ namespace Com.IsartDigital.Rush.Ui {
 
             level = levelToLoad;
 
+            sliderTime.value = 1;
+            OnSliderMoved += TimeManager.Instance.UpdateTickRate;
             Player.Instance.OnElementPlaced += UpdateHud;
+            Player.Instance.NewElemInHand += SelectElem;
 
             levelInventory = level.GetComponent<Level>().list;
 
@@ -64,34 +81,76 @@ namespace Com.IsartDigital.Rush.Ui {
             switchPhaseButton.GetComponent<SwitchPhaseBtn>().OnClick += SwitchPhaseToggle_OnValueChanged;
 
             for (int i = 0; i < levelInventory.Count; i++) {
-                button = Instantiate(uiButton, tileButtonContainer, false);
-                button.transform.localScale = Vector3.one;
-                button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
-                button.GetComponent<ButtonHandler>().index = i;
+                button = Instantiate(uiButton, tileButtonContainer);
                 buttonList.Add(button);
+                button.transform.localScale = Vector3.one;
+                //button.GetComponentInChildren<Text>().text = levelInventory[i].Number.ToString();
+                UpdateText(levelInventory[i].Number, i);
+                button.GetComponent<ButtonHandler>().index = i;
                 button.GetComponent<ButtonHandler>().OnClick += Player.Instance.OnHudButtonClick;
 
-                uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform,false);
+                uiTile = Instantiate(levelInventory[i].Tile.GetComponent<ADraggableTile>().UiTile, button.transform, false);
                 uiTile.transform.position += Vector3.back;
                 uiTile.transform.localScale *= 100;
 
                 uiTile.GetComponent<UiTile>().baseRotation = levelInventory[i].Direction;
 
+                Color textColor = uiTile.GetComponentInChildren<Renderer>().material.color;
+                textColor.a = 1;
+
+                button.GetComponent<ButtonHandler>().number[0].color = Color.white;
+            }
+
+            SelectElem(0);
+        }
+
+        private void SelectElem(int index) {
+            for (int i = buttonList.Count - 1; i >= 0; i--) {
+                Tween.LocalScale(buttonList[i].transform, Vector3.one, 0.2f, 0f, Tween.EaseInOutBack);
+
+                buttonList[i].GetComponent<ButtonHandler>().lightOnOff(false, Color.black);
 
             }
+
+            Tween.LocalScale(buttonList[index].transform, Vector3.one * 1.5f, 0.2f, 0f, Tween.EaseInOutBack);
+            Color lightColor = buttonList[index].GetComponentInChildren<Renderer>().material.color;
+            lightColor.a = 1;
+            buttonList[index].GetComponent<ButtonHandler>().lightOnOff(true, lightColor);
         }
 
         private void UpdateHud(int ntile, int index) {
-            buttonList[index].GetComponentInChildren<Text>().text = ntile.ToString();
+            UpdateText(ntile,index);
+
             if (ntile == 0) {
-                buttonList[index].SetActive(false);
+                buttonList[index].transform.GetChild(1).gameObject.SetActive(false);
+                Tween.LocalScale(buttonList[index].transform, Vector3.one, 0.2f, 0f, Tween.EaseInOutBack);
+                buttonList[index].GetComponent<ButtonHandler>().lightOnOff(false, Color.black);
+
+
             } else {
-                buttonList[index].SetActive(true);
+                buttonList[index].transform.GetChild(1).gameObject.SetActive(true);
+            }
+        }
+
+        private void UpdateText(int ntile, int index) {
+            Text[] text = buttonList[index].GetComponent<ButtonHandler>().number;
+
+            for (int i = 0; i < text.Length; i++) {
+                text[i].text = ntile.ToString();
             }
         }
 
         private void SwitchPhaseToggle_OnValueChanged() {
             SwitchPhase?.Invoke();
+            OnSliderMoved?.Invoke(sliderTime.value);
+            //tileButtonContainer.gameObject.SetActive(!tileButtonContainer.gameObject.activeSelf);
+            //if (GameManager.Instance.IsInActionPhase) {
+            //    GetComponent<Animator>().SetTrigger("Disappear");
+            //} else {
+            //    Debug.Log("Penis");
+            //    GetComponent<Animator>().SetTrigger("Appear"); 
+            //}
+            //Tween.LocalPosition(tileButtonContainer.transform, tileButtonContainer.transform.right * 4, 1f, 0f, Tween.EaseInBack);
         }
 
         private void PlayPauseToggle_OnValueChanged(bool isOn) {

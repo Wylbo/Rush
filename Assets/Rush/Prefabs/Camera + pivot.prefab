@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2930231188922377702}
   - component: {fileID: 2561229558420717540}
   - component: {fileID: 8040153493836869738}
+  - component: {fileID: 782871092}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -60,7 +61,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3834782936767316628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6333432057763777880}
@@ -136,8 +137,13 @@ MonoBehaviour:
   mouseHorizontalAxis: Mouse X
   mouseVerticalAxis: Mouse Y
   mouseSensitivity: 3
+  touchSensitivity: 5
   OribitDampening: 0
   cameraPivot: {fileID: 754499702048828809}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 512
+  distance: 0
 --- !u!114 &8040153493836869738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,8 +161,23 @@ MonoBehaviour:
     m_Bits: 512
   previewPrefab: {fileID: 8541498372401300673, guid: 2e050e173b704c744b134a8c68790429,
     type: 3}
-  tileContainer: {fileID: 0}
-  level: {fileID: 0}
+--- !u!114 &782871092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3834782936767316628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 38122a57570368043ab234574799a264, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &6699122752128766095
 GameObject:
   m_ObjectHideFlags: 0

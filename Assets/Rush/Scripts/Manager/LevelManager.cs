@@ -12,7 +12,6 @@ namespace Com.IsartDigital.Rush.Manager {
 
         [SerializeField] List<GameObject> levelsPrefabsList = new List<GameObject>();
         [SerializeField] GameObject levelSelector;
-        [SerializeField] Transform tileContainer;
 
         public event Action<GameObject> OnLevelLoading;
         public event Action OnLevelUnload;

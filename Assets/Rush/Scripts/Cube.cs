@@ -5,6 +5,7 @@
 
 using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
+using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +16,16 @@ namespace Com.IsartDigital.Rush {
         static public List<Cube> list { get; private set; } = new List<Cube>();
 
         [SerializeField] private AnimationCurve moveCurve;
+        [Space]
+        [Space]
+        [Space]
+        [Space]
+        [SerializeField] private ParticleSystem trailParticle;
+        [SerializeField] private ParticleSystem dustParticle;
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
         [SerializeField] private LayerMask groundMask;
+        [SerializeField] public GameObject neon;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -56,6 +64,8 @@ namespace Com.IsartDigital.Rush {
 
         private Action doAction;
 
+        private ParticleSystem.MainModule mainTrail;
+
         private void Start() {
             list.Add(this);
             TimeManager.Instance.OnTick += Tick;
@@ -70,17 +80,39 @@ namespace Com.IsartDigital.Rush {
 
             toPosition = transform.position;
             toRotation = transform.rotation;
+            //SetModeVoid();
+            SetModeSpawn();
+            //lightHallo.enabled = false;
+
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            GetComponentInChildren<Renderer>().GetPropertyBlock(block);
+
+            ParticleSystem.MainModule main = dustParticle.main;
+            main.startColor = block.GetColor("_Color");
+
+            mainTrail = trailParticle.main;
+            mainTrail.startColor = block.GetColor("_Color");
+
+
+
+        }
+
+        private void SetModeSpawn() {
             SetModeVoid();
+            Tween.LocalScale(transform, Vector3.zero, Vector3.one, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseBounce);
+            Tween.LightRange(lightHallo, 0, 2, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseBounce);
+        }
+        private void DoActionSpawn() {
+
         }
 
         private void CheckCollision() {
             down = Vector3.down;
-            forward = movementDirection;
 
             //check if ground under
             if (Physics.Raycast(transform.position, down, out hit, raycastDistance, groundMask)) {
                 //check for wall forward
-                if (Physics.Raycast(transform.position, forward, out hit, raycastDistance)) {
+                if (Physics.Raycast(transform.position, movementDirection, out hit, raycastDistance,groundMask)) {
                     GameObject hitObjectInFront = hit.collider.gameObject;
 
                     if (hitObjectInFront.CompareTag(groundTag)) {
@@ -105,8 +137,9 @@ namespace Com.IsartDigital.Rush {
                 tickCounter++;
                 return;
             }
-
-            CheckCollision();
+            if (doAction != DoActionOnTarget) {
+                CheckCollision();
+            }
 
 
         }
@@ -132,15 +165,49 @@ namespace Com.IsartDigital.Rush {
             toRotation = movementRotation * fromRotation;
         }
 
+        bool haveToPlayParticle = false;
         private void SetModeMove() {
             InitNextMove();
             doAction = DoActionMove;
+            haveToPlayParticle = Physics.Raycast(transform.position + movementDirection, Vector3.down, 1, groundMask);
+
+            //playDustParticle();
         }
 
         private void DoActionMove() {
             transform.position = Vector3.Lerp(fromPosition, toPosition, moveCurve.Evaluate(TimeManager.Instance.Ratio))
                 + Vector3.up * rotationOffsetY * Mathf.Sin(Mathf.PI * Mathf.Clamp01(moveCurve.Evaluate(TimeManager.Instance.Ratio)));
             transform.rotation = Quaternion.Lerp(fromRotation, toRotation, moveCurve.Evaluate(TimeManager.Instance.Ratio));
+
+            if (haveToPlayParticle && TimeManager.Instance.Ratio >= 1) {
+                //playDustParticle();
+                transform.rotation = Quaternion.identity;
+
+                Tween.LocalScale(transform, Vector3.one * 0.9f , 0.1f, 0f, Tween.EaseIn);
+                Tween.LocalScale(transform, Vector3.one, 0.1f, 0.1f, Tween.EaseIn);
+                //Tween.Position(transform, Vector3)
+
+                Tween.LightIntensity(lightHallo, lightHallo.intensity * 0.9f, 0.1f, 0f, Tween.EaseIn);
+                Tween.LightIntensity(lightHallo, 2, 0.1f, 0f, Tween.EaseIn);
+
+                playTrailParticle();
+            }
+        }
+
+        private void playDustParticle() {
+            dustParticle.transform.position = transform.position - Vector3.up / 2;
+            dustParticle.transform.rotation = Quaternion.identity;
+
+            dustParticle.Play();
+        }
+
+        private void playTrailParticle() {
+            trailParticle.transform.position = transform.position - Vector3.up / 2;
+            trailParticle.transform.rotation = Quaternion.identity;
+
+            
+            mainTrail.simulationSpeed = TimeManager.Instance.tickRate;
+            trailParticle.Play();
         }
 
         private void InitNextFall() {
@@ -158,12 +225,18 @@ namespace Com.IsartDigital.Rush {
         }
 
         public void SetModeWait(int nTickToWait) {
+            if (isWaiting) {
+                nTickToWait--;
+            }
             isWaiting = true;
+
             this.nTickToWait = nTickToWait;
+
             doAction = doActionWait;
         }
 
         private void doActionWait() {
+
             if (tickCounter > nTickToWait) {
                 CheckCollision();
                 tickCounter = 0;
@@ -178,6 +251,15 @@ namespace Com.IsartDigital.Rush {
 
         public void SetModeConvoyed(Vector3 convoyeurDirection) {
             isConvoyed = true;
+            if (convoyeurDirection == movementDirection && Physics.Raycast(transform.position, movementDirection, out hit, raycastDistance, groundMask)) {
+                //convoyeurDirection = Vector3.zero;
+                //SetDirection(Vector3.Cross(Vector3.up, movementDirection));
+                //InitNextConvoyedMovement(convoyeurDirection);
+                isConvoyed = false;
+                SetModeWait(1);
+                return;
+            }
+            
             InitNextConvoyedMovement(convoyeurDirection);
             doAction = DoActionConveyed;
         }
@@ -195,6 +277,7 @@ namespace Com.IsartDigital.Rush {
                     }
                 }
                 isConvoyed = false;
+                playTrailParticle();
             }
 
         }
@@ -203,9 +286,17 @@ namespace Com.IsartDigital.Rush {
             isWaiting = true;
             doAction = DoActionTeleport;
             tpTarget = target;
+
+            Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            Tween.LightRange(lightHallo, 0, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+
         }
 
         private void DoActionTeleport() {
+            if (tickCounter < 1) {
+            }
+
             if (tickCounter > 1) {
                 isWaiting = false;
 
@@ -213,6 +304,12 @@ namespace Com.IsartDigital.Rush {
                 toPosition = transform.position;
 
                 SetModeWait(2);
+
+                Tween.Position(transform, transform.position + Vector3.up * 5, transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+                Tween.LightRange(lightHallo, 0, 2, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
+                Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
+
+
             }
         }
 
@@ -248,6 +345,25 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void DoActionGameOver() {
+
+        }
+
+        GameObject test;
+        public void SetModeOnTarget() {
+            doAction = DoActionOnTarget;
+            lightHallo.enabled = false;
+            secondLight.enabled = false;
+            GetComponent<Collider>().enabled = false;
+
+            transform.rotation = Quaternion.identity;
+            Tween.Position(transform, transform.position + Vector3.up * 1, 1f, 0f, Tween.EaseInOutStrong, Tween.LoopType.None,
+                null, () => Destroy(gameObject));
+            Tween.LocalScale(transform, Vector3.zero, 1f, 0f, Tween.EaseInBack);
+            Tween.Rotate(transform, new Vector3(300, 500), Space.Self, 1f, 0f, Tween.EaseInOutBack);
+
+        }
+
+        private void DoActionOnTarget() {
 
         }
 

@@ -13,6 +13,8 @@ namespace Com.IsartDigital.Rush.Ui {
 
         [SerializeField] private Button back;
         [SerializeField] private Button reset;
+        [SerializeField] private Image blakcScreen;
+        [SerializeField] private Slider slider;
 
         public delegate void PlayPauseBtnEventHandler(bool isOn);
         public event PlayPauseBtnEventHandler OnClick;
@@ -27,6 +29,8 @@ namespace Com.IsartDigital.Rush.Ui {
             base.changeSprite(isOn);
             back.gameObject.SetActive(isOn);
             reset.gameObject.SetActive(isOn);
+            blakcScreen.gameObject.SetActive(isOn);
+            slider.gameObject.SetActive(!isOn);
         }
 
         protected override void button_onClick() {
