@@ -301,10 +301,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   list:
-  - tilePrefab: {fileID: 1107203473147756, guid: 7c58f80a63e8a7141b5b7377395135cc,
+  - tilePrefab: {fileID: 1324669775067448, guid: c6a4f00d8e6ee94408e741323199cb71,
       type: 3}
     _direction: 0
-    number: 1
+    number: 2
   - tilePrefab: {fileID: 1086838927579222, guid: e8eecaadcecd62c4abc686a94f5a59dd,
       type: 3}
     _direction: 0

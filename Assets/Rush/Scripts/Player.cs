@@ -36,14 +36,19 @@ namespace Com.IsartDigital.Rush {
             }
 
             controller = GetComponent<CameraController>();
-            LevelManager.Instance.OnLevelLoading += Init;
-            LevelManager.Instance.OnLevelUnload += UnIinit;
 
             Instance = this;
         }
 
+        private void Start() {
+            Debug.Log(LevelManager.Instance);
+            LevelManager.Instance.OnLevelLoading += Init;
+            LevelManager.Instance.OnLevelUnload += UnIinit;
+            
+        }
 
         public void Init(GameObject level) {
+
             this.level = level;
             inventory = this.level.GetComponent<Level>().list;
             preview = Instantiate(previewPrefab, level.transform);

@@ -143,6 +143,8 @@ namespace Com.IsartDigital.Rush.Ui {
         private void SwitchPhaseToggle_OnValueChanged() {
             SwitchPhase?.Invoke();
             OnSliderMoved?.Invoke(sliderTime.value);
+            tileButtonContainer.gameObject.SetActive(!tileButtonContainer.gameObject.activeSelf);
+            //Tween.LocalPosition(tileButtonContainer.transform, tileButtonContainer.transform.right * 4, 1f, 0f, Tween.EaseInBack);
         }
 
         private void PlayPauseToggle_OnValueChanged(bool isOn) {
