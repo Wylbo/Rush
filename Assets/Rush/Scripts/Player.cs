@@ -41,7 +41,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void Start() {
-            Debug.Log(LevelManager.Instance);
+
             LevelManager.Instance.OnLevelLoading += Init;
             LevelManager.Instance.OnLevelUnload += UnIinit;
             

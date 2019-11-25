@@ -41,7 +41,7 @@ namespace Com.IsartDigital.Rush.Manager {
             }
 
             instance = this;
-            
+
         }
 
         private void Start() {
@@ -60,6 +60,7 @@ namespace Com.IsartDigital.Rush.Manager {
             HudManager.Instance.Init(level);
             Hud.Instance.PlayPause += PlayPauseGame;
             Hud.Instance.SwitchPhase += SwitchMode;
+            Hud.Instance.gameObject.GetComponent<Animator>().SetTrigger("Appear");
             Cube.OnLooseCondition += Loose;
             isInit = true;
             menuMusic.Stop();
@@ -71,7 +72,7 @@ namespace Com.IsartDigital.Rush.Manager {
             win = isLost = isInit = IsPause = false;
 
             TimeManager.Instance.UnInit();
-            
+
             Hud.Instance.PlayPause -= PlayPauseGame;
             Hud.Instance.SwitchPhase -= SwitchMode;
             Cube.OnLooseCondition -= Loose;
@@ -92,7 +93,7 @@ namespace Com.IsartDigital.Rush.Manager {
             Cube.DestroyAll();
         }
 
-        
+
 
         public void PlayPauseGame(bool isOn) {
             Time.timeScale = isOn ? 1 : 0;
@@ -105,11 +106,13 @@ namespace Com.IsartDigital.Rush.Manager {
             if (IsPause) {
                 return;
             }
-            
+
 
             if (IsInActionPhase) {
                 SwitchToReflexionPhase();
+                Hud.Instance.gameObject.GetComponent<Animator>().SetTrigger("Appear");
             } else {
+                Hud.Instance.gameObject.GetComponent<Animator>().SetTrigger("Disappear");
                 SwitchToActionPhase();
             }
 
@@ -124,6 +127,7 @@ namespace Com.IsartDigital.Rush.Manager {
             Spawner.ResetAll();
             Cube.DestroyAll();
 
+
             OnSwitchPhase(false);
             OnReflexionPhase();
         }
@@ -131,7 +135,6 @@ namespace Com.IsartDigital.Rush.Manager {
         private void SwitchToActionPhase() {
             OnActionPhase();
             OnSwitchPhase(true);
-
         }
 
         public void Loose() {
