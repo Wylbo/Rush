@@ -14,13 +14,18 @@ namespace Com.IsartDigital.Rush {
 
 
         [SerializeField] private float speed;
+        [Header("Axis")]
         [SerializeField] private string horizontalAxis;
         [SerializeField] private string verticalAxis;
         [SerializeField] private string mouseBtn;
         [SerializeField] private string mouseHorizontalAxis;
         [SerializeField] private string mouseVerticalAxis;
-
+        [Space]
+        [Header("Sensitivity")]
         [SerializeField] private float mouseSensitivity;
+        [SerializeField] private float touchSensitivity;
+        [Space]
+        [Header("Other")]
         [SerializeField] private float OribitDampening;
         [SerializeField] public Transform cameraPivot;
         [SerializeField] private LayerMask groundMask;
@@ -136,7 +141,7 @@ namespace Com.IsartDigital.Rush {
                 bool raycast = Physics.Raycast(ray, out hit, 100, groundMask);
 
                 if ((touch.position - startPos).magnitude > 45) {
-                    axis = (-touch.deltaPosition.x / 2, -touch.deltaPosition.y / 2);
+                    axis = (-touch.deltaPosition.x / touchSensitivity, -touch.deltaPosition.y / touchSensitivity);
                 }
                 
             }
