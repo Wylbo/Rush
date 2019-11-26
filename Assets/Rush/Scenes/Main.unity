@@ -1476,11 +1476,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UiInGame
       objectReference: {fileID: 0}
-    - target: {fileID: 4240557819540221075, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4240557819540221807, guid: b5af561231d28c24ba8ce8f23e798283,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1591,47 +1586,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 505650728}
-    - target: {fileID: 2725973194420338550, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.20454545
-      objectReference: {fileID: 0}
-    - target: {fileID: 2725973194420338550, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.20454545
-      objectReference: {fileID: 0}
-    - target: {fileID: 2725973194420338550, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2725973194420338550, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7959398223268171256, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d709c71b5d1a572458662cb2ab961ff4,
-        type: 3}
-    - target: {fileID: 4240557820678058169, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_ChildAlignment
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 797768979046376570, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.20454545
-      objectReference: {fileID: 0}
-    - target: {fileID: 797768979046376570, guid: b5af561231d28c24ba8ce8f23e798283,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9047127212697824378, guid: b5af561231d28c24ba8ce8f23e798283,
         type: 3}
       propertyPath: levelSelector

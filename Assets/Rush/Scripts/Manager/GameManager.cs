@@ -27,6 +27,11 @@ namespace Com.IsartDigital.Rush.Manager {
         public event Action<bool> OnSwitchPhase;
 
         public event Action OnActionPhase;
+
+        internal void Reset() {
+            SwitchToReflexionPhase();
+        }
+
         public event Action OnReflexionPhase;
 
         public delegate void PlayPauseEventHandler(bool isOn);
@@ -116,7 +121,7 @@ namespace Com.IsartDigital.Rush.Manager {
                 SwitchToActionPhase();
             }
 
-            IsInActionPhase = !IsInActionPhase;
+            //IsInActionPhase = !IsInActionPhase;
 
 
             isLost = false;
@@ -126,13 +131,15 @@ namespace Com.IsartDigital.Rush.Manager {
             Turnstile.ResetAll();
             Spawner.ResetAll();
             Cube.DestroyAll();
+            IsInActionPhase = false;
 
-
-            OnSwitchPhase(false);
+            OnSwitchPhase?.Invoke(false);
             OnReflexionPhase();
         }
 
         private void SwitchToActionPhase() {
+            IsInActionPhase = true;
+
             OnActionPhase();
             OnSwitchPhase(true);
         }
