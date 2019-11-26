@@ -27,6 +27,11 @@ namespace Com.IsartDigital.Rush.Manager {
         public event Action<bool> OnSwitchPhase;
 
         public event Action OnActionPhase;
+
+        internal void Reset() {
+            SwitchToReflexionPhase();
+        }
+
         public event Action OnReflexionPhase;
 
         public delegate void PlayPauseEventHandler(bool isOn);
@@ -128,7 +133,7 @@ namespace Com.IsartDigital.Rush.Manager {
             Cube.DestroyAll();
             IsInActionPhase = false;
 
-            OnSwitchPhase(false);
+            OnSwitchPhase?.Invoke(false);
             OnReflexionPhase();
         }
 
