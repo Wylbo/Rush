@@ -147,7 +147,10 @@ namespace Com.IsartDigital.Rush.Manager {
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
             OnReflexionPhase();
+
             isLost = true;
+
+           StartCoroutine(Camera.main.GetComponent<CameraController>().Shake(.15f, .4f));
         }
 
         private void Win() {

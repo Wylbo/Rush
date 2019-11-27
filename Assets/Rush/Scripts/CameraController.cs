@@ -5,8 +5,10 @@
 
 using Com.IsartDigital.Common;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 namespace Com.IsartDigital.Rush {
     public class CameraController : MonoBehaviour {
@@ -167,6 +169,25 @@ namespace Com.IsartDigital.Rush {
 
             return (MathTools.SphericalToCarthesian(distance, angles.vert, angles.hori) + cameraPivot.position);
 
+        }
+
+        public IEnumerator Shake (float duration, float magnitude) {
+            Vector3 originalPos = transform.position;
+
+            float elapsedTime = 0.0f;
+
+            while(elapsedTime < duration) {
+                float x = Random.Range(-1f, 1f) * magnitude;
+                float y = Random.Range(-1f, 1f) * magnitude;
+
+                transform.localPosition = new Vector3(x, y, originalPos.z);
+
+                elapsedTime += Time.deltaTime;
+
+                yield return null;
+            }
+
+            transform.localPosition = originalPos;
         }
 
     }

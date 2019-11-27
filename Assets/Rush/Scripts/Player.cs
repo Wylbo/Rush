@@ -200,7 +200,7 @@ namespace Com.IsartDigital.Rush {
         }
 
         private void findNext() {
-            for (int i = inventory.Count - 1; i >= 0; i--) {
+            for (int i = 0; i < inventory.Count; i++) {
                 if (inventory[i].Tiles.Count > 0) {
                     inventoryIndex = i;
                     NewElemInHand(inventoryIndex);
