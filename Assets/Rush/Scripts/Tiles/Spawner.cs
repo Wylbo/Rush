@@ -20,6 +20,7 @@ namespace Com.IsartDigital.Rush.Tiles {
         [SerializeField] private int nToSpawn;
         [SerializeField] private int tickBeforeFirstSpawn;
         [SerializeField] private ColorChanger.EColor color;
+        [SerializeField] private ParticleSystemRenderer particle;
 
         private ColorChanger colorChanger;
 
@@ -42,6 +43,8 @@ namespace Com.IsartDigital.Rush.Tiles {
             block = colorChanger.ChangeColor(color);
 
             transform.GetComponentInChildren<Renderer>().SetPropertyBlock(block);
+
+            particle.SetPropertyBlock(block);
         }
 
         public static bool AllSpawnedAllCube() {
