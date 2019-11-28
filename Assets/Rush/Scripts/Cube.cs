@@ -287,7 +287,7 @@ namespace Com.IsartDigital.Rush {
             doAction = DoActionTeleport;
             tpTarget = target;
 
-            Tween.Shake(transform, transform.position, Vector3.Cross(Vector3.up, movementDirection) / 4, 1f / TimeManager.Instance.tickRate, 0f);
+            Tween.Shake(transform, transform.position, Vector3.one / 4, 1f / TimeManager.Instance.tickRate, 0f);
             //Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LightRange(lightHallo, 0, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
@@ -306,7 +306,7 @@ namespace Com.IsartDigital.Rush {
 
                 SetModeWait(2);
 
-                Tween.Shake(transform, transform.position, Vector3.Cross(Vector3.up, movementDirection) / 4, 1f / TimeManager.Instance.tickRate, 0f);
+                Tween.Shake(transform, transform.position, Vector3.one / 4, 1f / TimeManager.Instance.tickRate, 0f);
                 //Tween.Position(transform, transform.position + Vector3.up * 5, transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
                 Tween.LightRange(lightHallo, 0, 2, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
                 Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
