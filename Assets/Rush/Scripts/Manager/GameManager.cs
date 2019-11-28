@@ -150,7 +150,6 @@ namespace Com.IsartDigital.Rush.Manager {
 
             isLost = true;
 
-           StartCoroutine(Camera.main.GetComponent<CameraController>().Shake(.15f, .4f));
         }
 
         private void Win() {
