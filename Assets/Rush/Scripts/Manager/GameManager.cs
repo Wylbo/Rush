@@ -69,8 +69,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Hud.Instance.gameObject.GetComponent<Animator>().SetTrigger("Appear");
             Cube.OnLooseCondition += Loose;
             isInit = true;
+            PlayPauseGame(true);
 
-            //PlayPauseGame(true);
         }
 
         private void UnInit() {
@@ -101,8 +101,12 @@ namespace Com.IsartDigital.Rush.Manager {
 
 
         public void PlayPauseGame(bool isOn) {
-            //Time.timeScale = isOn ? 1 : 0;
-            TimeManager.Instance.onOff(isOn);
+            if (isOn && IsInActionPhase) {
+                TimeManager.Instance.Activate();
+            } else {
+                TimeManager.Instance.Desactivate();
+            }
+
             IsPause = !isOn;
 
             GameIsPaused?.Invoke(IsPause);

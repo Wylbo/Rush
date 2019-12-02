@@ -57,12 +57,12 @@ namespace Com.IsartDigital.Rush.Manager {
             }
         }
 
-        private void Activate() {
+        public void Activate() {
             isTicking = true;
             tickRate = speed;
         }
 
-        private void Desactivate() {
+        public void Desactivate() {
             isTicking = false;
             tickRate = 0;
         }
