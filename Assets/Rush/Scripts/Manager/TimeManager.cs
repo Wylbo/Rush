@@ -57,17 +57,17 @@ namespace Com.IsartDigital.Rush.Manager {
             }
         }
 
-        private void Activate() {
+        public void Activate() {
             isTicking = true;
             tickRate = speed;
         }
 
-        private void Desactivate() {
+        public void Desactivate() {
             isTicking = false;
             tickRate = 0;
         }
 
-        private void onOff(bool isOn) {
+        public void onOff(bool isOn) {
             isTicking = isOn;
 
             if (isTicking) {
@@ -82,7 +82,7 @@ namespace Com.IsartDigital.Rush.Manager {
         }
 
         private void Tick() {
-            if (elapsedTime > durationBetweenTicks) {
+            if (elapsedTime >= durationBetweenTicks) {
                 Debug.Log("<color=green><size=21>Tick</size></color>");
                 OnTick?.Invoke();
                 elapsedTime = 0;

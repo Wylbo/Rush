@@ -5,6 +5,7 @@
 
 using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
+using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -179,6 +180,7 @@ namespace Com.IsartDigital.Rush {
                 Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, level.transform);
                 elementInHand.Tiles.RemoveAt(0);
                 OnElementPlaced?.Invoke(elementInHand.Tiles.Count, inventoryIndex);
+                GetComponent<AudioSource>().Play();
 
                 if (elementInHand.Tiles.Count == 0) {
                     findNext();
@@ -194,13 +196,15 @@ namespace Com.IsartDigital.Rush {
                     inventoryIndex = i;
                     OnElementPlaced?.Invoke(inventory[inventoryIndex].Tiles.Count, inventoryIndex);
                     NewElemInHand(inventoryIndex);
-                    Destroy(above);
+                    Tween.LocalPosition(above.transform,above.transform.position + Vector3.up/2 , 0.2f, 0f, Tween.EaseInOutStrong);
+                    Tween.LocalPosition(above.transform,above.transform.position + Vector3.down/2, 0.2f, 0.3f, Tween.EaseInOutStrong, Tween.LoopType.None, null,() => Destroy(above));
+                    
                 }
             }
         }
 
         private void findNext() {
-            for (int i = inventory.Count - 1; i >= 0; i--) {
+            for (int i = 0; i < inventory.Count; i++) {
                 if (inventory[i].Tiles.Count > 0) {
                     inventoryIndex = i;
                     NewElemInHand(inventoryIndex);

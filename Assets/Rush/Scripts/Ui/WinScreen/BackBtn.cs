@@ -11,15 +11,17 @@ namespace Com.IsartDigital.Rush.Ui.WinScreen {
 	public class BackBtn : MonoBehaviour {
 
         [SerializeField] GameObject levelSelector;
+        [SerializeField] AudioSource click;
 
         private Button button;
 
 		private void Start () {
             button = GetComponent<Button>();
             button.onClick.AddListener(() => { HudManager.Instance.AddScreen(levelSelector);
-                HudManager.Instance.RemoveScreen(transform.parent.gameObject);
                 LevelManager.Instance.UnloadLevels();
                 GameManager.Instance.OnBackToLevelSelector();
+                click.Play();
+                HudManager.Instance.RemoveScreen(transform.parent.gameObject);
             });
         }
 	}

@@ -17,7 +17,7 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void UpdateRotation(CameraController cam) {
-             cam = Camera.main.GetComponent<CameraController>();
+             cam = Camera.main.transform.parent.GetComponent<CameraController>();
             Vector3 toPivot = cam.toPivot;
             toPivot = Vector3.ProjectOnPlane(toPivot, Vector3.up);
 

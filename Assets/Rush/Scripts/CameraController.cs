@@ -5,8 +5,10 @@
 
 using Com.IsartDigital.Common;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 namespace Com.IsartDigital.Rush {
     public class CameraController : MonoBehaviour {
@@ -168,6 +170,5 @@ namespace Com.IsartDigital.Rush {
             return (MathTools.SphericalToCarthesian(distance, angles.vert, angles.hori) + cameraPivot.position);
 
         }
-
     }
 }

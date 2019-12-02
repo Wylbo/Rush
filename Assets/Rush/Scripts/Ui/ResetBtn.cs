@@ -11,9 +11,10 @@ namespace Com.IsartDigital.Rush.Ui {
 	public class ResetBtn : MonoBehaviour {
 
         private Button button;
+        [SerializeField] AudioSource click;
 		private void Start () {
             button = GetComponent<Button>();
-            button.onClick.AddListener(LevelManager.Instance.RestartLevel);
+            button.onClick.AddListener(() => { LevelManager.Instance.RestartLevel(); click.Play(); });
 		}
 		
 	}

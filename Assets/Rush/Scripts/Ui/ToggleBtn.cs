@@ -26,6 +26,7 @@ namespace Com.IsartDigital.Rush.Ui {
         protected virtual void button_onClick() {
             isOn = !isOn;
             changeSprite(isOn);
+            GetComponent<AudioSource>().Play();
         }
 
         protected virtual void changeSprite(bool isOn) {

@@ -35,6 +35,7 @@ namespace Com.IsartDigital.Rush.Ui {
 
         public void GetIndex() {
             OnClick(index);
+            GetComponent<AudioSource>().Play();
             //Player.Instance.OnHudButtonClick(index);
         }
 

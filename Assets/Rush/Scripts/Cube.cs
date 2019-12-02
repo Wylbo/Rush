@@ -25,7 +25,9 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] public GameObject neon;
+        [Space]
+        [SerializeField] private AudioSource tpIn;
+        [SerializeField] private AudioSource tpOut;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -60,11 +62,13 @@ namespace Com.IsartDigital.Rush {
 
         private string groundTag = "Ground";
         private string tileTag = "Tile";
-        public int colorIndex;
+        [HideInInspector] public int colorIndex;
 
         private Action doAction;
 
         private ParticleSystem.MainModule mainTrail;
+
+        private AudioSource EndMove;
 
         private void Start() {
             list.Add(this);
@@ -93,7 +97,7 @@ namespace Com.IsartDigital.Rush {
             mainTrail = trailParticle.main;
             mainTrail.startColor = block.GetColor("_Color");
 
-
+            EndMove = GetComponent<AudioSource>();
 
         }
 
@@ -191,6 +195,7 @@ namespace Com.IsartDigital.Rush {
                 Tween.LightIntensity(lightHallo, 2, 0.1f, 0f, Tween.EaseIn);
 
                 playTrailParticle();
+                EndMove.Play();
             }
         }
 
@@ -287,7 +292,10 @@ namespace Com.IsartDigital.Rush {
             doAction = DoActionTeleport;
             tpTarget = target;
 
-            Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+            tpIn.Play();
+
+            Tween.Shake(transform, transform.position, Vector3.one / 4, 1f / TimeManager.Instance.tickRate, 0f);
+            //Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LightRange(lightHallo, 0, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
 
@@ -299,13 +307,15 @@ namespace Com.IsartDigital.Rush {
 
             if (tickCounter > 1) {
                 isWaiting = false;
+                tpOut.Play();
 
                 transform.position = tpTarget.position + Vector3.up / 2;
                 toPosition = transform.position;
 
                 SetModeWait(2);
 
-                Tween.Position(transform, transform.position + Vector3.up * 5, transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
+                Tween.Shake(transform, transform.position, Vector3.one / 4, 1f / TimeManager.Instance.tickRate, 0f);
+                //Tween.Position(transform, transform.position + Vector3.up * 5, transform.position, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
                 Tween.LightRange(lightHallo, 0, 2, 1 / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
                 Tween.LocalScale(transform, Vector3.one, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseLinear);
 
@@ -352,7 +362,6 @@ namespace Com.IsartDigital.Rush {
         public void SetModeOnTarget() {
             doAction = DoActionOnTarget;
             lightHallo.enabled = false;
-            secondLight.enabled = false;
             GetComponent<Collider>().enabled = false;
 
             transform.rotation = Quaternion.identity;

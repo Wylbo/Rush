@@ -13,6 +13,7 @@ namespace Com.IsartDigital.Rush.Manager {
 	public class LevelSelectorManager : MonoBehaviour {
 
         [SerializeField] private List<Button> list = new List<Button>();
+        [SerializeField] AudioSource click;
 
         public event Action<int> OnLoadLevel;
 		private void Start () {
@@ -23,6 +24,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
         private void LoadLevel(int levelToLoad) {
             OnLoadLevel(levelToLoad);
+            click.Play();
             HudManager.Instance.RemoveScreen(gameObject);
         }
 	}

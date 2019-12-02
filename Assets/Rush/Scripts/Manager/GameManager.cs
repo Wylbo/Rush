@@ -15,7 +15,11 @@ namespace Com.IsartDigital.Rush.Manager {
         [SerializeField] GameObject winScreen;
         [SerializeField] GameObject levelSelector;
         [SerializeField] GameObject TitleCard;
+        [SerializeField] GameObject GameOverScreen;
+        [SerializeField] GameObject hudInGame;
+        [Space]
         [SerializeField] AudioSource menuMusic;
+        [SerializeField] AudioSource gameOver;
         public static GameManager Instance { get { return instance; } }
 
         public bool IsInActionPhase { get; private set; } = false;
@@ -27,6 +31,11 @@ namespace Com.IsartDigital.Rush.Manager {
         public event Action<bool> OnSwitchPhase;
 
         public event Action OnActionPhase;
+
+        internal void Reset() {
+            SwitchToReflexionPhase();
+        }
+
         public event Action OnReflexionPhase;
 
         public delegate void PlayPauseEventHandler(bool isOn);
@@ -63,9 +72,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Hud.Instance.gameObject.GetComponent<Animator>().SetTrigger("Appear");
             Cube.OnLooseCondition += Loose;
             isInit = true;
-            menuMusic.Stop();
-
             PlayPauseGame(true);
+
         }
 
         private void UnInit() {
@@ -79,7 +87,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
             SwitchToReflexionPhase();
 
-            menuMusic.Play();
+            //menuMusic.Play();
 
             Player.Instance.UnIinit();
 
@@ -96,7 +104,12 @@ namespace Com.IsartDigital.Rush.Manager {
 
 
         public void PlayPauseGame(bool isOn) {
-            Time.timeScale = isOn ? 1 : 0;
+            if (isOn && IsInActionPhase) {
+                TimeManager.Instance.Activate();
+            } else {
+                TimeManager.Instance.Desactivate();
+            }
+
             IsPause = !isOn;
 
             GameIsPaused?.Invoke(IsPause);
@@ -116,23 +129,25 @@ namespace Com.IsartDigital.Rush.Manager {
                 SwitchToActionPhase();
             }
 
-            IsInActionPhase = !IsInActionPhase;
+            //IsInActionPhase = !IsInActionPhase;
 
 
             isLost = false;
         }
 
-        private void SwitchToReflexionPhase() {
+        public void SwitchToReflexionPhase() {
             Turnstile.ResetAll();
             Spawner.ResetAll();
             Cube.DestroyAll();
+            IsInActionPhase = false;
 
-
-            OnSwitchPhase(false);
+            OnSwitchPhase?.Invoke(false);
             OnReflexionPhase();
         }
 
         private void SwitchToActionPhase() {
+            IsInActionPhase = true;
+
             OnActionPhase();
             OnSwitchPhase(true);
         }
@@ -140,7 +155,13 @@ namespace Com.IsartDigital.Rush.Manager {
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
             OnReflexionPhase();
+
+            HudManager.Instance.AddScreen(GameOverScreen);
+            HudManager.Instance.RemoveScreen(hudInGame);
+            gameOver.Play();
+
             isLost = true;
+
         }
 
         private void Win() {

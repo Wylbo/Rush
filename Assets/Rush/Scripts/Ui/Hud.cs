@@ -119,7 +119,7 @@ namespace Com.IsartDigital.Rush.Ui {
         }
 
         private void UpdateHud(int ntile, int index) {
-            UpdateText(ntile,index);
+            UpdateText(ntile, index);
 
             if (ntile == 0) {
                 buttonList[index].transform.GetChild(1).gameObject.SetActive(false);
@@ -143,16 +143,13 @@ namespace Com.IsartDigital.Rush.Ui {
         private void SwitchPhaseToggle_OnValueChanged() {
             SwitchPhase?.Invoke();
             OnSliderMoved?.Invoke(sliderTime.value);
-            //tileButtonContainer.gameObject.SetActive(!tileButtonContainer.gameObject.activeSelf);
-            //if (GameManager.Instance.IsInActionPhase) {
-            //    GetComponent<Animator>().SetTrigger("Disappear");
-            //} else {
-            //    Debug.Log("Penis");
-            //    GetComponent<Animator>().SetTrigger("Appear"); 
-            //}
-            //Tween.LocalPosition(tileButtonContainer.transform, tileButtonContainer.transform.right * 4, 1f, 0f, Tween.EaseInBack);
         }
 
+        public void UnPause() {
+            if (GameManager.Instance.IsPause) {
+                PlayPauseToggle_OnValueChanged(GameManager.Instance.IsPause);
+            }
+        }
         private void PlayPauseToggle_OnValueChanged(bool isOn) {
             PlayPause?.Invoke(isOn);
             ActivateSidePanel(isOn);
