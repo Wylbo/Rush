@@ -180,6 +180,7 @@ namespace Com.IsartDigital.Rush {
                 Instantiate(elementInHand.Tiles[0], preview.transform.position, preview.transform.rotation, level.transform);
                 elementInHand.Tiles.RemoveAt(0);
                 OnElementPlaced?.Invoke(elementInHand.Tiles.Count, inventoryIndex);
+                GetComponent<AudioSource>().Play();
 
                 if (elementInHand.Tiles.Count == 0) {
                     findNext();

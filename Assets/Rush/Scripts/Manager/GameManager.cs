@@ -15,6 +15,9 @@ namespace Com.IsartDigital.Rush.Manager {
         [SerializeField] GameObject winScreen;
         [SerializeField] GameObject levelSelector;
         [SerializeField] GameObject TitleCard;
+        [SerializeField] GameObject GameOverScreen;
+        [SerializeField] GameObject hudInGame;
+        [Space]
         [SerializeField] AudioSource menuMusic;
         [SerializeField] AudioSource gameOver;
         public static GameManager Instance { get { return instance; } }
@@ -132,7 +135,7 @@ namespace Com.IsartDigital.Rush.Manager {
             isLost = false;
         }
 
-        private void SwitchToReflexionPhase() {
+        public void SwitchToReflexionPhase() {
             Turnstile.ResetAll();
             Spawner.ResetAll();
             Cube.DestroyAll();
@@ -153,6 +156,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
             OnReflexionPhase();
 
+            HudManager.Instance.AddScreen(GameOverScreen);
+            HudManager.Instance.RemoveScreen(hudInGame);
             gameOver.Play();
 
             isLost = true;
