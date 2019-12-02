@@ -5,6 +5,7 @@
 
 using Com.IsartDigital.Rush.Manager;
 using Com.IsartDigital.Rush.Tiles;
+using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -194,7 +195,9 @@ namespace Com.IsartDigital.Rush {
                     inventoryIndex = i;
                     OnElementPlaced?.Invoke(inventory[inventoryIndex].Tiles.Count, inventoryIndex);
                     NewElemInHand(inventoryIndex);
-                    Destroy(above);
+                    Tween.LocalPosition(above.transform,above.transform.position + Vector3.up/2 , 0.2f, 0f, Tween.EaseInOutStrong);
+                    Tween.LocalPosition(above.transform,above.transform.position + Vector3.down/2, 0.2f, 0.3f, Tween.EaseInOutStrong, Tween.LoopType.None, null,() => Destroy(above));
+                    
                 }
             }
         }
