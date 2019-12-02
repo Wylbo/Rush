@@ -25,7 +25,9 @@ namespace Com.IsartDigital.Rush {
         [SerializeField] public Light lightHallo;
         [SerializeField] public Light secondLight;
         [SerializeField] private LayerMask groundMask;
-        [SerializeField] public GameObject neon;
+        [Space]
+        [SerializeField] private AudioSource tpIn;
+        [SerializeField] private AudioSource tpOut;
 
         private Vector3 fromPosition;
         private Vector3 toPosition;
@@ -60,7 +62,7 @@ namespace Com.IsartDigital.Rush {
 
         private string groundTag = "Ground";
         private string tileTag = "Tile";
-        public int colorIndex;
+        [HideInInspector] public int colorIndex;
 
         private Action doAction;
 
@@ -290,6 +292,8 @@ namespace Com.IsartDigital.Rush {
             doAction = DoActionTeleport;
             tpTarget = target;
 
+            tpIn.Play();
+
             Tween.Shake(transform, transform.position, Vector3.one / 4, 1f / TimeManager.Instance.tickRate, 0f);
             //Tween.Position(transform, transform.position + Vector3.up * 5, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
             Tween.LocalScale(transform, Vector3.zero, 1f / TimeManager.Instance.tickRate, 0f, Tween.EaseInOutStrong);
@@ -303,6 +307,7 @@ namespace Com.IsartDigital.Rush {
 
             if (tickCounter > 1) {
                 isWaiting = false;
+                tpOut.Play();
 
                 transform.position = tpTarget.position + Vector3.up / 2;
                 toPosition = transform.position;
