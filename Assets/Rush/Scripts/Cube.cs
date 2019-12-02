@@ -66,6 +66,8 @@ namespace Com.IsartDigital.Rush {
 
         private ParticleSystem.MainModule mainTrail;
 
+        private AudioSource EndMove;
+
         private void Start() {
             list.Add(this);
             TimeManager.Instance.OnTick += Tick;
@@ -93,7 +95,7 @@ namespace Com.IsartDigital.Rush {
             mainTrail = trailParticle.main;
             mainTrail.startColor = block.GetColor("_Color");
 
-
+            EndMove = GetComponent<AudioSource>();
 
         }
 
@@ -191,6 +193,7 @@ namespace Com.IsartDigital.Rush {
                 Tween.LightIntensity(lightHallo, 2, 0.1f, 0f, Tween.EaseIn);
 
                 playTrailParticle();
+                EndMove.Play();
             }
         }
 
@@ -354,7 +357,6 @@ namespace Com.IsartDigital.Rush {
         public void SetModeOnTarget() {
             doAction = DoActionOnTarget;
             lightHallo.enabled = false;
-            secondLight.enabled = false;
             GetComponent<Collider>().enabled = false;
 
             transform.rotation = Quaternion.identity;

@@ -24,6 +24,7 @@ namespace Com.IsartDigital.Rush.Manager {
         private void LoadLevel(int levelToLoad) {
             OnLoadLevel(levelToLoad);
             HudManager.Instance.RemoveScreen(gameObject);
+            GetComponent<AudioSource>().Play();
         }
 	}
 }

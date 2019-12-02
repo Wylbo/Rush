@@ -67,7 +67,7 @@ namespace Com.IsartDigital.Rush.Manager {
             tickRate = 0;
         }
 
-        private void onOff(bool isOn) {
+        public void onOff(bool isOn) {
             isTicking = isOn;
 
             if (isTicking) {

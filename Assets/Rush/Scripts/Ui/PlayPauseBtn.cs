@@ -31,6 +31,14 @@ namespace Com.IsartDigital.Rush.Ui {
             reset.gameObject.SetActive(isOn);
             blakcScreen.gameObject.SetActive(isOn);
             slider.gameObject.SetActive(!isOn);
+
+            Animator animator = transform.parent.GetComponent<Animator>();
+            if (isOn) {
+                animator.Play("In", 1);
+
+            } else {
+                animator.Play("Out", 1);
+            }
         }
 
         protected override void button_onClick() {

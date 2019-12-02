@@ -16,6 +16,7 @@ namespace Com.IsartDigital.Rush.Manager {
         [SerializeField] GameObject levelSelector;
         [SerializeField] GameObject TitleCard;
         [SerializeField] AudioSource menuMusic;
+        [SerializeField] AudioSource gameOver;
         public static GameManager Instance { get { return instance; } }
 
         public bool IsInActionPhase { get; private set; } = false;
@@ -68,9 +69,8 @@ namespace Com.IsartDigital.Rush.Manager {
             Hud.Instance.gameObject.GetComponent<Animator>().SetTrigger("Appear");
             Cube.OnLooseCondition += Loose;
             isInit = true;
-            menuMusic.Stop();
 
-            PlayPauseGame(true);
+            //PlayPauseGame(true);
         }
 
         private void UnInit() {
@@ -84,7 +84,7 @@ namespace Com.IsartDigital.Rush.Manager {
 
             SwitchToReflexionPhase();
 
-            menuMusic.Play();
+            //menuMusic.Play();
 
             Player.Instance.UnIinit();
 
@@ -101,7 +101,8 @@ namespace Com.IsartDigital.Rush.Manager {
 
 
         public void PlayPauseGame(bool isOn) {
-            Time.timeScale = isOn ? 1 : 0;
+            //Time.timeScale = isOn ? 1 : 0;
+            TimeManager.Instance.onOff(isOn);
             IsPause = !isOn;
 
             GameIsPaused?.Invoke(IsPause);
@@ -147,6 +148,8 @@ namespace Com.IsartDigital.Rush.Manager {
         public void Loose() {
             Debug.Log("<color=red><size=21>GameOver</size></color>");
             OnReflexionPhase();
+
+            gameOver.Play();
 
             isLost = true;
 
