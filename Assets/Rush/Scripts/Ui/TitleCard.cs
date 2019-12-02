@@ -13,12 +13,19 @@ namespace Com.IsartDigital.Rush.Ui {
 		private void Start () {
 			
 		}
-		
+
+        private bool hasClicked = false;
 		private void Update () {
-            if (Input.anyKey) {
-                HudManager.Instance.AddScreen(levelSelector);
-                HudManager.Instance.RemoveScreen(gameObject);
+            if (Input.anyKey && !hasClicked) {
+                hasClicked = true;
+                GetComponent<Animator>().SetTrigger("Start");
+                GetComponent<AudioSource>().Play();
             }
 		}
+
+        private void Launch() {
+            HudManager.Instance.AddScreen(levelSelector);
+            HudManager.Instance.RemoveScreen(gameObject);
+        }
 	}
 }

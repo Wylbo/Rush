@@ -20,6 +20,7 @@ namespace Com.IsartDigital.Rush.Ui.WinScreen {
                 HudManager.Instance.RemoveScreen(transform.parent.gameObject);
                 LevelManager.Instance.UnloadLevels();
                 GameManager.Instance.OnBackToLevelSelector();
+                GetComponent<AudioSource>().Play();
             });
         }
 	}

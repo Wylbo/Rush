@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Com.IsartDigital.Rush.Ui {
-	public class PlayPauseBtn : ToggleBtn {
+    public class PlayPauseBtn : ToggleBtn {
 
         [SerializeField] private Button back;
         [SerializeField] private Button reset;
@@ -19,11 +19,11 @@ namespace Com.IsartDigital.Rush.Ui {
         public delegate void PlayPauseBtnEventHandler(bool isOn);
         public event PlayPauseBtnEventHandler OnClick;
 
-		override protected void Start () {
+        override protected void Start() {
             base.Start();
             isOn = true;
             GameManager.Instance.GameIsPaused += changeSprite;
-		}
+        }
 
         protected override void changeSprite(bool isOn) {
             base.changeSprite(isOn);

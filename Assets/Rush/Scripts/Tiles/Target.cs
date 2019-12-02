@@ -43,7 +43,8 @@ namespace Com.IsartDigital.Rush.Tiles {
                 ParticleSystem.MainModule main = particleSystemBurst.main;
                 main.startColor = block.GetColor("_Color");
                 cube.SetModeOnTarget();
-                
+
+                GetComponent<AudioSource>().Play();
             }
         }
     }

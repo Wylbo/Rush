@@ -13,7 +13,7 @@ namespace Com.IsartDigital.Rush.Ui {
         private Button button;
 		private void Start () {
             button = GetComponent<Button>();
-            button.onClick.AddListener(LevelManager.Instance.RestartLevel);
+            button.onClick.AddListener(() => { LevelManager.Instance.RestartLevel(); GetComponent<AudioSource>().Play(); });
 		}
 		
 	}
